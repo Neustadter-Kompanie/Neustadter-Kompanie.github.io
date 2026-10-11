@@ -2,10 +2,69 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Neustadter Kompanie – Getränkekarte</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#193d33">
+  <title>Getränkekarte | Neustadter Kompanie</title>
+  <style>
+    :root{color-scheme:light;--green:#193d33;--cream:#f6f1e7;--wine:#782c38;--ink:#27332d;--muted:#64716b}
+    *{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+    header{background:var(--green);color:#fff;padding:30px 20px;text-align:center}header small{letter-spacing:.22em;text-transform:uppercase;color:#e1d3b5}h1,h2{font-family:Georgia,serif}h1{font-size:clamp(2rem,6vw,3.5rem);margin:10px 0}header p{margin:0;color:#e4e9e2}
+    main{max-width:960px;margin:30px auto;padding:0 18px 60px}.notice{background:#fff8e6;border-left:4px solid #b67c2c;padding:14px 18px;border-radius:8px;margin-bottom:20px}
+    .card{background:white;border:1px solid #e3ded4;border-radius:16px;padding:24px;box-shadow:0 8px 28px #193d3310;margin-bottom:18px}
+    .eyebrow{font-size:.76rem;font-weight:800;letter-spacing:.14em;color:var(--wine);text-transform:uppercase}h2{font-size:1.65rem;margin:8px 0 12px}p{line-height:1.55}.muted{color:var(--muted)}
+    .tabs{display:flex;gap:8px;margin:18px 0}.tab{flex:1;border:1px solid #d4dcd5;background:#fff;color:var(--green);padding:12px;border-radius:10px;font-weight:700}.tab.active{background:var(--green);color:#fff}
+    label{display:block;font-weight:700;margin:14px 0 7px}input{display:block;width:100%;font:inherit;padding:13px;border:1px solid #b9c3bc;border-radius:9px}button{font:inherit;cursor:pointer}.primary{width:100%;background:var(--wine);color:white;border:0;border-radius:10px;padding:14px;margin-top:18px;font-weight:700}.primary:disabled{opacity:.5;cursor:not-allowed}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.drink{padding:18px;border:1px solid #e3ded4;border-radius:12px;background:#fff}.drink h3{margin:0 0 8px;font-size:1.05rem}.price{font-weight:800;color:var(--wine);font-size:1.25rem}
+    .drink button{display:block;width:100%;margin-top:12px;border:1px solid #c9d4cb;border-radius:8px;padding:10px;background:#f4f7f3;color:#486252;cursor:not-allowed}
+    .summary{display:flex;justify-content:space-between;gap:15px;align-items:center;background:#e7eee7;padding:15px;border-radius:12px}.summary strong{font-size:1.4rem}footer{text-align:center;color:var(--muted);padding:22px;font-size:.85rem}
+    [hidden]{display:none!important}@media(min-width:720px){.columns{display:grid;grid-template-columns:1fr 1fr;gap:18px}}
+  </style>
 </head>
 <body>
-  <h1>Neustadter Kompanie 🍻</h1>
-  <p>Unsere digitale Strichliste entsteht hier.</p>
+  <header><small>Neustadter Kompanie</small><h1>Unsere Strichliste 🍻</h1><p>Deine Getränke. Dein Überblick. Unser Wagen.</p></header>
+  <main>
+    <div class="notice" role="status"><strong>Vorschau:</strong> Die digitale Getränkekarte wird gerade eingerichtet. Registrierung, Anmeldung und Buchungen sind hier noch nicht freigeschaltet.</div>
+    <div class="columns">
+      <section class="card" aria-labelledby="account-title">
+        <div class="eyebrow">Gästezugang</div><h2 id="account-title">Willkommen am Wagen!</h2>
+        <div class="tabs" role="group" aria-label="Anmeldung oder Registrierung">
+          <button type="button" class="tab active" id="loginTab" aria-pressed="true">Anmelden</button>
+          <button type="button" class="tab" id="registerTab" aria-pressed="false">Registrieren</button>
+        </div>
+        <form id="loginForm"><label for="loginName">Dein Name</label><input id="loginName" autocomplete="name" placeholder="Vor- und Nachname" disabled><label for="loginNumber">Deine Gastnummer</label><input id="loginNumber" inputmode="numeric" placeholder="z. B. 126" disabled><button type="button" class="primary" disabled>Anmelden – bald verfügbar</button></form>
+        <form id="registerForm" hidden><label for="registerName">Dein Name</label><input id="registerName" autocomplete="name" placeholder="Vor- und Nachname" disabled><p class="muted">Bei der Registrierung bekommst du eine persönliche Gastnummer.</p><button type="button" class="primary" disabled>Registrieren – bald verfügbar</button></form>
+      </section>
+      <section class="card"><div class="eyebrow">Dein Konto</div><h2>Deine Strichliste</h2><p class="muted">Nach der Anmeldung siehst du hier deine Buchungen, Zahlungen und deinen offenen Betrag.</p><div class="summary"><span>Offener Betrag</span><strong>–,–– €</strong></div><p class="muted">Fördermitglieder erhalten automatisch ihre eigenen Getränkepreise. Den Mitgliedsstatus verwaltet ausschließlich der Vorstand.</p></section>
+    </div>
+    <section class="card" aria-labelledby="drinks-title"><div class="eyebrow">Am Wagen</div><h2 id="drinks-title">Unsere Getränkekarte</h2><p class="muted">Reguläre Preise. Die Buchungsbuttons werden nach der sicheren Freischaltung aktiviert.</p><div id="drinks" class="grid"></div></section>
+  </main>
+  <footer>Neustadter Kompanie · Digitale Getränkeliste · Vorschau</footer>
+  <script>
+    const drinks = [
+      ['Bier 0,5 l',200],['Weinschorle',400],['Cola 0,5 l',200],
+      ['Cola Zero 0,5 l',200],['Spezi 0,5 l',200],['Eistee',200],
+      ['Red Bull',200],["Jack Daniel’s 5 cl",300],["Jack Daniel’s 6 cl",400],
+      ['Shots',150],['Wasser',0]
+    ];
+    const euro = cents => (cents/100).toLocaleString('de-DE',{style:'currency',currency:'EUR'});
+    const drinksContainer = document.getElementById('drinks');
+    for(const [name,price] of drinks){
+      const card=document.createElement('article');card.className='drink';
+      const title=document.createElement('h3');title.textContent=name;
+      const amount=document.createElement('div');amount.className='price';amount.textContent=euro(price);
+      const button=document.createElement('button');button.type='button';button.disabled=true;button.textContent='Buchen – bald verfügbar';
+      card.append(title,amount,button);drinksContainer.append(card);
+    }
+    const loginTab=document.getElementById('loginTab');
+    const registerTab=document.getElementById('registerTab');
+    function showTab(register){
+      loginTab.classList.toggle('active',!register);registerTab.classList.toggle('active',register);
+      loginTab.setAttribute('aria-pressed',String(!register));registerTab.setAttribute('aria-pressed',String(register));
+      document.getElementById('loginForm').hidden=register;
+      document.getElementById('registerForm').hidden=!register;
+    }
+    loginTab.addEventListener('click',()=>showTab(false));
+    registerTab.addEventListener('click',()=>showTab(true));
+  </script>
 </body>
 </html>
