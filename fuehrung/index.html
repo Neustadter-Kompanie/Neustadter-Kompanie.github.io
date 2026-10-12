@@ -118,11 +118,12 @@ const supabase=createClient('https://tyiskycptrrtlibpdbse.supabase.co','sb_publi
 const $=id=>document.getElementById(id);const money=cents=>new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR'}).format(Number(cents)/100);
 let profile=null,guests=[],balances=[],membershipRequests=[],familyRequests=[],clubMembers=[],birthdays=[],memberTypeFilter="single",editingMemberId=null;
 let boardProducts=[],paperQuantities=new Map(),paperPending=null,paperSending=false,boardUserId=null;
+let paperPriceQuote=null,paperPriceLoading=false,paperPriceRequestVersion=0;
 let voidEntries=[],voidLoading=false,voidProcessing=false,voidRequestSequence=0;
 const PAPER_PENDING_PREFIX="nk_paper_pending_v1_";
 function status(id,text,ok=false){$(id).textContent=text;$(id).classList.toggle('ok',ok)}
 function node(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e}
-function showTab(tab){if(profile?.role==='gremium'&&tab!=='birthdays')return;if(tab==='admin'&&!profile?.is_admin)return;for(const el of document.querySelectorAll('.tab'))el.hidden=el.id!==tab;for(const b of document.querySelectorAll('#tabs button'))b.classList.toggle('active',b.dataset.tab===tab)}
+function showTab(tab){if(profile?.role==='gremium'&&tab!=='birthdays')return;if(tab==='admin'&&!profile?.is_admin)return;for(const el of document.querySelectorAll('.tab'))el.hidden=el.id!==tab;for(const b of document.querySelectorAll('#tabs button'))b.classList.toggle('active',b.dataset.tab===tab);if(tab==='paper'&&paperSelectedGuest())void loadPaperPriceQuote()}
 for(const b of document.querySelectorAll('#tabs button'))b.addEventListener('click',()=>showTab(b.dataset.tab));for(const b of document.querySelectorAll('[data-jump]'))b.addEventListener('click',()=>showTab(b.dataset.jump));
 function showLogin(error=''){$('loadingPanel').hidden=true;$('app').hidden=true;$('loginPanel').hidden=false;$('logout').hidden=true;profile=null;boardUserId=null;guests=[];balances=[];status('loginStatus',error)}
 async function initialize(){
@@ -456,7 +457,7 @@ async function loadBoardPrices(){
  const root=$('priceList');root.replaceChildren();status('priceStatus','Preise werden geladen …');
  const {data,error}=await supabase.rpc('drink_board_list_prices');
  if(error){status('priceStatus','Preise konnten nicht geladen werden: '+error.message);status('paperStatus','Getränke konnten nicht geladen werden: '+error.message);return}
- boardProducts=data||[];renderPaperProducts();status('priceStatus','');
+ boardProducts=data||[];paperPriceQuote=null;renderPaperProducts();if(paperSelectedGuest())void loadPaperPriceQuote();status('priceStatus','');
  if(!data?.length){root.append(node('p','Keine Getränke gefunden.','muted'));return}
  for(const p of data){
   const form=node('form',undefined,'member-card');
@@ -476,7 +477,7 @@ async function loadBoardPrices(){
    const {error}=await supabase.rpc('drink_board_update_prices',{p_product_id:p.product_id,p_price_cents:normalCents,p_member_price_cents:memberCents});
    save.disabled=false;
    if(error){feedback.textContent='Speichern fehlgeschlagen: '+error.message;return}
-   feedback.textContent='Preise gespeichert.';feedback.classList.add('ok');p.normal_price_cents=normalCents;p.member_price_cents=memberCents;renderPaperProducts();
+   feedback.textContent='Preise gespeichert.';feedback.classList.add('ok');p.normal_price_cents=normalCents;p.member_price_cents=memberCents;paperPriceQuote=null;renderPaperProducts();if(paperSelectedGuest())void loadPaperPriceQuote();
   });
   root.append(form);
  }
@@ -494,8 +495,43 @@ function restorePaperPending(){
 }
 function paperActiveProducts(){return boardProducts.filter(p=>p.is_active===true)}
 function paperSelectedGuest(){return guests.find(g=>g.is_active && String(g.guest_number)===$('paperGuest').value)||null}
-function paperGuestIsMember(g){
- return Boolean(g && clubMembers.some(m=>String(m.guest_number)===String(g.guest_number) && m.membership_status==='active'));
+// Die Preisvorschau kommt ausschließlich aus der sicheren Vorstands-RPC.
+// Ohne bestätigte Antwort darf keine Sammelbuchung ausgelöst werden.
+function paperQuoteForSelectedGuest(){
+ const guest=paperSelectedGuest();
+ return guest&&paperPriceQuote?.guestNumber===guest.guest_number?paperPriceQuote:null;
+}
+async function loadPaperPriceQuote(){
+ const version=++paperPriceRequestVersion;
+ const guest=paperSelectedGuest();
+ paperPriceQuote=null;
+ paperPriceLoading=Boolean(guest);
+ renderPaperProducts();
+ if(!guest){status('paperStatus','');return}
+ status('paperStatus','Gültige Getränkepreise für '+guest.display_name+' werden geladen …');
+ try{
+  const {data,error}=await supabase.rpc('drink_board_paper_prices',{p_guest_number:guest.guest_number});
+  if(version!==paperPriceRequestVersion||paperSelectedGuest()?.guest_number!==guest.guest_number)return;
+  paperPriceLoading=false;
+  if(error)throw error;
+  if(!Array.isArray(data)||!data.length)throw new Error('Keine Preise für dieses Gastkonto gefunden.');
+  const prices=new Map();
+  for(const p of data){
+   const cents=Number(p.effective_price_cents);
+   if(!Number.isSafeInteger(cents)||cents<0||typeof p.product_id!=='string')throw new Error('Ungültige Preisangabe vom Server.');
+   prices.set(p.product_id,cents);
+  }
+  if(paperActiveProducts().some(p=>!prices.has(p.product_id)))throw new Error('Die Preisliste ist unvollständig. Bitte erneut laden.');
+  paperPriceQuote={guestNumber:guest.guest_number,prices,isMember:data[0].is_member===true};
+  renderPaperProducts();
+  status('paperStatus','Preise für '+guest.display_name+' geladen.',true);
+ }catch(error){
+  if(version!==paperPriceRequestVersion)return;
+  paperPriceLoading=false;
+  paperPriceQuote=null;
+  renderPaperProducts();
+  status('paperStatus','Preisvorschau fehlgeschlagen: '+(error?.message||'Unbekannter Fehler')+'. Bitte den Gast erneut auswählen.');
+ }
 }
 function renderPaperGuestOptions(){
  const target=$('paperGuest');const selected=target.value;
@@ -507,24 +543,22 @@ function renderPaperGuestOptions(){
   target.add(new Option('#'+g.guest_number+' · '+g.display_name,String(g.guest_number)));
  }
  if([...target.options].some(o=>o.value===selected))target.value=selected;
- renderPaperSummary();
+ if(target.value!==selected)void loadPaperPriceQuote();else renderPaperSummary();
 }
-function getPaperUnitPrice(product,isMember){
- const normal=Number(product.normal_price_cents);
- const member=product.member_price_cents==null?normal:Number(product.member_price_cents);
- return isMember && Number.isSafeInteger(member)?member:normal;
+function getPaperUnitPrice(product){
+ const quote=paperQuoteForSelectedGuest();
+ return quote?.prices.get(product.product_id)??null;
 }
 function renderPaperProducts(){
  const root=$('paperProducts');root.replaceChildren();
  const active=paperActiveProducts();
  if(!active.length){root.append(node('p','Keine aktiven Getränke verfügbar. Preise im Reiter „Getränkepreise“ prüfen.','muted'));renderPaperSummary();return}
- const g=paperSelectedGuest();const isMember=paperGuestIsMember(g);
  for(const product of active){
   const id=product.product_id;
   const item=node('div',undefined,'paper-item');
   const top=node('div',undefined,'paper-row');
   top.append(node('strong',product.product_name));
-  const unitPrice=getPaperUnitPrice(product,isMember);
+  const unitPrice=getPaperUnitPrice(product);
   top.append(node('span',Number.isFinite(unitPrice)?money(unitPrice):'–','pill'));
   item.append(top);
   const controls=node('div',undefined,'paper-counter');
@@ -557,15 +591,24 @@ function paperSnapshot(){
  return paperActiveProducts().map(p=>({product_id:p.product_id,quantity:paperQuantities.get(p.product_id)||0})).filter(i=>i.quantity>0);
 }
 function renderPaperSummary(){
- const guest=paperSelectedGuest(),member=paperGuestIsMember(guest);
+ const guest=paperSelectedGuest(),quote=paperQuoteForSelectedGuest();
  const qty=paperSnapshot();let count=0,total=0;
- const priceById=new Map(paperActiveProducts().map(p=>[p.product_id,p]));
- for(const item of qty){const product=priceById.get(item.product_id);if(!product)continue;count+=item.quantity;total+=item.quantity*getPaperUnitPrice(product,member)}
+ const productById=new Map(paperActiveProducts().map(p=>[p.product_id,p]));
+ let allPricesKnown=Boolean(quote);
+ for(const item of qty){
+  const product=productById.get(item.product_id);
+  if(!product){allPricesKnown=false;continue}
+  count+=item.quantity;
+  const unitPrice=getPaperUnitPrice(product);
+  if(!Number.isSafeInteger(unitPrice)){allPricesKnown=false;continue}
+  total+=item.quantity*unitPrice;
+ }
  $('paperCount').textContent=count===1?'1 Getränk':count+' Getränke';
- $('paperTotal').textContent=money(total);
- $('paperGuestInfo').textContent=guest?(guest.display_name+' · #'+guest.guest_number+' · '+(member?'Aktive Fördermitgliedschaft – Vorschau mit Förderpreisen':'Vorschau mit Normalpreisen; endgültige Preisprüfung erfolgt beim Buchen')):'Bitte ein Gastkonto auswählen.';
- $('paperPriceNote').textContent='Vorschau anhand der zuletzt geladenen Preise. Den verbindlichen Preis und Mitgliedsstatus ermittelt Supabase beim Buchen.';
- $('paperSubmit').disabled=!guest||count===0||count>500||paperSending||Boolean(paperPending)||!Number.isSafeInteger(total)||total<0;
+ $('paperTotal').textContent=guest&&allPricesKnown?money(total):'–';
+ $('paperGuestInfo').textContent=!guest?'Bitte ein Gastkonto auswählen.':
+  guest.display_name+' · #'+guest.guest_number+' · '+(quote?(quote.isMember?'Aktives Fördermitglied – Vorschau mit Förderpreisen':'Vorschau mit Normalpreisen'):paperPriceLoading?'Preise werden geladen …':'Preise noch nicht bestätigt – Buchung gesperrt');
+ $('paperPriceNote').textContent='Preise und Mitgliedsstatus werden für das ausgewählte Konto sicher aus Supabase geladen. Der verbindliche Betrag wird beim Buchen erneut berechnet.';
+ $('paperSubmit').disabled=!guest||!quote||!allPricesKnown||count===0||count>500||paperSending||Boolean(paperPending)||!Number.isSafeInteger(total)||total<0;
  $('paperSubmit').textContent=count?'🧾 '+count+' Getränke verbuchen':'🧾 Strichliste verbuchen';
  $('paperClear').disabled=paperSending||Boolean(paperPending);
 }
@@ -607,10 +650,11 @@ async function sendPaperPending(){
  }
 }
 $('paperGuestSearch').addEventListener('input',renderPaperGuestOptions);
-$('paperGuest').addEventListener('change',()=>{renderPaperProducts();renderPaperSummary()});
+$('paperGuest').addEventListener('change',()=>{void loadPaperPriceQuote()});
 $('paperSubmit').addEventListener('click',async()=>{
  if(profile?.role!=='vorstand'||paperPending||paperSending)return;
  const guest=paperSelectedGuest(),items=paperSnapshot();
+ if(!guest||!paperQuoteForSelectedGuest()){status('paperStatus','Bitte zuerst die bestätigten Preise des Gastkontos laden.');return}
  const count=items.reduce((sum,item)=>sum+item.quantity,0);
  if(!guest||!items.length||count>500||items.length>40){status('paperStatus','Bitte einen aktiven Gast und insgesamt 1 bis 500 Getränke auswählen.');return}
  const preview=$('paperTotal').textContent;
