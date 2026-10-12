@@ -5,7 +5,7 @@
 <title>Mein Konto | Neustadter Kompanie</title>
 <style>
 :root{--green:#193d33;--cream:#f6f1e7;--wine:#782c38;--ink:#27332d;--muted:#64716b}*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif}header{background:var(--green);color:white;text-align:center;padding:30px 16px}header small{color:#e1d3b5;letter-spacing:.2em;text-transform:uppercase}h1,h2{font-family:Georgia,serif}h1{margin:8px 0;font-size:clamp(2rem,6vw,3rem)}main{max-width:960px;margin:26px auto;padding:0 16px 50px}.card{background:white;border:1px solid #e3ded4;border-radius:16px;padding:22px;margin-bottom:18px;box-shadow:0 8px 28px #193d3310}.muted{color:var(--muted);line-height:1.5}.eyebrow{font-size:.76rem;font-weight:800;letter-spacing:.14em;color:var(--wine);text-transform:uppercase}.tabs{display:flex;gap:8px;margin:16px 0}.tab{flex:1;border:1px solid #d4dcd5;background:#fff;color:var(--green);padding:12px;border-radius:10px;font-weight:700}.tab.active{background:var(--green);color:#fff}label{display:block;font-weight:700;margin:13px 0 7px}input,select{width:100%;font:inherit;padding:12px;border:1px solid #b9c3bc;border-radius:9px}.primary{width:100%;background:var(--wine);color:#fff;border:0;border-radius:10px;padding:14px;margin-top:18px;font-weight:700}.primary:disabled{opacity:.55}button{font:inherit;cursor:pointer}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:12px}.drink{padding:16px;border:1px solid #e3ded4;border-radius:12px;background:#fff}.drink h3{margin:0 0 8px;font-size:1.04rem}.price{font-weight:800;color:var(--wine);font-size:1.25rem}.notice{background:#fff8e6;border-left:4px solid #b67c2c;padding:13px 16px;border-radius:8px;margin-bottom:18px}.checkbox{display:flex;align-items:flex-start;gap:9px;font-weight:500}.family-fields{background:#f4f7f3;padding:15px;border-radius:10px;margin-top:12px}.pill{display:inline-block;background:#e7eee7;border-radius:999px;padding:6px 12px;color:var(--green);font-size:.82rem;font-weight:700}.account-row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #eee}.total{background:#e7eee7;border-radius:12px;padding:17px;display:flex;justify-content:space-between;align-items:center}.total strong{font-size:1.5rem}footer{text-align:center;color:var(--muted);padding:22px;font-size:.85rem}[hidden]{display:none!important}@media(min-width:720px){.columns{display:grid;grid-template-columns:1fr 1fr;gap:18px}}a{color:var(--wine)}.status{min-height:1.5em}.secondary{background:white;color:var(--green);border:1px solid #c8d0c9;border-radius:9px;padding:10px 15px;font-weight:700}.actions{display:flex;justify-content:flex-end;margin-bottom:12px}.history{list-style:none;margin:0;padding:0}.history li{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #eee;padding:12px 0}.history small{display:block;color:var(--muted);margin-top:4px}.amount{white-space:nowrap;font-weight:700}.credit{color:#196a48}.error{color:#9c2737}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:12px}.drink{border:1px solid #e3ded4;border-radius:12px;padding:15px}.drink h3{margin:0 0 8px;font-size:1rem}.drink .price{font-weight:800;color:var(--wine)}.drink button{width:100%;margin-top:12px}.status{line-height:1.5}.success{color:#196a48}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:12px}.drink{border:1px solid #e3ded4;border-radius:12px;padding:15px}.drink h3{margin:0 0 8px;font-size:1rem}.drink .price{font-weight:800;color:var(--wine)}.drink button{width:100%;margin-top:12px}.status{line-height:1.5}.success{color:#196a48}.qty-controls{display:flex;align-items:center;justify-content:center;gap:15px;margin-top:12px}.qty-controls button{width:46px;margin:0;padding:10px;border:1px solid #b9c3bc;border-radius:10px;background:#fff;font-weight:800;font-size:1.2rem}.qty-controls output{min-width:28px;text-align:center;font-weight:800}.history .cancel-btn{margin-top:8px;padding:7px 12px;border:1px solid #b9c3bc;background:#fff;color:var(--wine);border-radius:8px;font-weight:700}.history .cancel-btn:disabled{opacity:.5;cursor:not-allowed}
 </style>
 </head>
 <body>
@@ -17,7 +17,7 @@
 <div id="accountContent" hidden>
 <section class="card"><div class="eyebrow">Mein Konto</div><h2 id="guestName">Persönliche Strichliste</h2><span class="pill" id="guestNumber"></span><p class="muted">Hier siehst du deine eigenen Buchungen und bestätigten Zahlungen.</p><div class="total"><span id="balanceLabel">Kontostand</span><strong id="balance">–</strong></div><p class="muted">Ein positiver Kontostand bedeutet Guthaben, ein negativer einen offenen Betrag. Familienkonten folgen später.</p></section>
 <div class="columns"><section class="card"><div class="eyebrow">Verbrauch</div><h2>Getränkebuchungen</h2><ul class="history" id="entries"></ul></section><section class="card"><div class="eyebrow">Einzahlungen</div><h2>Zahlungen</h2><ul class="history" id="payments"></ul></section></div>
-<section class="card"><div class="eyebrow">Getränkekarte</div><h2>Getränke buchen 🍻</h2><p class="muted">Wähle ein Getränk. Der Preis wird aus der Datenbank geladen. Jede bestätigte Buchung wird deinem Konto belastet.</p><div id="productList" class="grid" aria-live="polite"><p class="muted">Getränke werden geladen …</p></div><p id="bookingStatus" class="status" role="status" aria-live="polite"></p><button id="refreshAccount" type="button" class="secondary">Kontostand aktualisieren</button></section>
+<section class="card"><div class="eyebrow">Getränkekarte</div><h2>Getränke buchen 🍻</h2><p class="muted">Stelle mit + und − die Anzahl ein (maximal 10 je Buchung). Erst beim Bestätigen wird gebucht. Innerhalb von 5 Minuten kannst du die Buchung unter „Getränkebuchungen“ stornieren.</p><div id="productList" class="grid" aria-live="polite"><p class="muted">Getränke werden geladen …</p></div><p id="bookingStatus" class="status" role="status" aria-live="polite"></p><button id="refreshAccount" type="button" class="secondary">Kontostand aktualisieren</button></section>
 </div><p id="accountStatus" role="status" aria-live="polite"></p>
 </main><footer>Neustadter Kompanie · Persönliche Strichliste</footer>
 <script>
@@ -34,7 +34,16 @@ const signedOut=document.getElementById("signedOut"),accountContent=document.get
 function signOut(){sessionStorage.removeItem("drink_guest_token");accountContent.hidden=true;signedOut.hidden=false;logout.hidden=true;window.location.replace("/trinken/");}
 logout.addEventListener("click",signOut);
 function formatDate(date){return new Date(date).toLocaleString("de-DE",{dateStyle:"medium",timeStyle:"short"});}
-function addHistory(id,items,makeText,makeAmount){const list=document.getElementById(id);list.replaceChildren();if(!items.length){const li=document.createElement("li");li.textContent="Noch keine Einträge vorhanden.";list.append(li);return;}for(const item of items){const li=document.createElement("li"),details=document.createElement("div"),name=document.createElement("span"),date=document.createElement("small"),amount=document.createElement("span");name.textContent=makeText(item);date.textContent=formatDate(item.created_at);amount.textContent=makeAmount(item);amount.className="amount";details.append(name,date);li.append(details,amount);list.append(li);}}
+function addHistory(id,items,makeText,makeAmount){const list=document.getElementById(id);list.replaceChildren();if(!items.length){const li=document.createElement("li");li.textContent="Noch keine Einträge vorhanden.";list.append(li);return;}for(const item of items){const li=document.createElement("li"),details=document.createElement("div"),name=document.createElement("span"),date=document.createElement("small"),amount=document.createElement("span");name.textContent=makeText(item);date.textContent=formatDate(item.created_at);amount.textContent=makeAmount(item);amount.className="amount";details.append(name,date);if(id==="entries"&&item.status==="active"){
+ const deadline=new Date(item.created_at).getTime()+300000;
+ if(Number.isFinite(deadline)&&Date.now()<deadline){
+  const cancel=document.createElement("button");cancel.type="button";cancel.className="cancel-btn";
+  const update=()=>{const left=Math.max(0,Math.ceil((deadline-Date.now())/1000));cancel.textContent=left?"Stornieren ("+Math.floor(left/60)+":"+String(left%60).padStart(2,"0")+")":"Stornofrist abgelaufen";cancel.disabled=left===0;};update();
+  const timer=setInterval(()=>{if(!cancel.isConnected){clearInterval(timer);return;}update();if(cancel.disabled)clearInterval(timer);},1000);
+  cancel.addEventListener("click",async()=>{if(cancel.disabled||!confirm("Buchung "+makeText(item)+" wirklich stornieren?"))return;cancel.disabled=true;accountStatus.className="status";accountStatus.textContent="Stornierung läuft …";try{const token=sessionStorage.getItem("drink_guest_token");if(!token)throw new Error("Bitte erneut anmelden.");await drinkRequest("cancel_drink",{token,entry_id:item.id});await loadAccount();accountStatus.className="status success";accountStatus.textContent="Buchung erfolgreich storniert.";}catch(error){accountStatus.className="status error";accountStatus.textContent=error.message||"Stornierung fehlgeschlagen.";update();}});
+  details.append(cancel);
+ }
+}li.append(details,amount);list.append(li);}}
 let productsLoaded=false;
 function productRows(payload){
   if(Array.isArray(payload))return payload;
@@ -61,22 +70,31 @@ async function loadProducts(){
       const card=document.createElement("article");card.className="drink";
       const heading=document.createElement("h3");heading.textContent=name;
       const price=document.createElement("div");price.className="price";price.textContent=cents===0?"Kostenlos":euro(cents);
-      const button=document.createElement("button");button.className="primary";button.type="button";button.textContent="1 × buchen";
+      let quantity=0;
+      const controls=document.createElement("div");controls.className="qty-controls";
+      const minus=document.createElement("button");minus.type="button";minus.textContent="−";minus.setAttribute("aria-label",name+" Anzahl verringern");
+      const plus=document.createElement("button");plus.type="button";plus.textContent="+";plus.setAttribute("aria-label",name+" Anzahl erhöhen");
+      const count=document.createElement("output");count.setAttribute("aria-live","polite");
+      const button=document.createElement("button");button.className="primary";button.type="button";
+      function render(){count.textContent=String(quantity);minus.disabled=quantity===0;plus.disabled=quantity===10;button.disabled=quantity===0;button.textContent=quantity?quantity+" × buchen · "+euro(cents*quantity):"Anzahl auswählen";}
+      minus.addEventListener("click",()=>{quantity=Math.max(0,quantity-1);render();});
+      plus.addEventListener("click",()=>{quantity=Math.min(10,quantity+1);render();});
       button.addEventListener("click",async()=>{
-        if(button.disabled)return;
-        if(!confirm("1 × "+name+" für "+euro(cents)+" verbindlich buchen?"))return;
-        button.disabled=true;status.className="status";status.textContent="Buchung wird gespeichert …";
+        if(button.disabled||!quantity)return;
+        const bookedQuantity=quantity;
+        if(!confirm(bookedQuantity+" × "+name+" für "+euro(cents*bookedQuantity)+" verbindlich buchen?"))return;
+        button.disabled=true;minus.disabled=true;plus.disabled=true;status.className="status";status.textContent="Buchung wird gespeichert …";
         try{
           const token=sessionStorage.getItem("drink_guest_token");
           if(!token)throw new Error("Sitzung abgelaufen. Bitte erneut anmelden.");
-          const response=await drinkRequest("add_drink",{token,product_id:id,quantity:1});
+          const response=await drinkRequest("add_drink",{token,product_id:id,quantity:bookedQuantity});
           if(response.success===false)throw new Error(response.error||"Buchung fehlgeschlagen.");
-          status.className="status success";status.textContent="Gebucht: "+name+" ("+euro(cents)+").";
-          await loadAccount();
+          quantity=0;render();await loadAccount();
+          status.className="status success";status.textContent="Gebucht: "+bookedQuantity+" × "+name+" ("+euro(cents*bookedQuantity)+"). Innerhalb von 5 Minuten stornierbar.";
         }catch(error){status.className="status error";status.textContent=error.message||"Buchung fehlgeschlagen.";}
-        finally{button.disabled=false;}
+        finally{render();}
       });
-      card.append(heading,price,button);root.append(card);
+      controls.append(minus,count,plus);card.append(heading,price,controls,button);root.append(card);render();
     }
     if(!root.children.length)root.textContent="Die Produktdaten enthalten noch keine unterstützten Preise oder IDs.";
     productsLoaded=true;
