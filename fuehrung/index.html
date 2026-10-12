@@ -21,6 +21,23 @@
 .paper-alert{margin-top:15px;padding:15px;background:#fff3d8;border:1px solid #e5c78f;border-radius:12px}
 .paper-note{font-size:12px;color:var(--muted)}
 @media(max-width:450px){.paper-actions button{flex:1}.paper-summary-line strong{font-size:20px}}
+
+/* Getränke-Stornierungen: gut bedienbare Buchungshistorie auf Mobilgeräten */
+.void-list{display:grid;gap:11px;margin-top:15px}
+.void-entry{border:1px solid var(--line);border-radius:12px;background:#fff;padding:14px}
+.void-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.void-head strong{display:block;font-size:15px}
+.void-amount{text-align:right;white-space:nowrap;font-weight:800;font-size:17px}
+.void-meta{color:var(--muted);font-size:12px;margin-top:5px}
+.void-tag{display:inline-block;background:#e8f0ec;color:var(--green);border-radius:30px;padding:3px 8px;font-size:11px;font-weight:700;margin-top:7px}
+.void-tag.void-done{background:#f5e8e7;color:var(--red)}
+.void-actions{margin-top:11px}
+.void-actions button{margin:0}
+.void-edit{margin-top:12px;padding:12px;border-radius:10px;background:#f8f4e9}
+.void-edit label{margin-top:0}
+.void-edit textarea{min-height:76px;resize:vertical}
+.void-edit .paper-actions{margin-top:9px}
+@media(max-width:500px){.void-head{gap:6px}.void-amount{font-size:15px}.void-actions button{width:100%}}
 </style>
 </head>
 <body>
@@ -42,7 +59,19 @@
 <article class="panel" id="familyManagementPanel"><h2>Bestehenden Gast zu Familie hinzufügen</h2><p class="muted">Für alle Familien in der zentralen Mitgliederdatenbank – unabhängig davon, ob sie online bestätigt oder manuell angelegt wurden.</p><form id="addFamilyGuestForm"><label for="familyTarget">Familie auswählen</label><select id="familyTarget" required><option value="">Familie auswählen …</option></select><label for="familyGuestNumber">Vorhandene Gastnummer</label><input id="familyGuestNumber" type="number" inputmode="numeric" min="1000" max="9999" required placeholder="z. B. 7736"><button class="primary" id="addFamilyGuestBtn" type="submit">Gast zur Familie hinzufügen</button></form><p class="status" id="addFamilyGuestStatus" role="status"></p><h3 style="margin-top:22px">Neue Person direkt in diese Familie aufnehmen</h3><p class="muted">Die oben ausgewählte Familie wird übernommen. Für die neue Person wird eine freie Gastnummer erstellt; es entsteht kein weiterer Jahresbeitrag.</p><form id="createFamilyPersonForm"><div class="fieldrow"><div><label for="familyPersonFirst">Vorname</label><input id="familyPersonFirst" required maxlength="100" autocomplete="off"></div><div><label for="familyPersonLast">Nachname</label><input id="familyPersonLast" required maxlength="100" autocomplete="off"></div></div><button class="primary" type="submit" id="createFamilyPersonBtn">Neues Familienmitglied anlegen</button></form><p class="status" id="createFamilyPersonStatus" role="status"></p><div id="familyPersonResult" class="panel" hidden style="border:2px solid #c9a56b;background:#f1f6f0;margin-top:12px"><strong id="familyPersonResultName"></strong><p class="muted">Neue Gastnummer</p><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><strong id="familyPersonResultNumber" style="font-size:34px;letter-spacing:2px"></strong><button type="button" class="primary" style="margin:0" id="copyFamilyPersonNumber">Nummer kopieren</button></div><p class="muted">Der Getränkezugang muss separat sicher aktiviert werden.</p></div><div class="hint">Das bestehende Gastkonto bleibt erhalten. Gemeinsame Abrechnung und Mitgliederrabatte werden dadurch noch nicht aktiviert.</div></article>
 </section>
 <section id="guests" class="tab" hidden><article class="panel"><h2>Gäste</h2><p class="muted">Echte Konten aus Supabase. Ein positiver Kontostand ist Guthaben, ein negativer Betrag ist offen.</p><input id="guestSearch" class="search" placeholder="Nach Name oder Gastnummer suchen …" aria-label="Gäste suchen"><p id="guestStatus" class="status" role="status"></p><div id="guestList"></div></article></section>
-<section id="finance" class="tab" hidden><article class="panel"><h2>Einzahlung oder Gutschrift erfassen</h2><p class="muted">Jede bestätigte Buchung wird in der Datenbank mit dem ausführenden Vorstandsmitglied gespeichert.</p><form id="paymentForm"><div class="fieldrow"><div><label for="paymentGuest">Gastkonto</label><select id="paymentGuest" required><option value="">Bitte Gast auswählen</option></select></div><div><label for="paymentMethod">Buchungsart</label><select id="paymentMethod" required><option value="cash">Bareinzahlung</option><option value="paypal">PayPal-Einzahlung</option><option value="other">Sonstige Gutschrift (kein Geldeingang)</option></select></div><div><label for="paymentAmount">Betrag in Euro</label><input id="paymentAmount" type="text" inputmode="decimal" placeholder="z. B. 10,00" required></div><div><label for="paymentReason">Grund / Vermerk</label><input id="paymentReason" type="text" maxlength="500" placeholder="z. B. Einzahlung am Wagen" required></div></div><button class="primary" id="paymentBtn" type="submit">Buchung speichern</button></form><p class="status" id="paymentStatus" role="status"></p><div class="hint"><strong>Wichtig:</strong> „Sonstige Gutschrift“ verändert den Getränkekontostand, ist aber keine tatsächliche Einnahme. Getränkekorrekturen, Auszahlungen und Mitgliedsbeiträge erhalten später eigene Buchungsfunktionen.</div></article><article class="panel"><h2>Kontostände</h2><p class="muted">Aktueller Stand der Getränkekonten. Eine vollständige Buchungshistorie folgt mit der nächsten Ausbaustufe.</p><div id="financeList"></div></article></section>
+<section id="finance" class="tab" hidden><article class="panel"><h2>Einzahlung oder Gutschrift erfassen</h2><p class="muted">Jede bestätigte Buchung wird in der Datenbank mit dem ausführenden Vorstandsmitglied gespeichert.</p><form id="paymentForm"><div class="fieldrow"><div><label for="paymentGuest">Gastkonto</label><select id="paymentGuest" required><option value="">Bitte Gast auswählen</option></select></div><div><label for="paymentMethod">Buchungsart</label><select id="paymentMethod" required><option value="cash">Bareinzahlung</option><option value="paypal">PayPal-Einzahlung</option><option value="other">Sonstige Gutschrift (kein Geldeingang)</option></select></div><div><label for="paymentAmount">Betrag in Euro</label><input id="paymentAmount" type="text" inputmode="decimal" placeholder="z. B. 10,00" required></div><div><label for="paymentReason">Grund / Vermerk</label><input id="paymentReason" type="text" maxlength="500" placeholder="z. B. Einzahlung am Wagen" required></div></div><button class="primary" id="paymentBtn" type="submit">Buchung speichern</button></form><p class="status" id="paymentStatus" role="status"></p><div class="hint"><strong>Wichtig:</strong> „Sonstige Gutschrift“ verändert den Getränkekontostand, ist aber keine tatsächliche Einnahme. Getränkekorrekturen erfolgen weiter unten über die Stornierfunktion. Auszahlungen und Mitgliedsbeiträge werden gesondert verwaltet.</div></article><article class="panel" id="voidPanel">
+  <h2>↩️ Getränkebuchung stornieren</h2>
+  <p class="muted">Nur für den Vorstand. Selbstbuchungen und nachgetragene Papierstrichlisten können ohne Zeitlimit storniert werden. Die ursprüngliche Buchung bleibt im Verlauf sichtbar.</p>
+  <div class="fieldrow">
+    <div><label for="voidGuestSearch">Gast suchen</label><input id="voidGuestSearch" type="search" autocomplete="off" placeholder="Name oder Gastnummer"></div>
+    <div><label for="voidGuest">Gastkonto auswählen</label><select id="voidGuest"><option value="">Bitte Gast auswählen</option></select></div>
+  </div>
+  <button class="secondary-btn" type="button" id="voidReload">Buchungen aktualisieren</button>
+  <p class="status" id="voidStatus" role="status" aria-live="polite"></p>
+  <div id="voidEntries" class="void-list" aria-live="polite"><p class="muted">Wähle einen Gast, um seine Getränkebuchungen zu sehen.</p></div>
+  <div class="hint">Eine Papierstrichliste mit mehr als zehn gleichen Getränken wird in mehrere Buchungen aufgeteilt. Jede Buchung kann einzeln storniert werden. Der Kontostand wird nach der Stornierung neu berechnet.</div>
+</article>
+<article class="panel"><h2>Kontostände</h2><p class="muted">Aktueller Stand der Getränkekonten. Einzelne Getränkebuchungen findest du oben unter „Getränkebuchung stornieren“.</p><div id="financeList"></div></article></section>
 <section id="paper" class="tab" hidden>
 <article class="panel">
   <h2>🧾 Papierstrichliste nachbuchen</h2>
@@ -89,6 +118,7 @@ const supabase=createClient('https://tyiskycptrrtlibpdbse.supabase.co','sb_publi
 const $=id=>document.getElementById(id);const money=cents=>new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR'}).format(Number(cents)/100);
 let profile=null,guests=[],balances=[],membershipRequests=[],familyRequests=[],clubMembers=[],birthdays=[],memberTypeFilter="single",editingMemberId=null;
 let boardProducts=[],paperQuantities=new Map(),paperPending=null,paperSending=false,boardUserId=null;
+let voidEntries=[],voidLoading=false,voidProcessing=false,voidRequestSequence=0;
 const PAPER_PENDING_PREFIX="nk_paper_pending_v1_";
 function status(id,text,ok=false){$(id).textContent=text;$(id).classList.toggle('ok',ok)}
 function node(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e}
@@ -112,9 +142,102 @@ async function initialize(){
  await refreshBirthdays();
  if(board){await refreshData();await refreshMembershipRequests();await refreshFamilyRequests();await refreshClubMembers();await loadBoardPrices();renderPaperGuestOptions();renderPaperProducts();renderPaperPending()}
 }
-async function refreshData(){status('guestStatus','');const [gr,br]=await Promise.all([supabase.from('drink_guests').select('id,guest_number,display_name,is_active').order('guest_number'),supabase.from('drink_balances').select('guest_id,guest_number,display_name,balance_cents')]);if(gr.error||br.error){const detail=[gr.error?.message,br.error?.message].filter(Boolean).join(' · ');$('dataNotice').hidden=false;$('dataNotice').textContent='Gastdaten konnten nicht vollständig geladen werden. Bitte Supabase-Leserechte prüfen. '+detail;status('guestStatus','Laden fehlgeschlagen.');$('guestCount').textContent='–';$('openAmount').textContent='–';$('creditAmount').textContent='–';$('overviewGuests').textContent='–';$('overviewDebt').textContent='–';$('overviewCredit').textContent='–';$('guestList').replaceChildren();$('financeList').replaceChildren();$('paymentGuest').replaceChildren(new Option('Keine Konten verfügbar',''));return} $('dataNotice').hidden=true;guests=gr.data||[];balances=br.data||[];const balanceMap=new Map(balances.map(b=>[b.guest_id,Number(b.balance_cents)]));const active=guests.filter(g=>g.is_active);const debt=active.reduce((sum,g)=>sum+Math.max(0,-(balanceMap.get(g.id)||0)),0);const credit=active.reduce((sum,g)=>sum+Math.max(0,balanceMap.get(g.id)||0),0);$('guestCount').textContent=active.length;$('openAmount').textContent=money(debt);$('creditAmount').textContent=money(credit);$('overviewGuests').textContent=active.length;$('overviewDebt').textContent=money(debt);$('overviewCredit').textContent=money(credit);const sel=$('paymentGuest');const selected=sel.value;sel.replaceChildren(new Option('Bitte Gast auswählen',''));for(const g of active)sel.add(new Option('#'+g.guest_number+' · '+g.display_name,g.id));if(active.some(g=>g.id===selected))sel.value=selected;renderGuests();renderFinance();renderPaperGuestOptions()}
+async function refreshData(){status('guestStatus','');const [gr,br]=await Promise.all([supabase.from('drink_guests').select('id,guest_number,display_name,is_active').order('guest_number'),supabase.from('drink_balances').select('guest_id,guest_number,display_name,balance_cents')]);if(gr.error||br.error){const detail=[gr.error?.message,br.error?.message].filter(Boolean).join(' · ');$('dataNotice').hidden=false;$('dataNotice').textContent='Gastdaten konnten nicht vollständig geladen werden. Bitte Supabase-Leserechte prüfen. '+detail;status('guestStatus','Laden fehlgeschlagen.');$('guestCount').textContent='–';$('openAmount').textContent='–';$('creditAmount').textContent='–';$('overviewGuests').textContent='–';$('overviewDebt').textContent='–';$('overviewCredit').textContent='–';$('guestList').replaceChildren();$('financeList').replaceChildren();$('paymentGuest').replaceChildren(new Option('Keine Konten verfügbar',''));$('voidGuest').replaceChildren(new Option('Keine Konten verfügbar',''));return} $('dataNotice').hidden=true;guests=gr.data||[];balances=br.data||[];const balanceMap=new Map(balances.map(b=>[b.guest_id,Number(b.balance_cents)]));const active=guests.filter(g=>g.is_active);const debt=active.reduce((sum,g)=>sum+Math.max(0,-(balanceMap.get(g.id)||0)),0);const credit=active.reduce((sum,g)=>sum+Math.max(0,balanceMap.get(g.id)||0),0);$('guestCount').textContent=active.length;$('openAmount').textContent=money(debt);$('creditAmount').textContent=money(credit);$('overviewGuests').textContent=active.length;$('overviewDebt').textContent=money(debt);$('overviewCredit').textContent=money(credit);const sel=$('paymentGuest');const selected=sel.value;sel.replaceChildren(new Option('Bitte Gast auswählen',''));for(const g of active)sel.add(new Option('#'+g.guest_number+' · '+g.display_name,g.id));if(active.some(g=>g.id===selected))sel.value=selected;renderGuests();renderFinance();renderPaperGuestOptions();renderVoidGuestOptions()}
 function renderGuests(){const root=$('guestList');root.replaceChildren();const q=$('guestSearch').value.trim().toLocaleLowerCase('de');const balanceMap=new Map(balances.map(b=>[b.guest_id,Number(b.balance_cents)]));const filtered=guests.filter(g=>String(g.guest_number).includes(q)||g.display_name.toLocaleLowerCase('de').includes(q));if(!filtered.length){root.append(node('p','Keine passenden Gastkonten.','muted'));return}for(const g of filtered){const bal=balanceMap.get(g.id)||0;const row=node('div',undefined,'item');const info=node('div');info.append(node('strong',g.display_name,'name'),node('div','Gastnummer '+g.guest_number+(g.is_active?'':' · Inaktiv'),'muted'));const badge=node('span',bal>=0?money(bal)+' Guthaben':money(-bal)+' offen','pill'+(bal<0?' debt':''));row.append(info,badge);root.append(row)}}
 function renderFinance(){const root=$('financeList');root.replaceChildren();const balanceMap=new Map(balances.map(b=>[b.guest_id,Number(b.balance_cents)]));if(!guests.length){root.append(node('p','Keine Gastkonten vorhanden.','muted'));return}for(const g of guests){const bal=balanceMap.get(g.id)||0;const row=node('div',undefined,'item');const info=node('div');info.append(node('strong',g.display_name),node('div','Gastnummer '+g.guest_number,'muted'));row.append(info,node('span',money(bal),'amount '+(bal<0?'negative':'positive')));root.append(row)}}
+
+// Stornierungen: Buchungen nur über geschützte Vorstands-RPCs laden und ändern.
+function renderVoidGuestOptions(){
+  const select=$('voidGuest'), selected=select.value;
+  const q=$('voidGuestSearch').value.trim().toLocaleLowerCase('de');
+  const filtered=guests.filter(g=>String(g.guest_number).includes(q)||g.display_name.toLocaleLowerCase('de').includes(q));
+  select.replaceChildren(new Option('Bitte Gast auswählen',''));
+  for(const g of filtered)select.add(new Option('#'+g.guest_number+' · '+g.display_name+(g.is_active?'':' (inaktiv)'),g.id));
+  if(filtered.some(g=>g.id===selected))select.value=selected;
+  else if(selected){voidRequestSequence++;voidLoading=false;$('voidReload').disabled=false;voidEntries=[];renderVoidEntries();status('voidStatus','Bitte ein Gastkonto auswählen.');}
+}
+async function loadVoidEntries(){
+  const guestId=$('voidGuest').value;
+  const seq=++voidRequestSequence;
+  voidEntries=[];
+  if(!guestId){renderVoidEntries();status('voidStatus','');return}
+  if(profile?.role!=='vorstand'||!guests.some(g=>g.id===guestId)){
+    status('voidStatus','Gastkonto oder Berechtigung ungültig.');return
+  }
+  voidLoading=true;
+  $('voidReload').disabled=true;
+  $('voidEntries').replaceChildren(node('p','Getränkebuchungen werden geladen …','muted'));
+  status('voidStatus','');
+  const {data,error}=await supabase.rpc('drink_board_list_entries',{p_guest_id:guestId});
+  if(seq!==voidRequestSequence)return;
+  voidLoading=false;
+  $('voidReload').disabled=false;
+  if(error){status('voidStatus','Buchungen konnten nicht geladen werden: '+error.message);$('voidEntries').replaceChildren();return}
+  voidEntries=Array.isArray(data)?data:[];
+  renderVoidEntries();
+  status('voidStatus',voidEntries.length?'Die letzten '+voidEntries.length+' Buchungen werden angezeigt.':'Keine Getränkebuchungen vorhanden.',true);
+}
+function renderVoidEntries(){
+  const root=$('voidEntries');root.replaceChildren();
+  if(!$('voidGuest').value){root.append(node('p','Wähle einen Gast, um seine Getränkebuchungen zu sehen.','muted'));return}
+  if(!voidEntries.length){root.append(node('p','Keine Getränkebuchungen vorhanden.','muted'));return}
+  for(const entry of voidEntries){
+    const row=node('article',undefined,'void-entry');
+    const head=node('div',undefined,'void-head'), details=node('div');
+    details.append(node('strong',entry.quantity+' × '+entry.product_name));
+    const when=entry.booked_at?new Date(entry.booked_at).toLocaleString('de-DE',{dateStyle:'medium',timeStyle:'short'}):'Datum unbekannt';
+    details.append(node('div','Gebucht am '+when,'void-meta'));
+    details.append(node('span',entry.is_paper?'🧾 Papierstrichliste':'Selbstbuchung','void-tag'));
+    const amount=node('div',money(entry.effective_total_cents),'void-amount');
+    head.append(details,amount);row.append(head);
+    const credit=Number(entry.member_credit_cents||0);
+    if(credit>0)row.append(node('div','Ursprünglich '+money(entry.original_total_cents)+' · Fördergutschrift '+money(credit),'void-meta'));
+    if(entry.entry_status==='voided'){
+      const label=node('span','Storniert','void-tag void-done');row.append(label);
+      if(entry.void_reason)row.append(node('div','Grund: '+entry.void_reason,'void-meta'));
+      if(entry.voided_at)row.append(node('div','Storniert am '+new Date(entry.voided_at).toLocaleString('de-DE'),'void-meta'));
+    }else if(entry.entry_status==='active'){
+      const actions=node('div',undefined,'void-actions');
+      const toggle=node('button','Buchung stornieren','secondary-btn');toggle.type='button';
+      const editor=node('div',undefined,'void-edit');editor.hidden=true;
+      const lbl=node('label','Stornogrund (mindestens 5 Zeichen)');
+      const field=node('textarea');field.maxLength=500;field.placeholder='z. B. Falschem Gast zugeordnet';field.setAttribute('aria-label','Stornogrund für '+entry.quantity+' × '+entry.product_name);lbl.append(field);
+      const btnRow=node('div',undefined,'paper-actions');
+      const submit=node('button','Stornierung bestätigen','primary');submit.type='button';
+      const cancel=node('button','Abbrechen','secondary-btn');cancel.type='button';
+      const localStatus=node('p','', 'status');localStatus.setAttribute('role','status');
+      toggle.addEventListener('click',()=>{editor.hidden=!editor.hidden;if(!editor.hidden)field.focus()});
+      cancel.addEventListener('click',()=>{if(voidProcessing)return;editor.hidden=true;field.value='';localStatus.textContent=''});
+      submit.addEventListener('click',async()=>{
+        if(voidProcessing||voidLoading)return;
+        const reason=field.value.trim();
+        if(reason.length<5||reason.length>500){localStatus.textContent='Bitte einen Stornogrund mit 5 bis 500 Zeichen angeben.';return}
+        const guestId=$('voidGuest').value;
+        const guest=guests.find(g=>g.id===guestId);
+        if(!guest)return;
+        if(!confirm('Getränkebuchung wirklich stornieren?\n\n'+guest.display_name+' (#'+guest.guest_number+')\n'+entry.quantity+' × '+entry.product_name+'\nBetrag: '+money(entry.effective_total_cents)+'\n\nGrund: '+reason+'\n\nDie Buchung bleibt als storniert sichtbar.'))return;
+        voidProcessing=true;submit.disabled=true;cancel.disabled=true;toggle.disabled=true;$('voidReload').disabled=true;$('voidGuest').disabled=true;
+        localStatus.textContent='Stornierung wird gespeichert …';
+        const {data,error}=await supabase.rpc('drink_board_void_entry',{p_entry_id:entry.entry_id,p_guest_id:guestId,p_reason:reason});
+        if(error||data!==true){
+          localStatus.textContent='Stornierung fehlgeschlagen: '+(error?.message||'Keine Bestätigung erhalten. Bitte Buchung aktualisieren.');
+          voidProcessing=false;submit.disabled=false;cancel.disabled=false;toggle.disabled=false;$('voidReload').disabled=false;$('voidGuest').disabled=false;
+          return;
+        }
+        voidProcessing=false;
+        status('voidStatus','✅ '+entry.quantity+' × '+entry.product_name+' für '+guest.display_name+' storniert. Kontostand wird aktualisiert.',true);
+        await refreshData();
+        await loadVoidEntries();
+        status('voidStatus','✅ Stornierung gespeichert. Die Buchung ist weiterhin im Verlauf als storniert sichtbar.',true);
+      });
+      btnRow.append(submit,cancel);editor.append(lbl,btnRow,localStatus);actions.append(toggle,editor);row.append(actions);
+    }
+    root.append(row);
+  }
+}
+$('voidGuestSearch').addEventListener('input',renderVoidGuestOptions);
+$('voidGuest').addEventListener('change',loadVoidEntries);
+$('voidReload').addEventListener('click',loadVoidEntries);
 
 async function refreshMembershipRequests(){
   const {data,error}=await supabase.rpc('drink_board_membership_requests');
