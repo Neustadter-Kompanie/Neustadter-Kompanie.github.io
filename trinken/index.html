@@ -61,7 +61,7 @@
   <p>Deine Getränke. Dein Überblick. Unser Wagen.</p>
 </header>
 <main>
-  <div class="notice"><strong>Hinweis:</strong> Die digitale Strichliste befindet sich noch in der Erprobung. Die Getränkekarte zeigt reguläre Preise. Die Beantragung einer Fördermitgliedschaft ist online noch nicht freigeschaltet.</div>
+  <div class="notice"><strong>Hinweis:</strong> Die digitale Strichliste befindet sich noch in der Erprobung. Hier stehen die regulären Getränkepreise. Bestätigte Fördermitglieder sehen ihre persönlichen Preise nach der Anmeldung im Getränkekonto.</div>
   <section class="card">
     <div class="eyebrow">Gästezugang</div>
     <h2>Willkommen am Wagen!</h2>
@@ -82,7 +82,7 @@
       <input id="registerName" autocomplete="name" placeholder="Vor- und Nachname" minlength="2" maxlength="120" required>
       <div class="family-fields">
         <div class="eyebrow">Fördermitgliedschaft</div>
-        <p class="muted">Die Bestätigung bestehender Fördermitgliedschaften und die Einrichtung von Familienkonten folgen später. Mit dieser Registrierung legst du zunächst nur ein normales Gastkonto an.</p>
+        <p class="muted">Mit dieser Registrierung legst du zunächst ein kostenloses Gastkonto an. Eine Fördermitgliedschaft kannst du anschließend in deinem Getränkekonto beantragen; über die Aufnahme entscheidet der Vorstand.</p>
       </div>
       <p class="muted">Du erhältst bei der Registrierung eine persönliche vierstellige Gastnummer. Bitte notiere sie dir.</p>
       <button id="registerButton" class="primary" type="submit">Kostenlos als Gast registrieren</button>
@@ -93,6 +93,7 @@
     <div class="eyebrow">Am Wagen</div>
     <h2>Unsere Getränkekarte</h2>
     <p class="muted">Reguläre Preise. Deine persönlichen Buchungen und deinen Kontostand siehst du nach der Anmeldung.</p>
+    <p id="drinkLoadStatus" class="muted status" role="status" aria-live="polite">Getränkepreise werden geladen …</p>
     <div class="grid" id="drinks"></div>
   </section>
 </main>
@@ -124,13 +125,49 @@ function showTab(register){
 }
 loginTab.addEventListener("click",()=>showTab(false));
 registerTab.addEventListener("click",()=>showTab(true));
-const drinks=[["Bier 0,5 l",200],["Weinschorle",400],["Cola 0,5 l",200],["Cola Zero 0,5 l",200],["Spezi 0,5 l",200],["Eistee",200],["Red Bull",200],["Jack Daniel’s 5 cl",300],["Jack Daniel’s 6 cl",400],["Shots",150],["Wasser",0]];
-for(const [name,price] of drinks){
-  const card=document.createElement("article");card.className="drink";
-  const title=document.createElement("h3");title.textContent=name;
-  const amount=document.createElement("div");amount.className="price";amount.textContent=price?euro(price):"Kostenlos";
-  card.append(title,amount);document.getElementById("drinks").append(card);
+// Öffentliche Getränkekarte: nur die aktuellen Normalpreise aus Supabase.
+// Die dazugehörige, schreibgeschützte RPC gibt keine Förderpreise oder Gästedaten aus.
+const PUBLIC_PRICES_API="https://tyiskycptrrtlibpdbse.supabase.co/rest/v1/rpc/drink_public_price_list";
+async function loadPublicDrinks(){
+  const list=document.getElementById("drinks");
+  const status=document.getElementById("drinkLoadStatus");
+  try{
+    const response=await fetch(PUBLIC_PRICES_API,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        apikey:SUPABASE_ANON_KEY,
+        Authorization:"Bearer "+SUPABASE_ANON_KEY
+      },
+      body:"{}",
+      cache:"no-store"
+    });
+    if(!response.ok)throw new Error("HTTP "+response.status);
+    const products=await response.json();
+    if(!Array.isArray(products))throw new Error("Ungültige Serverantwort");
+    const cards=document.createDocumentFragment();
+    for(const product of products){
+      const name=product.product_name;
+      const price=product.normal_price_cents;
+      if(typeof name!=="string"||!Number.isInteger(price)||price<0){
+        throw new Error("Ungültige Preisdaten");
+      }
+      const card=document.createElement("article");card.className="drink";
+      const title=document.createElement("h3");title.textContent=name;
+      const amount=document.createElement("div");amount.className="price";
+      amount.textContent=price===0?"Kostenlos":euro(price);
+      card.append(title,amount);cards.append(card);
+    }
+    list.replaceChildren(cards);
+    status.textContent=products.length?"":"Aktuell sind keine Getränke verfügbar.";
+  }catch(error){
+    console.error("Getränkepreise konnten nicht geladen werden:",error);
+    list.replaceChildren();
+    status.className="status error";
+    status.textContent="Die Getränkepreise konnten nicht geladen werden. Bitte die Seite erneut öffnen.";
+  }
 }
+loadPublicDrinks();
 const loginForm=document.getElementById("loginForm");
 const loginName=document.getElementById("loginName");
 const loginNumber=document.getElementById("loginNumber");
