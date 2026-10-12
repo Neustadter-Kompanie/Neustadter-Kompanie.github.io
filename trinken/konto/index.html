@@ -47,7 +47,9 @@ async function loadProducts(){
   const root=document.getElementById("productList"),status=document.getElementById("bookingStatus");
   root.replaceChildren();root.append(document.createTextNode("Getränke werden geladen …"));
   try{
-    const result=await drinkRequest("products");
+    const token=sessionStorage.getItem("drink_guest_token");
+    if(!token)throw new Error("Sitzung abgelaufen. Bitte erneut anmelden.");
+    const result=await drinkRequest("products",{token});
     const rows=productRows(result).filter(p=>p.is_active!==false&&p.active!==false);
     root.replaceChildren();
     if(!rows.length){root.append(document.createTextNode("Keine buchbaren Getränke verfügbar."));return;}
