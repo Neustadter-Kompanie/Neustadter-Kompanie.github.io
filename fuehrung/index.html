@@ -5,6 +5,22 @@
 <title>Vereinsverwaltung – Neustadter Kompanie</title>
 <style>
 :root{--green:#183a30;--green2:#285347;--cream:#f8f4e9;--gold:#c9a56b;--ink:#26352f;--muted:#69766f;--line:#e3e3db;--red:#934b45}*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{background:var(--green);color:white;padding:20px 18px}header .wrap{max-width:1050px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px}header small{color:var(--gold);font-size:11px;letter-spacing:2px;font-weight:700}h1{font:normal 29px Georgia,serif;margin:6px 0 2px}header p{color:#cbd9d1;margin:0;font-size:13px}main{max-width:1050px;margin:auto;padding:18px 16px 45px}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat,.panel{background:white;border:1px solid var(--line);border-radius:15px}.stat{padding:15px}.stat .value{font-size:25px;font-weight:750}.stat .label{font-size:12px;color:var(--muted)}nav{display:flex;gap:7px;overflow:auto;padding:20px 0 14px}nav button{border:1px solid var(--line);background:white;color:var(--ink);padding:10px 14px;border-radius:999px;white-space:nowrap;font-weight:650;font-size:13px}.subtabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.subtabs button{border:1px solid var(--line);background:white;border-radius:9px;padding:10px 14px;font-weight:700}.subtabs button.active{background:var(--green);color:white}.member-card{border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}.member-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.secondary-btn{border:1px solid var(--green);border-radius:9px;background:white;color:var(--green);padding:8px 12px;font-weight:700}.birthday-today{border-left:4px solid var(--gold);background:#fff8e8;padding:12px;border-radius:8px}.member-editor{margin-top:15px;border-top:1px solid var(--line);padding-top:15px}nav button.active{background:var(--green);color:white;border-color:var(--green)}.panel{padding:18px;margin-bottom:13px}h2{font:normal 22px Georgia,serif;margin:0 0 8px}h3{font-size:15px;margin:0 0 6px}p{margin:5px 0 12px}.muted{color:var(--muted);font-size:13px}.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 0;border-top:1px solid var(--line)}.item:first-of-type{border-top:0}.item strong{display:block}.pill{display:inline-block;border-radius:999px;padding:4px 9px;font-size:11px;font-weight:750;background:#e7eee8;color:#35634a;white-space:nowrap}.pill.debt{background:#f7e8e5;color:#9a4944}.amount{font-weight:750;white-space:nowrap}.positive{color:#25704a}.negative{color:var(--red)}[hidden]{display:none!important}input,select,textarea{width:100%;border:1px solid #d4d9d2;border-radius:10px;padding:11px;background:#fff;color:var(--ink);font:inherit}.search{margin:10px 0 15px}.formula{padding:12px;background:#f1f6f0;border-radius:10px;font-size:13px}.grid{display:grid;grid-template-columns:1fr;gap:12px}button{cursor:pointer}label{display:block;font-weight:650;margin:12px 0 5px}.primary{background:var(--green);color:white;border:0;border-radius:10px;padding:12px 18px;font-weight:700;margin-top:15px}.primary:disabled{opacity:.5;cursor:not-allowed}.hint{border-left:4px solid var(--gold);padding:11px 13px;background:#faf6ec;border-radius:8px;margin:13px 0;font-size:13px}.fieldrow{display:grid;grid-template-columns:1fr;gap:0 14px}.status{margin:12px 0;color:var(--red)}.status.ok{color:#25704a}.login{max-width:460px;margin:35px auto}.login button{width:100%}.smallbtn{border:1px solid #adc1b4;color:white;background:transparent;padding:8px 10px;border-radius:9px}.smallbtn:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:2px}.name{overflow-wrap:anywhere}.notice{margin:14px 0;padding:12px 15px;background:#fff3d8;border:1px solid #ead39d;border-radius:12px;font-size:13px}footer{text-align:center;color:var(--muted);font-size:12px;padding:15px}@media(min-width:720px){.stats{grid-template-columns:repeat(4,1fr)}.grid,.fieldrow{grid-template-columns:1fr 1fr}}
+/* Papierstrichlisten: mobile-first counter and summary */
+.paper-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:11px;margin:16px 0}
+.paper-item{border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff}
+.paper-item .paper-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.paper-counter{display:flex;gap:6px;align-items:center;margin-top:11px}
+.paper-counter button{width:42px;height:42px;flex:0 0 42px;border:1px solid #b9c7be;background:#eef4ee;border-radius:9px;font-size:24px;color:var(--green);font-weight:700}
+.paper-counter input{width:78px;text-align:center;padding:9px 3px;flex:1;min-width:55px;font-size:17px;font-weight:700}
+.paper-counter button:disabled{opacity:.4;cursor:not-allowed}
+.paper-summary{background:#eaf2eb;border:1px solid #cbdbcf;border-radius:12px;padding:16px;margin-top:16px}
+.paper-summary-line{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.paper-summary-line strong{font-size:23px;white-space:nowrap}
+.paper-actions{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.paper-actions .primary{margin:0}
+.paper-alert{margin-top:15px;padding:15px;background:#fff3d8;border:1px solid #e5c78f;border-radius:12px}
+.paper-note{font-size:12px;color:var(--muted)}
+@media(max-width:450px){.paper-actions button{flex:1}.paper-summary-line strong{font-size:20px}}
 </style>
 </head>
 <body>
@@ -15,7 +31,7 @@
 <div id="app" hidden>
 <div class="notice" id="dataNotice" hidden></div>
 <section class="stats" aria-label="Kennzahlen"><div class="stat"><div class="value" id="memberCount">–</div><div class="label">Fördermitglieder · Personen</div></div><div class="stat"><div class="value" id="guestCount">–</div><div class="label">Gästekonten</div></div><div class="stat"><div class="value" id="openAmount">–</div><div class="label">Offene Getränkebeträge</div></div><div class="stat"><div class="value" id="creditAmount">–</div><div class="label">Getränkeguthaben gesamt</div></div></section>
-<nav aria-label="Bereiche" id="tabs"><button class="active" data-tab="overview" type="button">Übersicht</button><button data-tab="members" type="button" class="board-only">Mitglieder</button><button data-tab="birthdays" type="button">🎂 Geburtstage <span id="birthdayBadge" hidden></span></button><button class="board-only" data-tab="guests" type="button">Gäste</button><button class="board-only" data-tab="finance" type="button">Finanzen</button><button class="board-only" data-tab="prices" type="button">🍻 Getränkepreise</button><button class="board-only" data-tab="requests" type="button">Anträge</button><button id="adminTab" data-tab="admin" type="button" hidden>⚙ Admin</button></nav>
+<nav aria-label="Bereiche" id="tabs"><button class="active" data-tab="overview" type="button">Übersicht</button><button data-tab="members" type="button" class="board-only">Mitglieder</button><button data-tab="birthdays" type="button">🎂 Geburtstage <span id="birthdayBadge" hidden></span></button><button class="board-only" data-tab="guests" type="button">Gäste</button><button class="board-only" data-tab="finance" type="button">Finanzen</button><button class="board-only" data-tab="paper" type="button">🧾 Papierstrichlisten</button><button class="board-only" data-tab="prices" type="button">🍻 Getränkepreise</button><button class="board-only" data-tab="requests" type="button">Anträge</button><button id="adminTab" data-tab="admin" type="button" hidden>⚙ Admin</button></nav>
 <section id="overview" class="tab"><div class="grid"><article class="panel"><h2>Getränkekonten</h2><p class="muted">Aktuelle Daten aus der Getränkeliste.</p><div class="item"><strong>Registrierte Gäste</strong><span id="overviewGuests">–</span></div><div class="item"><strong>Offene Getränkebeträge</strong><span id="overviewDebt">–</span></div><div class="item"><strong>Verfügbares Guthaben</strong><span id="overviewCredit">–</span></div><button type="button" class="primary" data-jump="guests">Gästekonten ansehen</button></article><article class="panel"><h2>Mitgliedschaften</h2><p>Einzelmitgliedschaft: <strong>25 € pro Kalenderjahr</strong></p><p>Familienmitgliedschaft: <strong>30 € pro Kalenderjahr</strong></p><div class="hint">Die Mitgliederdatenbank ist angebunden. Die Beitragsabrechnung ist noch nicht eingerichtet.</div></article></div><article class="panel"><h2>Kontostand verstehen</h2><div class="formula">Einzahlungen und Gutschriften − Getränkeverbrauch = Kontostand. Positiv bedeutet Guthaben, negativ bedeutet offener Betrag.</div><p class="muted">Mitgliedsbeiträge und rückwirkende Mitgliederrabatte werden erst nach Einrichtung der zugehörigen Datenbanklogik berücksichtigt.</p></article></section>
 <section id="birthdays" class="tab" hidden><article class="panel"><h2>🎂 Geburtstage</h2><p class="muted">Heute und in den kommenden 30 Tagen · nur für Vorstand und Gremium</p><p class="status" id="birthdayStatus" role="status"></p><div id="birthdayList"></div><button type="button" class="secondary-btn" id="reloadBirthdays">Aktualisieren</button></article></section>
 <section id="members" class="tab" hidden>
@@ -27,8 +43,43 @@
 </section>
 <section id="guests" class="tab" hidden><article class="panel"><h2>Gäste</h2><p class="muted">Echte Konten aus Supabase. Ein positiver Kontostand ist Guthaben, ein negativer Betrag ist offen.</p><input id="guestSearch" class="search" placeholder="Nach Name oder Gastnummer suchen …" aria-label="Gäste suchen"><p id="guestStatus" class="status" role="status"></p><div id="guestList"></div></article></section>
 <section id="finance" class="tab" hidden><article class="panel"><h2>Einzahlung oder Gutschrift erfassen</h2><p class="muted">Jede bestätigte Buchung wird in der Datenbank mit dem ausführenden Vorstandsmitglied gespeichert.</p><form id="paymentForm"><div class="fieldrow"><div><label for="paymentGuest">Gastkonto</label><select id="paymentGuest" required><option value="">Bitte Gast auswählen</option></select></div><div><label for="paymentMethod">Buchungsart</label><select id="paymentMethod" required><option value="cash">Bareinzahlung</option><option value="paypal">PayPal-Einzahlung</option><option value="other">Sonstige Gutschrift (kein Geldeingang)</option></select></div><div><label for="paymentAmount">Betrag in Euro</label><input id="paymentAmount" type="text" inputmode="decimal" placeholder="z. B. 10,00" required></div><div><label for="paymentReason">Grund / Vermerk</label><input id="paymentReason" type="text" maxlength="500" placeholder="z. B. Einzahlung am Wagen" required></div></div><button class="primary" id="paymentBtn" type="submit">Buchung speichern</button></form><p class="status" id="paymentStatus" role="status"></p><div class="hint"><strong>Wichtig:</strong> „Sonstige Gutschrift“ verändert den Getränkekontostand, ist aber keine tatsächliche Einnahme. Getränkekorrekturen, Auszahlungen und Mitgliedsbeiträge erhalten später eigene Buchungsfunktionen.</div></article><article class="panel"><h2>Kontostände</h2><p class="muted">Aktueller Stand der Getränkekonten. Eine vollständige Buchungshistorie folgt mit der nächsten Ausbaustufe.</p><div id="financeList"></div></article></section>
-<section id="prices" class="tab" hidden><article class="panel"><h2>🍻 Getränkepreise verwalten</h2><p class="muted">Normalpreis und Fördermitgliederpreis bearbeiten. Änderungen gelten für künftige Buchungen; bestehende Buchungen bleiben unverändert.</p><p class="hint">Die Mitgliederpreise sind hier zunächst nur hinterlegt. Die automatische Anwendung beim Buchen wird gesondert eingerichtet.</p><p id="priceStatus" class="status" role="status" aria-live="polite"></p><div id="priceList"></div><button type="button" id="reloadPrices" class="secondary-btn">Preise aktualisieren</button></article></section>
-<section id="requests" class="tab" hidden><article class="panel"><h2>Mitgliedschaftsanträge</h2><p class="muted">Hier werden nur Bestätigungsanfragen zu bereits per PDF/E-Mail beantragten Fördermitgliedschaften angezeigt. Bitte Mitgliedschaft anhand der Vereinsunterlagen prüfen.</p><p id="membershipStatus" class="status" role="status"></p><div id="membershipRequests"></div></article><article class="panel"><h2>Familienmitglieder prüfen</h2><p class="muted">Jede Person einzeln anhand der Mitgliedsunterlagen bestätigen oder ablehnen. Eine bestätigte Prüfung aktiviert noch keine Familienabrechnung oder Mitgliederpreise.</p><p id="familyStatus" class="status" role="status"></p><div id="familyRequests"></div></article></section>
+<section id="paper" class="tab" hidden>
+<article class="panel">
+  <h2>🧾 Papierstrichliste nachbuchen</h2>
+  <p class="muted">Eine Strichliste auf ein Getränkekonto übertragen. Mengen eintragen, Betrag prüfen und alles zusammen verbuchen. Es wird automatisch der am Buchungstag gültige Normal- oder Fördermitgliederpreis verwendet.</p>
+  <div id="paperEditor">
+    <div class="fieldrow">
+      <div><label for="paperGuestSearch">Gast suchen</label><input type="search" id="paperGuestSearch" autocomplete="off" placeholder="Name oder vierstellige Gastnummer"></div>
+      <div><label for="paperGuest">Gastkonto auswählen</label><select id="paperGuest" required><option value="">Bitte Gast auswählen</option></select></div>
+    </div>
+    <p id="paperGuestInfo" class="muted" aria-live="polite">Bitte ein Gastkonto auswählen.</p>
+    <h3>Getränke und Mengen</h3>
+    <p class="paper-note">Du kannst auch größere Mengen eintragen. Das System teilt sie automatisch in zulässige Einzelbuchungen auf.</p>
+    <div id="paperProducts" class="paper-grid"><p class="muted">Getränke werden geladen …</p></div>
+    <div class="paper-summary" aria-live="polite">
+      <div class="paper-summary-line"><span><strong>Voraussichtliche Summe</strong><br><span id="paperCount" class="muted">0 Getränke</span></span><strong id="paperTotal">0,00 €</strong></div>
+      <p id="paperPriceNote" class="paper-note">Die endgültige Summe berechnet Supabase beim Buchen anhand der gültigen Preise und des Mitgliedsstatus.</p>
+    </div>
+    <div class="paper-actions">
+      <button class="primary" id="paperSubmit" type="button" disabled>🧾 Strichliste verbuchen</button>
+      <button class="secondary-btn" id="paperClear" type="button">Eingabe zurücksetzen</button>
+    </div>
+  </div>
+  <div id="paperPendingBox" class="paper-alert" hidden>
+    <strong>Ungeklärter Buchungsversuch</strong>
+    <p>Falls die Verbindung unterbrochen wurde, könnte die Buchung bereits erfolgt sein. Die gleiche Buchungskennung kann gefahrlos erneut gesendet werden. Bitte keine neue Buchung für dieselbe Papierliste anlegen.</p>
+    <p id="paperPendingDetails" class="muted"></p>
+    <div class="paper-actions">
+      <button type="button" class="primary" id="paperRetry">Mit gleicher Kennung erneut senden</button>
+      <button type="button" class="secondary-btn" id="paperDiscard">Nach Prüfung verwerfen</button>
+    </div>
+  </div>
+  <p id="paperStatus" class="status" role="status" aria-live="polite"></p>
+  <div class="hint"><strong>Hinweis:</strong> Die Buchung belastet das ausgewählte Getränkekonto. Papierstrichlisten können vom Gast nicht selbst storniert werden. Bitte die Papierliste erst als erledigt markieren, wenn die Buchung bestätigt wurde.</div>
+</article>
+</section>
+<section id="prices" class="tab" hidden><article class="panel"><h2>🍻 Getränkepreise verwalten</h2><p class="muted">Normalpreis und Fördermitgliederpreis bearbeiten. Änderungen gelten für künftige Buchungen; bestehende Buchungen bleiben unverändert.</p><p class="hint">Bestätigte Fördermitglieder erhalten ihre hinterlegten Förderpreise automatisch beim Getränkebuchen und Nachtragen von Papierstrichlisten.</p><p id="priceStatus" class="status" role="status" aria-live="polite"></p><div id="priceList"></div><button type="button" id="reloadPrices" class="secondary-btn">Preise aktualisieren</button></article></section>
+<section id="requests" class="tab" hidden><article class="panel"><h2>Mitgliedschaftsanträge</h2><p class="muted">Hier werden nur Bestätigungsanfragen zu bereits per PDF/E-Mail beantragten Fördermitgliedschaften angezeigt. Bitte Mitgliedschaft anhand der Vereinsunterlagen prüfen.</p><p id="membershipStatus" class="status" role="status"></p><div id="membershipRequests"></div></article><article class="panel"><h2>Familienmitglieder prüfen</h2><p class="muted">Jede Person einzeln anhand der Mitgliedsunterlagen bestätigen oder ablehnen. Die gemeinsame Familienabrechnung folgt später. Aktive Fördermitglieder erhalten bereits ihre hinterlegten Getränke-Förderpreise.</p><p id="familyStatus" class="status" role="status"></p><div id="familyRequests"></div></article></section>
 <section id="admin" class="tab" hidden><article class="panel"><h2>Administration</h2><p id="adminIdentity" class="muted"></p><div class="hint">Dieser Reiter erscheint nur für Benutzer mit <code>is_admin = true</code>. Preisverwaltung, Benutzerrechte und Systemeinstellungen werden erst nach Einrichtung zusätzlicher geschützter Datenbankfunktionen freigeschaltet.</div></article></section>
 </div><footer>Neustadter Kompanie · Geschützter Vorstandsbereich</footer>
 </main>
@@ -37,17 +88,19 @@ import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2
 const supabase=createClient('https://tyiskycptrrtlibpdbse.supabase.co','sb_publishable_Ctoq40heyWXiE8L8RMMFoQ_MwKCRPjp');
 const $=id=>document.getElementById(id);const money=cents=>new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR'}).format(Number(cents)/100);
 let profile=null,guests=[],balances=[],membershipRequests=[],familyRequests=[],clubMembers=[],birthdays=[],memberTypeFilter="single",editingMemberId=null;
+let boardProducts=[],paperQuantities=new Map(),paperPending=null,paperSending=false,boardUserId=null;
+const PAPER_PENDING_PREFIX="nk_paper_pending_v1_";
 function status(id,text,ok=false){$(id).textContent=text;$(id).classList.toggle('ok',ok)}
 function node(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e}
 function showTab(tab){if(profile?.role==='gremium'&&tab!=='birthdays')return;if(tab==='admin'&&!profile?.is_admin)return;for(const el of document.querySelectorAll('.tab'))el.hidden=el.id!==tab;for(const b of document.querySelectorAll('#tabs button'))b.classList.toggle('active',b.dataset.tab===tab)}
 for(const b of document.querySelectorAll('#tabs button'))b.addEventListener('click',()=>showTab(b.dataset.tab));for(const b of document.querySelectorAll('[data-jump]'))b.addEventListener('click',()=>showTab(b.dataset.jump));
-function showLogin(error=''){$('loadingPanel').hidden=true;$('app').hidden=true;$('loginPanel').hidden=false;$('logout').hidden=true;profile=null;guests=[];balances=[];status('loginStatus',error)}
+function showLogin(error=''){$('loadingPanel').hidden=true;$('app').hidden=true;$('loginPanel').hidden=false;$('logout').hidden=true;profile=null;boardUserId=null;guests=[];balances=[];status('loginStatus',error)}
 async function initialize(){
  $('loadingPanel').hidden=false;$('loginPanel').hidden=true;$('app').hidden=true;
  const {data:{user},error}=await supabase.auth.getUser();if(error||!user){showLogin();return}
  const {data:p,error:pe}=await supabase.from('profiles').select('display_name,role,is_admin').eq('id',user.id).maybeSingle();
  if(pe||!p||!['vorstand','gremium'].includes(p.role)){showLogin('Für dieses Konto besteht kein Zugang.');return}
- profile=p;$('loadingPanel').hidden=true;$('app').hidden=false;$('logout').hidden=false;
+ profile=p;boardUserId=user.id;restorePaperPending();$('loadingPanel').hidden=true;$('app').hidden=false;$('logout').hidden=false;
  const board=p.role==='vorstand';
  for(const el of document.querySelectorAll('.board-only'))el.hidden=!board;
  $('adminTab').hidden=!board||!p.is_admin;
@@ -57,9 +110,9 @@ async function initialize(){
  document.querySelector('[data-tab="overview"]').hidden=!board;
  showTab(board?'overview':'birthdays');
  await refreshBirthdays();
- if(board){await refreshData();await refreshMembershipRequests();await refreshFamilyRequests();await refreshClubMembers();await loadBoardPrices()}
+ if(board){await refreshData();await refreshMembershipRequests();await refreshFamilyRequests();await refreshClubMembers();await loadBoardPrices();renderPaperGuestOptions();renderPaperProducts();renderPaperPending()}
 }
-async function refreshData(){status('guestStatus','');const [gr,br]=await Promise.all([supabase.from('drink_guests').select('id,guest_number,display_name,is_active').order('guest_number'),supabase.from('drink_balances').select('guest_id,guest_number,display_name,balance_cents')]);if(gr.error||br.error){const detail=[gr.error?.message,br.error?.message].filter(Boolean).join(' · ');$('dataNotice').hidden=false;$('dataNotice').textContent='Gastdaten konnten nicht vollständig geladen werden. Bitte Supabase-Leserechte prüfen. '+detail;status('guestStatus','Laden fehlgeschlagen.');$('guestCount').textContent='–';$('openAmount').textContent='–';$('creditAmount').textContent='–';$('overviewGuests').textContent='–';$('overviewDebt').textContent='–';$('overviewCredit').textContent='–';$('guestList').replaceChildren();$('financeList').replaceChildren();$('paymentGuest').replaceChildren(new Option('Keine Konten verfügbar',''));return} $('dataNotice').hidden=true;guests=gr.data||[];balances=br.data||[];const balanceMap=new Map(balances.map(b=>[b.guest_id,Number(b.balance_cents)]));const active=guests.filter(g=>g.is_active);const debt=active.reduce((sum,g)=>sum+Math.max(0,-(balanceMap.get(g.id)||0)),0);const credit=active.reduce((sum,g)=>sum+Math.max(0,balanceMap.get(g.id)||0),0);$('guestCount').textContent=active.length;$('openAmount').textContent=money(debt);$('creditAmount').textContent=money(credit);$('overviewGuests').textContent=active.length;$('overviewDebt').textContent=money(debt);$('overviewCredit').textContent=money(credit);const sel=$('paymentGuest');const selected=sel.value;sel.replaceChildren(new Option('Bitte Gast auswählen',''));for(const g of active)sel.add(new Option('#'+g.guest_number+' · '+g.display_name,g.id));if(active.some(g=>g.id===selected))sel.value=selected;renderGuests();renderFinance()}
+async function refreshData(){status('guestStatus','');const [gr,br]=await Promise.all([supabase.from('drink_guests').select('id,guest_number,display_name,is_active').order('guest_number'),supabase.from('drink_balances').select('guest_id,guest_number,display_name,balance_cents')]);if(gr.error||br.error){const detail=[gr.error?.message,br.error?.message].filter(Boolean).join(' · ');$('dataNotice').hidden=false;$('dataNotice').textContent='Gastdaten konnten nicht vollständig geladen werden. Bitte Supabase-Leserechte prüfen. '+detail;status('guestStatus','Laden fehlgeschlagen.');$('guestCount').textContent='–';$('openAmount').textContent='–';$('creditAmount').textContent='–';$('overviewGuests').textContent='–';$('overviewDebt').textContent='–';$('overviewCredit').textContent='–';$('guestList').replaceChildren();$('financeList').replaceChildren();$('paymentGuest').replaceChildren(new Option('Keine Konten verfügbar',''));return} $('dataNotice').hidden=true;guests=gr.data||[];balances=br.data||[];const balanceMap=new Map(balances.map(b=>[b.guest_id,Number(b.balance_cents)]));const active=guests.filter(g=>g.is_active);const debt=active.reduce((sum,g)=>sum+Math.max(0,-(balanceMap.get(g.id)||0)),0);const credit=active.reduce((sum,g)=>sum+Math.max(0,balanceMap.get(g.id)||0),0);$('guestCount').textContent=active.length;$('openAmount').textContent=money(debt);$('creditAmount').textContent=money(credit);$('overviewGuests').textContent=active.length;$('overviewDebt').textContent=money(debt);$('overviewCredit').textContent=money(credit);const sel=$('paymentGuest');const selected=sel.value;sel.replaceChildren(new Option('Bitte Gast auswählen',''));for(const g of active)sel.add(new Option('#'+g.guest_number+' · '+g.display_name,g.id));if(active.some(g=>g.id===selected))sel.value=selected;renderGuests();renderFinance();renderPaperGuestOptions()}
 function renderGuests(){const root=$('guestList');root.replaceChildren();const q=$('guestSearch').value.trim().toLocaleLowerCase('de');const balanceMap=new Map(balances.map(b=>[b.guest_id,Number(b.balance_cents)]));const filtered=guests.filter(g=>String(g.guest_number).includes(q)||g.display_name.toLocaleLowerCase('de').includes(q));if(!filtered.length){root.append(node('p','Keine passenden Gastkonten.','muted'));return}for(const g of filtered){const bal=balanceMap.get(g.id)||0;const row=node('div',undefined,'item');const info=node('div');info.append(node('strong',g.display_name,'name'),node('div','Gastnummer '+g.guest_number+(g.is_active?'':' · Inaktiv'),'muted'));const badge=node('span',bal>=0?money(bal)+' Guthaben':money(-bal)+' offen','pill'+(bal<0?' debt':''));row.append(info,badge);root.append(row)}}
 function renderFinance(){const root=$('financeList');root.replaceChildren();const balanceMap=new Map(balances.map(b=>[b.guest_id,Number(b.balance_cents)]));if(!guests.length){root.append(node('p','Keine Gastkonten vorhanden.','muted'));return}for(const g of guests){const bal=balanceMap.get(g.id)||0;const row=node('div',undefined,'item');const info=node('div');info.append(node('strong',g.display_name),node('div','Gastnummer '+g.guest_number,'muted'));row.append(info,node('span',money(bal),'amount '+(bal<0?'negative':'positive')));root.append(row)}}
 
@@ -163,7 +216,7 @@ async function refreshClubMembers(){
   const {data,error}=await supabase.rpc('club_board_list_members');
   if(error){status('memberListStatus','Mitglieder konnten nicht geladen werden: '+error.message);clubMembers=[]}
   else{status('memberListStatus','');clubMembers=data||[]}
-  renderApprovedMembers();
+  renderApprovedMembers();renderPaperSummary();
 }
 
 async function refreshFamilyRequests(){
@@ -279,8 +332,8 @@ async function loadBoardPrices(){
  if(profile?.role!=='vorstand')return;
  const root=$('priceList');root.replaceChildren();status('priceStatus','Preise werden geladen …');
  const {data,error}=await supabase.rpc('drink_board_list_prices');
- if(error){status('priceStatus','Preise konnten nicht geladen werden: '+error.message);return}
- status('priceStatus','');
+ if(error){status('priceStatus','Preise konnten nicht geladen werden: '+error.message);status('paperStatus','Getränke konnten nicht geladen werden: '+error.message);return}
+ boardProducts=data||[];renderPaperProducts();status('priceStatus','');
  if(!data?.length){root.append(node('p','Keine Getränke gefunden.','muted'));return}
  for(const p of data){
   const form=node('form',undefined,'member-card');
@@ -300,11 +353,160 @@ async function loadBoardPrices(){
    const {error}=await supabase.rpc('drink_board_update_prices',{p_product_id:p.product_id,p_price_cents:normalCents,p_member_price_cents:memberCents});
    save.disabled=false;
    if(error){feedback.textContent='Speichern fehlgeschlagen: '+error.message;return}
-   feedback.textContent='Preise gespeichert.';feedback.classList.add('ok');
+   feedback.textContent='Preise gespeichert.';feedback.classList.add('ok');p.normal_price_cents=normalCents;p.member_price_cents=memberCents;renderPaperProducts();
   });
   root.append(form);
  }
 }
+
+// Papierstrichlisten – separate Vorstandsbuchung mit serverseitigen Preisen.
+// Keine direkte Schreibberechtigung für drink_entries im Browser erforderlich.
+function paperPendingKey(){return PAPER_PENDING_PREFIX+(boardUserId||'unbekannt')}
+function restorePaperPending(){
+ paperPending=null;
+ try{
+  const stored=sessionStorage.getItem(paperPendingKey());
+  if(stored){const parsed=JSON.parse(stored);if(parsed?.requestId && Number.isInteger(parsed.guestNumber) && Array.isArray(parsed.items))paperPending=parsed}
+ }catch{}
+}
+function paperActiveProducts(){return boardProducts.filter(p=>p.is_active===true)}
+function paperSelectedGuest(){return guests.find(g=>g.is_active && String(g.guest_number)===$('paperGuest').value)||null}
+function paperGuestIsMember(g){
+ return Boolean(g && clubMembers.some(m=>String(m.guest_number)===String(g.guest_number) && m.membership_status==='active'));
+}
+function renderPaperGuestOptions(){
+ const target=$('paperGuest');const selected=target.value;
+ const q=$('paperGuestSearch').value.trim().toLocaleLowerCase('de');
+ target.replaceChildren(new Option('Bitte Gast auswählen',''));
+ for(const g of guests){
+  if(!g.is_active)continue;
+  if(q && !String(g.guest_number).includes(q) && !g.display_name.toLocaleLowerCase('de').includes(q) && String(g.guest_number)!==selected)continue;
+  target.add(new Option('#'+g.guest_number+' · '+g.display_name,String(g.guest_number)));
+ }
+ if([...target.options].some(o=>o.value===selected))target.value=selected;
+ renderPaperSummary();
+}
+function getPaperUnitPrice(product,isMember){
+ const normal=Number(product.normal_price_cents);
+ const member=product.member_price_cents==null?normal:Number(product.member_price_cents);
+ return isMember && Number.isSafeInteger(member)?member:normal;
+}
+function renderPaperProducts(){
+ const root=$('paperProducts');root.replaceChildren();
+ const active=paperActiveProducts();
+ if(!active.length){root.append(node('p','Keine aktiven Getränke verfügbar. Preise im Reiter „Getränkepreise“ prüfen.','muted'));renderPaperSummary();return}
+ const g=paperSelectedGuest();const isMember=paperGuestIsMember(g);
+ for(const product of active){
+  const id=product.product_id;
+  const item=node('div',undefined,'paper-item');
+  const top=node('div',undefined,'paper-row');
+  top.append(node('strong',product.product_name));
+  const unitPrice=getPaperUnitPrice(product,isMember);
+  top.append(node('span',Number.isFinite(unitPrice)?money(unitPrice):'–','pill'));
+  item.append(top);
+  const controls=node('div',undefined,'paper-counter');
+  const minus=node('button','−');minus.type='button';minus.setAttribute('aria-label',product.product_name+' minus eins');
+  const input=node('input');input.type='number';input.inputMode='numeric';input.min='0';input.max='500';input.step='1';input.value=String(paperQuantities.get(id)||0);input.setAttribute('aria-label','Anzahl '+product.product_name);
+  const plus=node('button','+');plus.type='button';plus.setAttribute('aria-label',product.product_name+' plus eins');
+  const setCount=n=>{
+   const count=Number.isInteger(n)?Math.max(0,Math.min(500,n)):0;
+   input.value=String(count);
+   if(count)paperQuantities.set(id,count);else paperQuantities.delete(id);
+   minus.disabled=count===0;plus.disabled=count===500;
+   renderPaperSummary();
+  };
+  minus.addEventListener('click',()=>setCount((paperQuantities.get(id)||0)-1));
+  plus.addEventListener('click',()=>setCount((paperQuantities.get(id)||0)+1));
+  input.addEventListener('input',()=>{
+   const raw=input.value;
+   if(raw===''){paperQuantities.delete(id);renderPaperSummary();return}
+   const n=Number(raw);if(!Number.isInteger(n) || n<0 || n>500){renderPaperSummary();return}
+   if(n)paperQuantities.set(id,n);else paperQuantities.delete(id);
+   minus.disabled=n===0;plus.disabled=n===500;renderPaperSummary();
+  });
+  input.addEventListener('change',()=>setCount(Number(input.value)));
+  setCount(paperQuantities.get(id)||0);
+  controls.append(minus,input,plus);item.append(controls);root.append(item);
+ }
+ renderPaperSummary();
+}
+function paperSnapshot(){
+ return paperActiveProducts().map(p=>({product_id:p.product_id,quantity:paperQuantities.get(p.product_id)||0})).filter(i=>i.quantity>0);
+}
+function renderPaperSummary(){
+ const guest=paperSelectedGuest(),member=paperGuestIsMember(guest);
+ const qty=paperSnapshot();let count=0,total=0;
+ const priceById=new Map(paperActiveProducts().map(p=>[p.product_id,p]));
+ for(const item of qty){const product=priceById.get(item.product_id);if(!product)continue;count+=item.quantity;total+=item.quantity*getPaperUnitPrice(product,member)}
+ $('paperCount').textContent=count===1?'1 Getränk':count+' Getränke';
+ $('paperTotal').textContent=money(total);
+ $('paperGuestInfo').textContent=guest?(guest.display_name+' · #'+guest.guest_number+' · '+(member?'Aktive Fördermitgliedschaft – Vorschau mit Förderpreisen':'Vorschau mit Normalpreisen; endgültige Preisprüfung erfolgt beim Buchen')):'Bitte ein Gastkonto auswählen.';
+ $('paperPriceNote').textContent='Vorschau anhand der zuletzt geladenen Preise. Den verbindlichen Preis und Mitgliedsstatus ermittelt Supabase beim Buchen.';
+ $('paperSubmit').disabled=!guest||count===0||count>500||paperSending||Boolean(paperPending)||!Number.isSafeInteger(total)||total<0;
+ $('paperSubmit').textContent=count?'🧾 '+count+' Getränke verbuchen':'🧾 Strichliste verbuchen';
+ $('paperClear').disabled=paperSending||Boolean(paperPending);
+}
+function renderPaperPending(){
+ const pending=Boolean(paperPending);
+ $('paperPendingBox').hidden=!pending;
+ $('paperEditor').querySelectorAll('input,select,button').forEach(el=>el.disabled=pending);
+ if(!pending){renderPaperSummary();return}
+ const g=guests.find(g=>g.guest_number===paperPending.guestNumber);
+ const count=paperPending.items.reduce((sum,item)=>sum+item.quantity,0);
+ $('paperPendingDetails').textContent=(g?g.display_name+' · ':'')+'Gastnummer #'+paperPending.guestNumber+' · '+count+' Getränke · Belegkennung '+paperPending.requestId;
+ $('paperRetry').disabled=paperSending;
+ $('paperDiscard').disabled=paperSending;
+}
+async function sendPaperPending(){
+ if(!paperPending||paperSending||profile?.role!=='vorstand')return;
+ paperSending=true;renderPaperPending();status('paperStatus','Sammelbuchung wird übermittelt …');
+ const submitted=paperPending;
+ try{
+  const {data,error}=await supabase.rpc('drink_board_book_paper_list',{
+   p_request_id:submitted.requestId,
+   p_guest_number:submitted.guestNumber,
+   p_items:submitted.items
+  });
+  if(error)throw error;
+  const result=Array.isArray(data)?data[0]:data;
+  if(!result||!result.batch_id||!Number.isInteger(Number(result.drinks_count)))throw new Error('Der Server hat keine bestätigte Belegnummer zurückgegeben.');
+  const count=Number(result.drinks_count),total=Number(result.total_cents);
+  paperPending=null;
+  sessionStorage.removeItem(paperPendingKey());
+  paperQuantities.clear();
+  paperSending=false;
+  renderPaperPending();renderPaperProducts();
+  status('paperStatus','✅ Erfolgreich: '+count+' Getränke für Gastnummer #'+submitted.guestNumber+' gebucht. Gesamtbetrag: '+money(total)+'. Beleg: '+result.batch_id,true);
+  await refreshData();
+ }catch(error){
+  paperSending=false;renderPaperPending();
+  status('paperStatus','Buchung nicht bestätigt: '+(error?.message||'Verbindungsfehler')+'. Bitte denselben Beleg erneut senden oder vor dem Verwerfen prüfen, ob die Buchung bereits erfolgt ist.');
+ }
+}
+$('paperGuestSearch').addEventListener('input',renderPaperGuestOptions);
+$('paperGuest').addEventListener('change',()=>{renderPaperProducts();renderPaperSummary()});
+$('paperSubmit').addEventListener('click',async()=>{
+ if(profile?.role!=='vorstand'||paperPending||paperSending)return;
+ const guest=paperSelectedGuest(),items=paperSnapshot();
+ const count=items.reduce((sum,item)=>sum+item.quantity,0);
+ if(!guest||!items.length||count>500||items.length>40){status('paperStatus','Bitte einen aktiven Gast und insgesamt 1 bis 500 Getränke auswählen.');return}
+ const preview=$('paperTotal').textContent;
+ if(!confirm('Papierstrichliste wirklich buchen?\n\n'+guest.display_name+' (#'+guest.guest_number+')\n'+count+' Getränke · voraussichtlich '+preview+'\n\nDer endgültige Betrag wird auf dem Server berechnet.'))return;
+ if(!globalThis.crypto?.randomUUID){status('paperStatus','Dieser Browser unterstützt keine sicheren Buchungskennungen. Bitte einen aktuellen Browser verwenden.');return}
+ paperPending={requestId:crypto.randomUUID(),guestNumber:guest.guest_number,items};
+ try{sessionStorage.setItem(paperPendingKey(),JSON.stringify(paperPending))}catch{
+  paperPending=null;status('paperStatus','Buchungsschutz kann nicht gespeichert werden. Bitte Browser-Speicher prüfen.');return;
+ }
+ renderPaperPending();await sendPaperPending();
+});
+$('paperRetry').addEventListener('click',sendPaperPending);
+$('paperDiscard').addEventListener('click',()=>{
+ if(!paperPending||paperSending)return;
+ if(!confirm('ACHTUNG: Hast du anhand des Getränkekontos geprüft, ob dieser Beleg bereits gebucht wurde?\n\nNur verwerfen, wenn du das sicher weißt. Sonst dieselbe Kennung erneut senden.'))return;
+ sessionStorage.removeItem(paperPendingKey());paperPending=null;renderPaperPending();
+ status('paperStatus','Buchungsversuch verworfen. Bitte nur neu buchen, wenn der vorherige Beleg tatsächlich nicht verbucht wurde.');
+});
+
 $('reloadPrices').addEventListener('click',loadBoardPrices);
 $('guestSearch').addEventListener('input',renderGuests);
 $('loginForm').addEventListener('submit',async e=>{e.preventDefault();const btn=$('loginBtn');btn.disabled=true;status('loginStatus','');const {error}=await supabase.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});$('password').value='';btn.disabled=false;if(error){status('loginStatus','Anmeldung fehlgeschlagen. Bitte Zugangsdaten prüfen.');return}await initialize()});
