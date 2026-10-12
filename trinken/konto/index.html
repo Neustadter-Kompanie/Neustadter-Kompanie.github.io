@@ -8,6 +8,7 @@
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:12px}.drink{border:1px solid #e3ded4;border-radius:12px;padding:15px}.drink h3{margin:0 0 8px;font-size:1rem}.drink .price{font-weight:800;color:var(--wine)}.drink button{width:100%;margin-top:12px}.status{line-height:1.5}.success{color:#196a48}.qty-controls{display:flex;align-items:center;justify-content:center;gap:15px;margin-top:12px}.qty-controls button{width:46px;margin:0;padding:10px;border:1px solid #b9c3bc;border-radius:10px;background:#fff;font-weight:800;font-size:1.2rem}.qty-controls output{min-width:28px;text-align:center;font-weight:800}.history .cancel-btn{margin-top:8px;padding:7px 12px;border:1px solid #b9c3bc;background:#fff;color:var(--wine);border-radius:8px;font-weight:700}.history .cancel-btn:disabled{opacity:.5;cursor:not-allowed}
 
 .member-tabs{display:flex;gap:8px;margin:14px 0 18px}.member-tabs button{flex:1;padding:12px 8px;border:1px solid #c8d0c9;border-radius:10px;background:white;color:var(--green);font-weight:700}.member-tabs button.active{background:var(--green);color:white}.member-state{padding:14px;background:#f4f7f3;border-radius:10px;margin:12px 0}.member-state strong{display:block;margin-bottom:5px}.member-option{display:flex;align-items:center;gap:10px;margin:12px 0}.member-option input{width:auto}.member-option span{flex:1}
+.family-person{padding:12px 0;border-bottom:1px solid #e3ded4}.family-person strong{display:block}.family-person small{color:var(--muted)}.family-inputs{display:grid;grid-template-columns:1fr;gap:0 12px}@media(min-width:650px){.family-inputs{grid-template-columns:2fr 1fr}}
 </style>
 </head>
 <body>
@@ -23,7 +24,7 @@
 <div class="columns"><section class="card"><div class="eyebrow">Verbrauch</div><h2>Getränkebuchungen</h2><ul class="history" id="entries"></ul></section><section class="card"><div class="eyebrow">Einzahlungen</div><h2>Zahlungen</h2><ul class="history" id="payments"></ul></section></div>
 <section class="card"><div class="eyebrow">Getränkekarte</div><h2>Getränke buchen 🍻</h2><p class="muted">Stelle mit + und − die Anzahl ein (maximal 10 je Buchung). Erst beim Bestätigen wird gebucht. Innerhalb von 5 Minuten kannst du die Buchung unter „Getränkebuchungen“ stornieren.</p><div id="productList" class="grid" aria-live="polite"><p class="muted">Getränke werden geladen …</p></div><p id="bookingStatus" class="status" role="status" aria-live="polite"></p><button id="refreshAccount" type="button" class="secondary">Kontostand aktualisieren</button></section>
 </div>
-<section class="card" id="membershipArea" hidden role="tabpanel" aria-labelledby="tabMembership"><div class="eyebrow">Fördermitgliedschaft</div><h2>Mitgliedschaft bestätigen lassen</h2><p class="muted">Der offizielle Mitgliedsantrag wird weiterhin als PDF per E-Mail eingereicht. Hier meldest du nur, dass du bereits Fördermitglied bist beziehungsweise deinen Mitgliedsantrag eingereicht hast. Der Vorstand prüft deine Angaben.</p><div class="member-state" id="membershipState">Mitgliedsstatus wird geladen …</div><form id="membershipForm" hidden><label for="membershipType">Welche Fördermitgliedschaft soll bestätigt werden?</label><select id="membershipType" required><option value="family" selected>Familienmitgliedschaft</option><option value="single">Einzelmitgliedschaft</option></select><label class="member-option" for="memberConfirm"><input type="checkbox" id="memberConfirm" required><span>Ich bestätige, dass ich bereits Fördermitglied bin oder den PDF-Mitgliedsantrag per E-Mail eingereicht habe.</span></label><button class="primary" type="submit" id="membershipSubmit">Bestätigung beim Vorstand anfragen</button></form><p id="membershipStatus" class="status" role="status" aria-live="polite"></p><p class="muted">Die Anfrage schaltet noch keine Mitgliederpreise frei. Familienmitglieder werden erst nach Prüfung durch den Vorstand verknüpft.</p></section>
+<section class="card" id="membershipArea" hidden role="tabpanel" aria-labelledby="tabMembership"><div class="eyebrow">Fördermitgliedschaft</div><h2>Mitgliedschaft bestätigen lassen</h2><p class="muted">Der offizielle Mitgliedsantrag wird weiterhin als PDF per E-Mail eingereicht. Hier meldest du nur, dass du bereits Fördermitglied bist beziehungsweise deinen Mitgliedsantrag eingereicht hast. Der Vorstand prüft deine Angaben.</p><div class="member-state" id="membershipState">Mitgliedsstatus wird geladen …</div><form id="membershipForm" hidden><label for="membershipType">Welche Fördermitgliedschaft soll bestätigt werden?</label><select id="membershipType" required><option value="family" selected>Familienmitgliedschaft</option><option value="single">Einzelmitgliedschaft</option></select><label class="member-option" for="memberConfirm"><input type="checkbox" id="memberConfirm" required><span>Ich bestätige, dass ich bereits Fördermitglied bin oder den PDF-Mitgliedsantrag per E-Mail eingereicht habe.</span></label><button class="primary" type="submit" id="membershipSubmit">Bestätigung beim Vorstand anfragen</button></form><p id="membershipStatus" class="status" role="status" aria-live="polite"></p><section id="familyManagement" class="family-fields" hidden><h3>Familienmitglieder einreichen</h3><p class="muted">Jede Person benötigt bereits ein eigenes Getränkekonto. Trage den vollständigen Namen und die Gastnummer ein. Der Vorstand prüft jede Person einzeln. Bis zur Freischaltung gelten die normalen Preise.</p><form id="familyMemberForm"><div class="family-inputs"><div><label for="familyFullName">Vor- und Nachname</label><input id="familyFullName" type="text" maxlength="120" autocomplete="off" required placeholder="z. B. Max Mustermann"></div><div><label for="familyGuestNumber">Gastnummer</label><input id="familyGuestNumber" type="text" inputmode="numeric" pattern="[0-9]{1,4}" maxlength="4" required placeholder="z. B. 2345"></div></div><button class="primary" id="familyMemberSubmit" type="submit">Person zur Prüfung einreichen</button></form><p id="familyMemberStatus" class="status" role="status" aria-live="polite"></p><h3>Bereits eingereichte Personen</h3><div id="familyMemberList"><p class="muted">Wird geladen …</p></div><button class="secondary" type="button" id="refreshFamilyMembers">Prüfstatus aktualisieren</button></section><p class="muted">Die Anfrage schaltet noch keine Mitgliederpreise frei. Familienmitglieder werden erst nach Prüfung durch den Vorstand verknüpft.</p></section>
 </div><p id="accountStatus" role="status" aria-live="polite"></p>
 </main><footer>Neustadter Kompanie · Persönliche Strichliste</footer>
 <script>
@@ -123,13 +124,15 @@ async function loadMembership(){
   const token=sessionStorage.getItem("drink_guest_token");if(!token)throw new Error("Bitte erneut anmelden.");
   const result=await drinkRequest("membership_confirmation_status",{token});
   const request=result.request;
-  if(!request){state.textContent="Noch keine Bestätigungsanfrage gestellt.";form.hidden=false;return;}
-  const kind=request.membership_type==="family"?"Familienmitgliedschaft":"Einzelmitgliedschaft";
+  if(!request){state.textContent="Noch keine Bestätigungsanfrage gestellt.";form.hidden=false;document.getElementById("familyManagement").hidden=true;return;}
+  document.getElementById("familyManagement").hidden=request.membership_type!=="family"||!(["pending","approved"].includes(request.status));
+   if(!document.getElementById("familyManagement").hidden)await loadFamilyMembers();
+   const kind=request.membership_type==="family"?"Familienmitgliedschaft":"Einzelmitgliedschaft";
   if(request.status==="pending")state.textContent=kind+": Deine Anfrage wartet auf Prüfung durch den Vorstand.";
   else if(request.status==="approved")state.textContent=kind+": Anfrage vom Vorstand bestätigt. Die tatsächliche Preis- und Familienfreischaltung wird separat eingerichtet.";
   else if(request.status==="rejected"){state.textContent=kind+": Deine letzte Anfrage wurde abgelehnt. Du kannst eine neue Bestätigung anfragen.";form.hidden=false;}
   else state.textContent="Anfragestatus: "+String(request.status);
- }catch(error){state.textContent="Status konnte nicht geladen werden.";message.className="status error";message.textContent=error.message||"Serverfehler";}
+ }catch(error){document.getElementById("familyManagement").hidden=true;state.textContent="Status konnte nicht geladen werden.";message.className="status error";message.textContent=error.message||"Serverfehler";}
 }
 document.getElementById("membershipForm").addEventListener("submit",async event=>{
  event.preventDefault();const button=document.getElementById("membershipSubmit"),message=document.getElementById("membershipStatus");
@@ -140,6 +143,38 @@ document.getElementById("membershipForm").addEventListener("submit",async event=
   const result=await drinkRequest("request_membership_confirmation",{token,membership_type:document.getElementById("membershipType").value,confirmed_existing_membership:true});
   if(result.success===false)throw new Error(result.error||"Anfrage fehlgeschlagen.");
   await loadMembership();message.className="status success";message.textContent=result.message||"Anfrage erfolgreich übermittelt.";
+ }catch(error){message.className="status error";message.textContent=error.message||"Anfrage fehlgeschlagen.";}
+ finally{button.disabled=false;}
+});
+async function loadFamilyMembers(){
+ const list=document.getElementById("familyMemberList"),message=document.getElementById("familyMemberStatus");
+ list.replaceChildren();list.textContent="Familienanfragen werden geladen …";
+ try{
+  const token=sessionStorage.getItem("drink_guest_token");if(!token)throw new Error("Bitte erneut anmelden.");
+  const result=await drinkRequest("family_member_requests",{token});
+  const requests=result.requests||[];list.replaceChildren();
+  if(!requests.length){list.textContent="Noch keine Familienmitglieder eingereicht.";return;}
+  for(const r of requests){
+   const row=document.createElement("div");row.className="family-person";
+   const name=document.createElement("strong");name.textContent=(r.display_name||"Unbekannt")+" · #"+r.guest_number;
+   const info=document.createElement("small");info.textContent=(r.status==="approved"?"Vom Vorstand bestätigt":r.status==="rejected"?"Vom Vorstand abgelehnt":"Wartet auf Prüfung")+(r.created_at?" · Eingereicht: "+formatDate(r.created_at):"");
+   row.append(name,info);list.append(row);
+  }
+ }catch(error){list.textContent="Familienanfragen konnten nicht geladen werden.";message.className="status error";message.textContent=error.message||"Serverfehler";}
+}
+document.getElementById("refreshFamilyMembers").addEventListener("click",loadFamilyMembers);
+document.getElementById("familyMemberForm").addEventListener("submit",async event=>{
+ event.preventDefault();const button=document.getElementById("familyMemberSubmit"),message=document.getElementById("familyMemberStatus");
+ const full_name=document.getElementById("familyFullName").value.trim().replace(/\s+/g," ");
+ const numberText=document.getElementById("familyGuestNumber").value.trim();
+ if(!full_name.includes(" ")||!/^[0-9]{1,4}$/.test(numberText)){message.className="status error";message.textContent="Bitte Vor- und Nachnamen sowie eine gültige Gastnummer angeben.";return;}
+ button.disabled=true;message.className="status";message.textContent="Anfrage wird eingereicht …";
+ try{
+  const token=sessionStorage.getItem("drink_guest_token");if(!token)throw new Error("Bitte erneut anmelden.");
+  const result=await drinkRequest("request_family_member",{token,full_name,guest_number:Number(numberText)});
+  if(result.success===false)throw new Error(result.error||"Anfrage fehlgeschlagen.");
+  document.getElementById("familyMemberForm").reset();
+  await loadFamilyMembers();message.className="status success";message.textContent="Person zur Prüfung eingereicht. Du kannst weitere Familienmitglieder hinzufügen.";
  }catch(error){message.className="status error";message.textContent=error.message||"Anfrage fehlgeschlagen.";}
  finally{button.disabled=false;}
 });
