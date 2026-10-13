@@ -272,15 +272,23 @@ function renderApprovedMembers(){
  const filtered=clubMembers.filter(m=>m.membership_type===memberTypeFilter);
  const groups=new Map();
  for(const m of filtered){if(!groups.has(m.membership_id))groups.set(m.membership_id,[]);groups.get(m.membership_id).push(m)}
- $('memberCount').textContent=clubMembers.length;
+ $('memberCount').textContent=clubMembers.filter(m=>m.member_status==='aktiv').length;
  if(!groups.size)root.append(node('p','Keine Mitgliedschaften in dieser Kategorie.','muted'));
  for(const members of groups.values()){
    const head=members.find(m=>m.is_primary)||members[0];
    const box=node('div',undefined,'member-card');
-   box.append(node('strong',head.first_name+' '+head.last_name+(memberTypeFilter==='family'?' · Familie':'')),node('div',String(members.length)+' Person(en) · '+money(head.annual_fee_cents)+' / Jahr · '+(head.membership_status==='active'?'Aktiv':'Inaktiv'),'muted'));
+   const activeCount=members.filter(m=>m.member_status==='aktiv').length;
+   box.append(node('strong',head.first_name+' '+head.last_name+(memberTypeFilter==='family'?' · Familie':'')),node('div',activeCount+' aktiv · '+members.length+' insgesamt · '+money(head.annual_fee_cents)+' / Jahr · '+(head.membership_status==='active'?'Mitgliedschaft aktiv':'Mitgliedschaft inaktiv'),'muted'));
    for(const m of members){
      const row=node('div',undefined,'item');const info=node('div');
      info.append(node('strong',m.first_name+' '+m.last_name),node('div','Mitgliedsnummer '+(m.member_number??'–')+' · Gastnummer #'+(m.guest_number??'–')+(m.is_primary?' · Hauptmitglied':''),'muted'));
+     const state=m.member_status==='ausgetreten'?'Ausgetreten':m.member_status==='aktiv'?'Aktiv':'Inaktiv';
+     info.append(node('span',state,'pill'+(state==='Ausgetreten'?' debt':'')));
+     if(m.member_status==='ausgetreten'){
+       const when=m.left_at?new Date(m.left_at).toLocaleString('de-DE',{dateStyle:'medium',timeStyle:'short'}):'unbekannt';
+       info.append(node('div','Austritt: '+when,'muted'));
+       if(m.left_reason)info.append(node('div','Grund: '+m.left_reason,'muted'));
+     }
      const edit=node('button','Bearbeiten','secondary-btn');edit.type='button';edit.addEventListener('click',()=>openMemberEditor(m));
      row.append(info,edit);box.append(row);
    }
@@ -298,7 +306,7 @@ function openMemberEditor(m){
  editingMemberId=m.member_id;
  const fields={editFirst:m.first_name,editLast:m.last_name,editBirth:m.date_of_birth,editEmail:m.email,editPhone:m.phone,editStreet:m.street,editHouse:m.house_number,editPostcode:m.postal_code,editCity:m.city,editNotes:m.notes};
  for(const [id,value] of Object.entries(fields))$(id).value=value??'';
- $('editMemberDescription').textContent='Mitgliedsnummer '+m.member_number+' · Gastnummer #'+m.guest_number;
+ $('editMemberDescription').textContent='Mitgliedsnummer '+m.member_number+' · Gastnummer #'+m.guest_number+' · '+(m.member_status==='ausgetreten'?'Ausgetreten':m.member_status==='aktiv'?'Aktiv':'Inaktiv');
  status('editMemberStatus','');$('memberEditorPanel').hidden=false;
  $('memberEditorPanel').scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -337,7 +345,7 @@ async function refreshBirthdays(){
 $('reloadBirthdays').addEventListener('click',refreshBirthdays);
 
 async function refreshClubMembers(){
-  const {data,error}=await supabase.rpc('club_board_list_members');
+  const {data,error}=await supabase.rpc('club_board_list_members_v2');
   if(error){status('memberListStatus','Mitglieder konnten nicht geladen werden: '+error.message);clubMembers=[]}
   else{status('memberListStatus','');clubMembers=data||[]}
   renderApprovedMembers();renderPaperSummary();
