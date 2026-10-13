@@ -18,6 +18,13 @@
 .family-primary{font-size:.74rem;white-space:nowrap;background:#e7eee7;color:var(--green);padding:5px 9px;border-radius:20px;font-weight:800}
 .family-total{margin-top:12px}
 @media(max-width:480px){.family-member-row{align-items:flex-start}.total{gap:8px}.total strong{white-space:nowrap}}
+
+.member-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;position:sticky;top:0;z-index:4;background:var(--cream);padding:9px 0;margin-top:0}
+.member-tabs button{font-size:clamp(.72rem,2.5vw,.92rem);overflow-wrap:anywhere;min-width:0}
+.family-member-amount{font-weight:750;text-align:right;white-space:nowrap}
+.family-member-amount small{font-weight:500}
+.family-account-note{font-size:.88rem;color:var(--muted)}
+@media(max-width:440px){.family-member-row{gap:8px}.family-member-amount{font-size:.9rem}}
 </style>
 </head>
 <body>
@@ -27,20 +34,36 @@
 <div class="actions"><button type="button" class="secondary" id="logout" hidden>Abmelden</button></div>
 <section class="card" id="signedOut"><div class="eyebrow">Mein Konto</div><h2>Bitte anmelden</h2><p class="muted">Für dieses Konto ist keine gültige Sitzung vorhanden.</p><a href="/trinken/">Zur Getränkekarte und Anmeldung</a></section>
 <div id="accountContent" hidden>
-<section class="card" id="familyAccountCard" hidden>
-  <div class="eyebrow">Gemeinsame Strichliste</div>
-  <h2 id="familyAccountName">Familienkonto</h2>
-  <p class="muted">Aktive Familienmitglieder und ihre gemeinsame Getränkekasse.</p>
-  <div id="familyAccountMembers" class="family-member-list" aria-label="Familienmitglieder"></div>
-  <div class="total family-total"><span id="familyBalanceLabel">Familienguthaben</span><strong id="familyBalance">–</strong></div>
-  <p class="muted">Die Buchungslisten unten zeigen weiterhin nur deine eigenen Einträge – der Familienkontostand berücksichtigt zusätzlich die anderen Familienmitglieder.</p>
-</section>
-<section class="card" id="personalAccountCard"><div class="eyebrow">Mein Konto</div><h2 id="guestName">Persönliche Strichliste</h2><span class="pill" id="guestNumber"></span><p class="muted">Hier siehst du deine eigenen Buchungen und bestätigten Zahlungen.</p><div class="total"><span id="balanceLabel">Kontostand</span><strong id="balance">–</strong></div><p class="muted">Dein persönlicher Kontostand bleibt auch beim Wechsel in eine Familie erhalten. Frühere persönliche Getränke werden nicht auf das Familienkonto übertragen.</p></section>
-<div class="member-tabs" role="tablist" aria-label="Kontobereiche"><button id="tabDrinks" class="active" type="button" role="tab" aria-selected="true" aria-controls="drinkArea">🍻 Strichliste</button><button id="tabMembership" type="button" role="tab" aria-selected="false" aria-controls="membershipArea">Fördermitgliedschaft</button></div>
-<div id="drinkArea">
-<div class="columns"><section class="card"><div class="eyebrow">Verbrauch</div><h2>Getränkebuchungen</h2><ul class="history" id="entries"></ul></section><section class="card"><div class="eyebrow">Einzahlungen</div><h2>Zahlungen</h2><ul class="history" id="payments"></ul></section></div>
-<section class="card"><div class="eyebrow">Dein Preisvorteil</div><h2>Fördermitglieder-Gutschriften</h2><p class="muted">Nach einer bestätigten Fördermitgliedschaft werden berechtigte Getränke seit der Antragstellung rückwirkend vergünstigt. Die Gutschriften sind bereits im Kontostand enthalten und zählen nicht als Einzahlung.</p><ul class="history" id="credits" aria-live="polite"></ul><p id="creditsTotal" class="credit" hidden></p></section>
+<div class="member-tabs" role="tablist" aria-label="Kontobereiche">
+  <button id="tabDrinks" class="active" type="button" role="tab" aria-selected="true" aria-controls="drinkArea">🍻 Getränke</button>
+  <button id="tabBalances" type="button" role="tab" aria-selected="false" aria-controls="balancesArea">💶 Kontostand</button>
+  <button id="tabMembership" type="button" role="tab" aria-selected="false" aria-controls="membershipArea">Fördermitgliedschaft</button>
+</div>
+<div id="drinkArea" role="tabpanel" aria-labelledby="tabDrinks">
 <section class="card"><div class="eyebrow">Getränkekarte</div><h2>Getränke buchen 🍻</h2><p class="muted">Stelle mit + und − die Anzahl ein (maximal 10 je Buchung). Erst beim Bestätigen wird gebucht. Eigene Buchungen kannst du innerhalb von 5 Minuten unter „Getränkebuchungen“ stornieren. Vom Vorstand nachgetragene Papierstrichlisten sind davon ausgenommen.</p><div id="productList" class="grid" aria-live="polite"><p class="muted">Getränke werden geladen …</p></div><p id="bookingStatus" class="status" role="status" aria-live="polite"></p><button id="refreshAccount" type="button" class="secondary">Kontostand aktualisieren</button></section>
+<div class="columns">
+  <section class="card"><div class="eyebrow">Verbrauch</div><h2>Meine Getränkebuchungen</h2><ul class="history" id="entries"></ul></section>
+  <section class="card"><div class="eyebrow">Einzahlungen</div><h2>Meine Zahlungen</h2><ul class="history" id="payments"></ul></section>
+</div>
+<section class="card"><div class="eyebrow">Dein Preisvorteil</div><h2>Fördermitglieder-Gutschriften</h2><p class="muted">Berechtigte Gutschriften sind bereits im jeweiligen Kontostand berücksichtigt. Sie gelten nicht als Einzahlung.</p><ul class="history" id="credits" aria-live="polite"></ul><p id="creditsTotal" class="credit" hidden></p></section>
+</div>
+<div id="balancesArea" role="tabpanel" aria-labelledby="tabBalances" hidden>
+  <section class="card" id="familyAccountCard" hidden>
+    <div class="eyebrow">Familienkonto</div>
+    <h2 id="familyAccountName">Familienkonto</h2>
+    <p id="familyAccountHint" class="muted"></p>
+    <div id="familyAccountMembers" class="family-member-list" hidden aria-label="Familienmitglieder und ihre Kontostände"></div>
+    <div class="total family-total"><span id="familyBalanceLabel">Kontostand</span><strong id="familyBalance">–</strong></div>
+    <p class="muted" id="familyAccountFooter"></p>
+  </section>
+  <section class="card" id="personalAccountCard">
+    <div class="eyebrow">Mein persönliches Konto</div>
+    <h2 id="guestName">Persönliche Strichliste</h2>
+    <span class="pill" id="guestNumber"></span>
+    <p class="muted">Hier sind deine Buchungen und Einzahlungen außerhalb eines Familienkontos erfasst.</p>
+    <div class="total"><span id="balanceLabel">Kontostand</span><strong id="balance">–</strong></div>
+    <p class="muted">Buchungen vor dem Familienbeitritt bleiben getrennt.</p>
+  </section>
 </div>
 <section class="card" id="membershipArea" hidden role="tabpanel" aria-labelledby="tabMembership"><div class="eyebrow">Fördermitgliedschaft</div><h2 id="membershipHeading">Mitgliedschaft bestätigen lassen</h2><p class="muted" id="membershipIntro">Der offizielle Mitgliedsantrag wird weiterhin als PDF per E-Mail eingereicht. Hier meldest du nur, dass du bereits Fördermitglied bist beziehungsweise deinen Mitgliedsantrag eingereicht hast. Der Vorstand prüft deine Angaben.</p><div class="member-state" id="membershipState">Mitgliedsstatus wird geladen …</div><form id="membershipForm" hidden><label for="membershipType">Welche Fördermitgliedschaft soll bestätigt werden?</label><select id="membershipType" required><option value="family" selected>Familienmitgliedschaft</option><option value="single">Einzelmitgliedschaft</option></select><label class="member-option" for="memberConfirm"><input type="checkbox" id="memberConfirm" required><span>Ich bestätige, dass ich bereits Fördermitglied bin oder den PDF-Mitgliedsantrag per E-Mail eingereicht habe.</span></label><button class="primary" type="submit" id="membershipSubmit">Bestätigung beim Vorstand anfragen</button></form><p id="membershipStatus" class="status" role="status" aria-live="polite"></p><section id="familyManagement" class="family-fields" hidden><h3>Familienmitglieder einreichen</h3><p class="muted">Jede Person benötigt bereits ein eigenes Getränkekonto. Trage den vollständigen Namen und die Gastnummer ein. Der Vorstand prüft jede Person einzeln. Bis zur Freischaltung gelten die normalen Preise.</p><form id="familyMemberForm"><div class="family-inputs"><div><label for="familyFullName">Vor- und Nachname</label><input id="familyFullName" type="text" maxlength="120" autocomplete="off" required placeholder="z. B. Max Mustermann"></div><div><label for="familyGuestNumber">Gastnummer</label><input id="familyGuestNumber" type="text" inputmode="numeric" pattern="[0-9]{1,4}" maxlength="4" required placeholder="z. B. 2345"></div></div><button class="primary" id="familyMemberSubmit" type="submit">Person zur Prüfung einreichen</button></form><p id="familyMemberStatus" class="status" role="status" aria-live="polite"></p><h3>Bereits eingereichte Personen</h3><div id="familyMemberList"><p class="muted">Wird geladen …</p></div><button class="secondary" type="button" id="refreshFamilyMembers">Prüfstatus aktualisieren</button></section><p class="muted">Die Anfrage schaltet noch keine Mitgliederpreise frei. Familienmitglieder werden erst nach Prüfung durch den Vorstand verknüpft.</p></section>
 </div><p id="accountStatus" role="status" aria-live="polite"></p>
@@ -125,16 +148,20 @@ async function loadProducts(){
     productsLoaded=true;
   }catch(error){root.textContent="Getränke konnten nicht geladen werden.";status.className="status error";status.textContent=error.message||"Serverfehler";}
 }
-const tabDrinks=document.getElementById("tabDrinks"),tabMembership=document.getElementById("tabMembership");
-function showAccountTab(membership){
- document.getElementById("drinkArea").hidden=membership;
- document.getElementById("membershipArea").hidden=!membership;
- tabDrinks.classList.toggle("active",!membership);tabMembership.classList.toggle("active",membership);
- tabDrinks.setAttribute("aria-selected",String(!membership));tabMembership.setAttribute("aria-selected",String(membership));
- if(membership)loadMembership();
+const accountTabs={drinks:["tabDrinks","drinkArea"],balances:["tabBalances","balancesArea"],membership:["tabMembership","membershipArea"]};
+function showAccountTab(which){
+ for(const [key,[buttonId,panelId]] of Object.entries(accountTabs)){
+  const active=key===which;
+  document.getElementById(panelId).hidden=!active;
+  const btn=document.getElementById(buttonId);
+  btn.classList.toggle("active",active);
+  btn.setAttribute("aria-selected",String(active));
+ }
+ if(which==="membership")loadMembership();
 }
-tabDrinks.addEventListener("click",()=>showAccountTab(false));
-tabMembership.addEventListener("click",()=>showAccountTab(true));
+for(const [key,[buttonId]] of Object.entries(accountTabs)){
+ document.getElementById(buttonId).addEventListener("click",()=>showAccountTab(key));
+}
 async function loadMembership(){
  const state=document.getElementById("membershipState"),form=document.getElementById("membershipForm"),message=document.getElementById("membershipStatus");
  const intro=document.getElementById("membershipIntro"),heading=document.getElementById("membershipHeading");
@@ -173,19 +200,25 @@ function formatMembershipDate(value){
  const valueDate=new Date(String(value).slice(0,10)+"T12:00:00");
  return Number.isNaN(valueDate.getTime())?null:valueDate.toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit",year:"numeric"});
 }
+function balanceStatus(cents){
+ if(!Number.isSafeInteger(cents))throw new Error("Ungültiger Kontobetrag");
+ return cents<0?"Offen: "+euro(-cents):cents>0?"Guthaben: "+euro(cents):"Ausgeglichen: "+euro(0);
+}
 function renderFamilyMemberList(members){
  const root=document.getElementById("familyAccountMembers");root.replaceChildren();
- if(!Array.isArray(members)||!members.length){const info=document.createElement("p");info.className="muted";info.textContent="Familienmitglieder derzeit nicht verfügbar.";root.append(info);return;}
+ if(!Array.isArray(members)||!members.length)throw new Error("Familienmitglieder nicht verfügbar");
  for(const member of members){
+  const amount=Number(member.balance_cents);
+  if(!Number.isSafeInteger(amount))throw new Error("Ungültiger Einzelkontostand");
   const row=document.createElement("div");row.className="family-member-row";
-  const identity=document.createElement("div"),name=document.createElement("strong"),number=document.createElement("small");
-  name.textContent=member.name;number.textContent="Gastnummer "+member.guest_number;
-  identity.append(name,number);row.append(identity);
-  if(member.is_primary){const pill=document.createElement("span");pill.className="family-primary";pill.textContent="Hauptmitglied";row.append(pill);}
-  root.append(row);
+  const identity=document.createElement("div");
+  const name=document.createElement("strong");name.textContent=member.name;
+  const detail=document.createElement("small");detail.textContent="Gastnummer "+member.guest_number+(member.is_primary?" · Hauptmitglied":member.is_current_member?"":" · ehemaliges Familienmitglied");
+  identity.append(name,detail);
+  const balance=document.createElement("span");balance.className="family-member-amount"+(amount<0?" error":amount>0?" credit":"");balance.textContent=balanceStatus(amount);
+  row.append(identity,balance);root.append(row);
  }
 }
-
 document.getElementById("membershipForm").addEventListener("submit",async event=>{
  event.preventDefault();const button=document.getElementById("membershipSubmit"),message=document.getElementById("membershipStatus");
  if(!document.getElementById("memberConfirm").checked)return;
@@ -231,7 +264,61 @@ document.getElementById("familyMemberForm").addEventListener("submit",async even
  finally{button.disabled=false;}
 });
 document.getElementById("refreshAccount").addEventListener("click",()=>loadAccount());
-async function loadAccount(){const token=sessionStorage.getItem("drink_guest_token");if(!token)return;accountStatus.textContent="Konto wird geladen …";try{const result=await drinkRequest("account",{token});if(!result.success||!result.guest)throw new Error("Kontodaten nicht verfügbar.");signedOut.hidden=true;accountContent.hidden=false;logout.hidden=false;document.getElementById("guestName").textContent=result.guest.name;document.getElementById("guestNumber").textContent="Gastnummer "+result.guest.number;const balance=Number(result.personal_balance_cents??result.balance_cents)||0;document.getElementById("balanceLabel").textContent=balance>0?"Persönliches Guthaben":balance<0?"Persönlich offen":"Persönlich ausgeglichen";document.getElementById("balance").textContent=euro(Math.abs(balance));const familyCard=document.getElementById("familyAccountCard");const family=result.family??null;familyCard.hidden=!family;if(family){const familyBalance=Number(family.balance_cents);if(!Number.isSafeInteger(familyBalance))throw new Error("Ungültiger Familienkontostand");document.getElementById("familyAccountName").textContent=family.name||"Familienkonto";renderFamilyMemberList(family.members);document.getElementById("familyBalanceLabel").textContent=familyBalance>0?"Familienguthaben":familyBalance<0?"Familie offen":"Familienkonto ausgeglichen";document.getElementById("familyBalance").textContent=euro(Math.abs(familyBalance));}addHistory("entries",result.entries||[],e=>e.product_name+(e.quantity>1?" × "+e.quantity:"")+(e.status!=="active"?" (storniert)":""),e=>e.status==="active"?"−"+euro(e.unit_price_cents*e.quantity):"Storniert");addHistory("payments",result.payments||[],p=>p.payment_method==="cash"?"Barzahlung":p.payment_method==="paypal"?"PayPal":"Sonstige Einzahlung",p=>"+"+euro(p.amount_cents));const credits=Array.isArray(result.credits)?result.credits:[];addHistory("credits",credits,c=>"Fördermitgliederrabatt · "+(Number(c.quantity)>1?c.quantity+" × ":"")+(c.product_name||"Getränk"),c=>"+"+euro(Number(c.amount_cents)||0));const creditsTotal=document.getElementById("creditsTotal");const creditSum=credits.reduce((sum,c)=>sum+(Number(c.amount_cents)||0),0);creditsTotal.hidden=!credits.length;creditsTotal.textContent="Bisherige Fördermitglieder-Gutschriften: +"+euro(creditSum);accountStatus.textContent="";if(!productsLoaded)await loadProducts();}catch(error){accountContent.hidden=true;signedOut.hidden=false;logout.hidden=true;accountStatus.textContent=error.message;accountStatus.classList.add("error");if(/Sitzung|anmelden|abgelaufen/i.test(error.message))sessionStorage.removeItem("drink_guest_token");}}
+async function loadAccount(){
+ const token=sessionStorage.getItem("drink_guest_token");if(!token)return;
+ accountStatus.className="status";accountStatus.textContent="Konto wird geladen …";
+ try{
+  const result=await drinkRequest("account",{token});
+  if(!result.success||!result.guest)throw new Error("Kontodaten nicht verfügbar.");
+  const personal=Number(result.personal_balance_cents??result.balance_cents);
+  if(!Number.isSafeInteger(personal))throw new Error("Ungültiger persönlicher Kontostand");
+  document.getElementById("guestName").textContent=result.guest.name;
+  document.getElementById("guestNumber").textContent="Gastnummer "+result.guest.number;
+  document.getElementById("balanceLabel").textContent=personal>0?"Persönliches Guthaben":personal<0?"Persönlich offen":"Persönlich ausgeglichen";
+  document.getElementById("balance").textContent=euro(Math.abs(personal));
+  const familyCard=document.getElementById("familyAccountCard");
+  const family=result.family??null;
+  familyCard.hidden=!family;
+  const membersRoot=document.getElementById("familyAccountMembers");
+  membersRoot.hidden=true;membersRoot.replaceChildren();
+  if(family){
+   const own=Number(family.own_balance_cents);
+   if(!Number.isSafeInteger(own))throw new Error("Ungültiger eigener Familienanteil");
+   if(family.is_primary===true){
+    const total=Number(family.balance_cents);
+    if(!Number.isSafeInteger(total))throw new Error("Ungültiger gemeinsamer Familienbetrag");
+    document.getElementById("familyAccountName").textContent=family.name||"Familienkonto";
+    document.getElementById("familyAccountHint").textContent="Buchungen und Einzahlungen der Familienmitglieder seit ihrem jeweiligen Familienbeitritt:";
+    renderFamilyMemberList(family.members);
+    membersRoot.hidden=false;
+    document.getElementById("familyBalanceLabel").textContent=total<0?"Gesamt offen":total>0?"Gemeinsames Guthaben":"Familienkonto ausgeglichen";
+    document.getElementById("familyBalance").textContent=euro(Math.abs(total));
+    document.getElementById("familyAccountFooter").textContent="Die Einzelbeträge ergeben zusammen den Familienkontostand. Frühere persönliche Kontostände gehören nicht dazu.";
+   }else{
+    // Weder Namen noch Beträge anderer Familienmitglieder erhalten.
+    document.getElementById("familyAccountName").textContent="Dein Anteil am Familienkonto";
+    document.getElementById("familyAccountHint").textContent="Deine eigenen Buchungen und Einzahlungen während deiner Familienzugehörigkeit.";
+    document.getElementById("familyBalanceLabel").textContent=own<0?"Dein Anteil offen":own>0?"Dein Guthaben":"Dein Anteil ausgeglichen";
+    document.getElementById("familyBalance").textContent=euro(Math.abs(own));
+    document.getElementById("familyAccountFooter").textContent="Die Konten anderer Familienmitglieder sind nicht einsehbar.";
+   }
+  }
+  addHistory("entries",result.entries||[],e=>e.product_name+(e.quantity>1?" × "+e.quantity:"")+(e.status!=="active"?" (storniert)":""),e=>e.status==="active"?"−"+euro(e.unit_price_cents*e.quantity):"Storniert");
+  addHistory("payments",result.payments||[],p=>p.payment_method==="cash"?"Barzahlung":p.payment_method==="paypal"?"PayPal":"Sonstige Einzahlung",p=>"+"+euro(p.amount_cents));
+  const credits=Array.isArray(result.credits)?result.credits:[];
+  addHistory("credits",credits,c=>"Fördermitgliederrabatt · "+(Number(c.quantity)>1?c.quantity+" × ":"")+(c.product_name||"Getränk"),c=>"+"+euro(Number(c.amount_cents)||0));
+  const creditsTotal=document.getElementById("creditsTotal"),creditSum=credits.reduce((sum,c)=>sum+(Number(c.amount_cents)||0),0);
+  creditsTotal.hidden=!credits.length;
+  creditsTotal.textContent="Bisherige Fördermitglieder-Gutschriften: +"+euro(creditSum);
+  signedOut.hidden=true;accountContent.hidden=false;logout.hidden=false;
+  accountStatus.textContent="";
+  if(!productsLoaded)await loadProducts();
+ }catch(error){
+  accountContent.hidden=true;signedOut.hidden=false;logout.hidden=true;
+  accountStatus.textContent=error.message;accountStatus.className="status error";
+  if(/Sitzung|anmelden|abgelaufen/i.test(error.message))sessionStorage.removeItem("drink_guest_token");
+ }
+}
 loadAccount();
 </script>
 </body>
