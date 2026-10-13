@@ -199,7 +199,49 @@
       .drinks-banner-icon{width:46px;height:46px;flex-basis:46px;font-size:1.15rem}
       .drinks-banner-text strong{font-size:1.3rem}
     }
-  </style>
+  
+
+/* Neustadter Kompanie · gemeinsame Designsprache 2026 · rein visuelle Erweiterung */
+:root{
+  --nk-pine:#17382e;--nk-deep:#102d25;--nk-wine:#873d3b;
+  --nk-cream:#f7f3e8;--nk-paper:#fffdf7;--nk-brass:#c6a66c;
+  --nk-line:#ded6c7;--nk-ink:#23372d;--nk-muted:#637168;
+  --nk-radius:16px;--nk-shadow:0 9px 26px rgba(16,45,37,.065);
+  --green:var(--nk-pine);--green2:#285347;--cream:var(--nk-cream);
+  --paper:var(--nk-paper);--wine:var(--nk-wine);--gold:var(--nk-brass);
+  --ink:var(--nk-ink);--muted:var(--nk-muted);--line:var(--nk-line);
+}
+html{scroll-behavior:smooth}body{background:var(--nk-cream);color:var(--nk-ink)}
+:focus-visible{outline:3px solid var(--nk-brass)!important;outline-offset:3px}
+button,a,input,select,textarea{transition:border-color .15s,background-color .15s,box-shadow .15s}
+button:disabled{cursor:not-allowed}
+input:not([type=checkbox]):not([type=radio]),select,textarea{border-radius:10px;border-color:#b4bfb6;max-width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--nk-brass);outline-offset:1px;border-color:var(--nk-pine)}
+.nk-headerbrand{display:inline-flex;align-items:center;gap:12px;color:#fff;text-decoration:none;min-width:0}
+.nk-headerbrand:hover{text-decoration:none;color:#fff}
+.nk-headerbrand img{width:42px;height:42px;object-fit:cover;border-radius:11px;background:#f7f3e8;border:1px solid rgba(255,255,255,.35);flex-shrink:0}
+.nk-brandstack{display:grid;gap:1px;min-width:0}
+.nk-brandstack strong{font:normal clamp(1rem,2.2vw,1.23rem) Georgia,serif;color:#fff;line-height:1.1}
+.nk-brandstack small{font:600 .64rem/1.4 system-ui,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:#e8d5b2}
+.nk-crossnav{display:flex;align-items:center;gap:7px;flex-wrap:wrap;min-width:0}
+.nk-crossnav a{color:#f8f4ea!important;border:1px solid rgba(255,255,255,.25);text-decoration:none;border-radius:999px;padding:8px 12px;font:650 .78rem/1.25 system-ui,sans-serif;white-space:nowrap;background:rgba(255,255,255,.05)}
+.nk-crossnav a:hover,.nk-crossnav a:focus-visible{background:rgba(255,255,255,.19);text-decoration:none}
+.nk-crossnav a[aria-current=page]{background:var(--nk-brass);color:var(--nk-deep)!important;border-color:var(--nk-brass)}
+.nk-header-wrap{max-width:1140px;margin:0 auto;display:flex;align-items:center;gap:18px;justify-content:space-between;flex-wrap:wrap}
+.nk-footer-note{font-size:.78rem;color:var(--nk-muted);line-height:1.6;text-align:center;padding:0 14px 20px}
+@media(max-width:680px){.nk-header-wrap{gap:12px}.nk-crossnav{width:100%;gap:6px}.nk-crossnav a{flex:1;text-align:center;padding:10px 7px;font-size:.74rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* Öffentliche Startseite: gleiche Typografie und Oberflächen wie interne Bereiche */
+header{box-shadow:0 4px 18px rgba(16,45,37,.14)}
+header .nav a{border-radius:10px}
+.event-card,.member-section .member-card,.gallery-card{border-radius:var(--nk-radius)}
+.hero .eyebrow,.kicker{letter-spacing:.14em}
+#main-navigation a[href="/trinken/"],#main-navigation a[href="/intern/"]{border:1px solid rgba(255,255,255,.3);padding:10px 13px;border-radius:11px}
+#main-navigation a[href="/trinken/"]:hover,#main-navigation a[href="/intern/"]:hover{background:rgba(255,255,255,.14)}
+@media(max-width:900px){#main-navigation a[href="/trinken/"],#main-navigation a[href="/intern/"]{padding:12px}}
+
+</style>
 
   
   
@@ -224,7 +266,7 @@
         <a href="#wagen">Der Wagen</a>
         <a href="#bilder">Einblicke</a>
         <a href="#termine">Termine</a>
-        <a href="/trinken/">🍻 Trinken</a>
+        <a href="/trinken/" aria-label="Digitale Strichliste öffnen">🍻 Trinken</a>
         <a class="gremium-link" href="/intern/" aria-label="Gremium – interner Bereich">Gremium <span>/intern</span></a>
         <a class="nav-cta" href="#mitmachen">Mitmachen ↗</a>
       </nav>
