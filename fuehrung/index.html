@@ -78,7 +78,7 @@
 
 <article class="panel" id="nkChangePanel" hidden>
 <h2>📅 Mitgliedschaftsänderung vormerken</h2>
-<p class="muted">Die Vormerkung ändert noch keine laufende Mitgliedschaft und belastet kein Konto. Die automatische Anwendung und Jahresabrechnung werden gesondert freigeschaltet.</p>
+<p class="muted">Die Vormerkungen wirken erst am gewählten Datum. Bei Veränderungen innerhalb eines laufenden Beitragsjahres ist eine Beitragskorrektur gesondert abzustimmen.</p>
 <form id="nkChangeForm">
 <input id="nkChangeMembership" type="hidden">
 <p><strong id="nkChangeName">–</strong></p>
@@ -89,9 +89,17 @@
 <div class="member-actions"><button class="primary" type="submit" id="nkChangeSave">Änderung vormerken</button><button type="button" class="secondary-btn" id="nkChangeClose">Abbrechen</button></div></form>
 <p class="status" id="nkChangeStatus" role="status"></p>
 </article>
-<article class="panel"><h2>Vorgemerkte Mitgliedschaftsänderungen</h2><p class="muted">Hier gespeicherte Vorgänge sind noch nicht automatisch wirksam. Bevor der Jahreswechsel verarbeitet wird, folgt das gesonderte Abrechnungsupdate.</p><div id="nkChangeList"></div><p class="status" id="nkChangeListStatus"></p></article>
+<article class="panel"><h2>Vorgemerkte Mitgliedschaftsänderungen</h2><p class="muted">Vorgemerkte Änderungen werden am Wirksamkeitstag automatisch verarbeitet. Bitte Sonderfälle und eventuelle Fehlermeldungen in der Beitragsübersicht kontrollieren.</p><div id="nkChangeList"></div><p class="status" id="nkChangeListStatus"></p></article>
 <article class="panel"><h2>Beitragsrechner für unterjährigen Eintritt</h2><p class="muted">Der angefangene Monat zählt vollständig. Der Rechner erzeugt keine Buchung.</p>
 <form id="nkFeeForm"><div class="fieldrow"><div><label for="nkFeeType">Mitgliedschaft</label><select id="nkFeeType"><option value="single">Einzel (24 € + 1 €)</option><option value="family">Familie (30 €, volle Euro)</option></select></div><div><label for="nkFeeDate">Eintrittsdatum</label><input id="nkFeeDate" type="date" required></div></div><button class="secondary-btn" type="submit" style="margin-top:12px">Beitrag berechnen</button></form><p class="status" id="nkFeeStatus"></p><div class="paper-summary" id="nkFeeResult" hidden></div></article>
+<article class="panel" id="nkFeeLedgerPanel"><h2>💶 Jahresbeiträge und automatische Verarbeitung</h2>
+<p class="muted">Beiträge ab 2027 werden höchstens einmal je Mitgliedschaft und Kalenderjahr erfasst. Sie werden im bestehenden Getränkekonto als eigene Buchungsart berücksichtigt. Bei Familien trägt nur das Hauptmitglied den Beitrag.</p>
+<p class="hint">Bei einem unterjährigen Wechsel ist eine mögliche Erstattung oder Nachberechnung derzeit nicht automatisiert. Solche Fälle bitte vorab gesondert abstimmen.</p>
+<p id="nkFeeLedgerStatus" class="status"></p>
+<div id="nkFeeLedgerList"></div>
+<div id="nkFeeAutomationErrors"></div>
+<button id="nkFeeLedgerReload" type="button" class="secondary-btn">Beitragsübersicht aktualisieren</button>
+</article>
 <article class="panel" id="memberEditorPanel" hidden><h2>Mitgliederakte bearbeiten</h2><p class="muted" id="editMemberDescription"></p><form id="editMemberForm"><div class="fieldrow"><div><label for="editFirst">Vorname</label><input id="editFirst" required maxlength="100"></div><div><label for="editLast">Nachname</label><input id="editLast" required maxlength="100"></div><div><label for="editBirth">Geburtsdatum</label><input id="editBirth" type="date"></div><div><label for="editEmail">E-Mail</label><input id="editEmail" type="email"></div><div><label for="editPhone">Telefon</label><input id="editPhone" type="tel"></div><div><label for="editStreet">Straße</label><input id="editStreet"></div><div><label for="editHouse">Hausnummer</label><input id="editHouse"></div><div><label for="editPostcode">PLZ</label><input id="editPostcode" inputmode="numeric"></div><div><label for="editCity">Ort</label><input id="editCity"></div></div><label for="editNotes">Interne Bemerkungen</label><textarea id="editNotes" rows="3"></textarea><div class="member-actions"><button class="primary" id="saveMemberBtn" type="submit">Änderungen speichern</button><button type="button" class="secondary-btn" id="cancelMemberEdit">Abbrechen</button></div></form><p class="status" id="editMemberStatus" role="status"></p></article>
 <article class="panel"><h2>Mitglied hinzufügen</h2><p class="muted">Auch ohne bisheriges Getränkekonto. Die Gastnummer wird automatisch erstellt.</p>
 <form id="createMemberForm"><div class="fieldrow"><div><label for="memberFirst">Vorname</label><input id="memberFirst" required maxlength="100" autocomplete="off"></div><div><label for="memberLast">Nachname</label><input id="memberLast" required maxlength="100" autocomplete="off"></div><div><label for="memberType">Mitgliedschaft</label><select id="memberType"><option value="single">Einzelmitgliedschaft · 25 €/Jahr</option><option value="family">Familienmitgliedschaft · 30 €/Jahr</option></select></div><div><label for="memberStart">Eintrittsdatum</label><input id="memberStart" type="date" required></div></div><button class="primary" id="createMemberBtn" type="submit">Mitglied anlegen</button></form><p class="status" id="createMemberStatus" role="status"></p><div id="createdGuestCard" class="panel" hidden style="border:2px solid #c9a56b;background:#f1f6f0;margin-top:12px"><strong id="createdGuestName">Mitglied angelegt</strong><p class="muted">Zugewiesene Gastnummer</p><div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap"><strong id="createdGuestNumber" style="font-size:34px;letter-spacing:2px">#0000</strong><button type="button" class="primary" id="copyCreatedNumber" style="margin:0">Nummer kopieren</button></div><p class="muted">Der Getränkezugang muss separat sicher aktiviert werden.</p></div><div class="hint">Bei Familienmitgliedschaften wird zunächst das Hauptmitglied angelegt. Bereits registrierte Gäste können unten einer bestehenden Familie zugeordnet werden. Der Zugang zum Getränkekonto muss vor Nutzung sicher aktiviert werden.</div></article>
@@ -709,7 +717,7 @@ async function refreshClubMembers(){
   if(error){status('memberListStatus','Mitglieder konnten nicht geladen werden: '+error.message);clubMembers=[]}
   else{status('memberListStatus','');clubMembers=data||[]}
   await refreshFamilyActivationStatus();
-  renderApprovedMembers();renderApprovedImports();renderPaperSummary();await nkLoadChanges();
+  renderApprovedMembers();renderApprovedImports();renderPaperSummary();await nkLoadChanges();await nkLoadAccounting();
 }
 
 async function refreshFamilyRequests(){
@@ -1221,6 +1229,31 @@ async function nkLoadChanges(){
  }
  status('nkChangeListStatus','',true);
 }
+async function nkLoadAccounting(){
+ if(profile?.role!=='vorstand')return;
+ const info=$('nkFeeLedgerStatus');info.textContent='Jahresbeiträge werden geladen …';
+ const {data,error}=await supabase.rpc('nk_board_membership_accounting');
+ if(error){info.textContent='Beitragsübersicht nicht verfügbar: '+error.message;return;}
+ const root=$('nkFeeLedgerList');root.replaceChildren();
+ const fees=Array.isArray(data?.fees)?data.fees:[];
+ const title=node('strong','Bisher gebuchte Jahresbeiträge: '+fees.length);root.append(title);
+ if(!fees.length)root.append(node('p','Noch keine Mitgliedsbeiträge verbucht. Automatischer Beginn: 2027.','muted'));
+ for(const f of fees.slice(0,100)){
+  const el=node('div',undefined,'account-row');
+  el.append(node('span',(f.name||'Mitglied')+' (#'+f.guest_number+') · '+f.year+' · '+(f.fee_type==='family'?'Familie':'Einzel')+' · '+f.months+' Monate'));
+  el.append(node('strong',money(Number(f.amount_cents))));root.append(el);
+ }
+ if(fees.length>100)root.append(node('p','Es werden die 100 neuesten Beiträge angezeigt.','muted'));
+ const errors=Array.isArray(data?.errors)?data.errors:[];
+ const warnings=$('nkFeeAutomationErrors');warnings.replaceChildren();
+ if(errors.length){
+  warnings.append(node('h3','⚠️ Fehler bei automatischen Vorgängen'));
+  for(const e of errors.slice(0,10))warnings.append(node('p',new Date(e.date).toLocaleString('de-DE')+': '+e.message,'hint'));
+ }
+ info.textContent='Daten aktualisiert.';
+}
+$('nkFeeLedgerReload').addEventListener('click',nkLoadAccounting);
+
 $('nkChangeForm').addEventListener('submit',async e=>{
  e.preventDefault();if(profile?.role!=='vorstand')return;
  const id=$('nkChangeMembership').value;
@@ -1228,14 +1261,14 @@ $('nkChangeForm').addEventListener('submit',async e=>{
  if(!entry){status('nkChangeStatus','Hauptmitglied nicht mehr gefunden');return}
  const type=$('nkChangeType').value,date=$('nkChangeDate').value;
  const label=type==='leave'?'Vereinsaustritt':type==='to_family'?'Einzel → Familie':'Familie → Einzel';
- if(!confirm(label+' für '+entry.first_name+' '+entry.last_name+' zum '+new Date(date+'T12:00:00').toLocaleDateString('de-DE')+' VORMERKEN?\nNoch keine automatische Umsetzung und keine Beitragsbuchung.'))return;
+ if(!confirm(label+' für '+entry.first_name+' '+entry.last_name+' zum '+new Date(date+'T12:00:00').toLocaleDateString('de-DE')+' VORMERKEN?\nDie Änderung wird am gewählten Datum automatisch wirksam.'))return;
  const btn=$('nkChangeSave');btn.disabled=true;status('nkChangeStatus','Vormerkung wird gespeichert …');
  const {error}=await supabase.rpc('nk_board_schedule_membership_change',{
   p_membership_id:id,p_change_type:type,p_effective_on:date,p_reason:$('nkChangeReason').value.trim()});
  btn.disabled=false;
  if(error){status('nkChangeStatus','Vormerken fehlgeschlagen: '+error.message);return}
  $('nkChangePanel').hidden=true;await nkLoadChanges();
- status('nkChangeListStatus','✅ Änderung sicher vorgemerkt. Noch nicht automatisch wirksam.',true);
+ status('nkChangeListStatus','✅ Änderung vorgemerkt. Automatische Umsetzung zum Wirksamkeitsdatum.',true);
 });
 $('nkFeeDate').value=new Date().toLocaleDateString('en-CA');
 $('nkFeeForm').addEventListener('submit',async e=>{
