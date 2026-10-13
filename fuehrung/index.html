@@ -38,6 +38,28 @@
 .void-edit textarea{min-height:76px;resize:vertical}
 .void-edit .paper-actions{margin-top:9px}
 @media(max-width:500px){.void-head{gap:6px}.void-amount{font-size:15px}.void-actions button{width:100%}}
+
+/* Familien- und persönliche Getränkekonten: Finanzübersicht */
+.account-section-title{margin:22px 0 8px;font:normal 21px Georgia,serif}
+.finance-summary{margin:12px 0 17px;background:#f0f5f0;border:1px solid #cfdbd0;border-radius:12px;padding:12px 14px}
+.finance-summary-line{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:6px 0}
+.finance-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin:10px 0}
+.finance-card summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.finance-card summary::-webkit-details-marker{display:none}
+.finance-card summary::before{content:'▸';color:var(--green);font-size:18px;margin-right:3px}
+.finance-card[open] summary::before{content:'▾'}
+.finance-card-title{flex:1;min-width:0}
+.finance-card-title strong{display:block;overflow-wrap:anywhere}
+.finance-card-title small{display:block;color:var(--muted);font-size:12px}
+.finance-member{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding:10px 0;font-size:13px}
+.finance-member:first-child{margin-top:12px}
+.finance-member .amount{font-size:14px}
+.finance-filter{max-width:330px}
+.finance-breakdown{margin-top:11px}
+.guest-balance-sub{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+.guest-balance-tags{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+@media(max-width:550px){.guest-balance-tags{justify-content:flex-start}.item.account-item{align-items:flex-start;flex-direction:column}}
+
 </style>
 </head>
 <body>
@@ -47,9 +69,9 @@
 <section id="loadingPanel" class="panel"><p>Benutzerberechtigung wird geprüft …</p></section>
 <div id="app" hidden>
 <div class="notice" id="dataNotice" hidden></div>
-<section class="stats" aria-label="Kennzahlen"><div class="stat"><div class="value" id="memberCount">–</div><div class="label">Fördermitglieder · Personen</div></div><div class="stat"><div class="value" id="guestCount">–</div><div class="label">Gästekonten</div></div><div class="stat"><div class="value" id="openAmount">–</div><div class="label">Offene Getränkebeträge</div></div><div class="stat"><div class="value" id="creditAmount">–</div><div class="label">Getränkeguthaben gesamt</div></div></section>
+<section class="stats" aria-label="Kennzahlen"><div class="stat"><div class="value" id="memberCount">–</div><div class="label">Fördermitglieder · Personen</div></div><div class="stat"><div class="value" id="guestCount">–</div><div class="label">Gästekonten</div></div><div class="stat"><div class="value" id="openAmount">–</div><div class="label">Offene Getränkebeträge · getrennte Konten</div></div><div class="stat"><div class="value" id="creditAmount">–</div><div class="label">Getränkeguthaben · getrennte Konten</div></div></section>
 <nav aria-label="Bereiche" id="tabs"><button class="active" data-tab="overview" type="button">Übersicht</button><button data-tab="members" type="button" class="board-only">Mitglieder</button><button data-tab="birthdays" type="button">🎂 Geburtstage <span id="birthdayBadge" hidden></span></button><button class="board-only" data-tab="guests" type="button">Gäste</button><button class="board-only" data-tab="finance" type="button">Finanzen</button><button class="board-only" data-tab="paper" type="button">🧾 Papierstrichlisten</button><button class="board-only" data-tab="prices" type="button">🍻 Getränkepreise</button><button class="board-only" data-tab="requests" type="button">Anträge</button><button id="adminTab" data-tab="admin" type="button" hidden>⚙ Admin</button></nav>
-<section id="overview" class="tab"><div class="grid"><article class="panel"><h2>Getränkekonten</h2><p class="muted">Aktuelle Daten aus der Getränkeliste.</p><div class="item"><strong>Registrierte Gäste</strong><span id="overviewGuests">–</span></div><div class="item"><strong>Offene Getränkebeträge</strong><span id="overviewDebt">–</span></div><div class="item"><strong>Verfügbares Guthaben</strong><span id="overviewCredit">–</span></div><button type="button" class="primary" data-jump="guests">Gästekonten ansehen</button></article><article class="panel"><h2>Mitgliedschaften</h2><p>Einzelmitgliedschaft: <strong>25 € pro Kalenderjahr</strong></p><p>Familienmitgliedschaft: <strong>30 € pro Kalenderjahr</strong></p><div class="hint">Die Mitgliederdatenbank ist angebunden. Die Beitragsabrechnung ist noch nicht eingerichtet.</div></article></div><article class="panel"><h2>Kontostand verstehen</h2><div class="formula">Einzahlungen und Gutschriften − Getränkeverbrauch = Kontostand. Positiv bedeutet Guthaben, negativ bedeutet offener Betrag.</div><p class="muted">Mitgliedsbeiträge und rückwirkende Mitgliederrabatte werden erst nach Einrichtung der zugehörigen Datenbanklogik berücksichtigt.</p></article></section>
+<section id="overview" class="tab"><div class="grid"><article class="panel"><h2>Getränkekonten</h2><p class="muted">Persönliche Konten und Familienkonten ohne Doppelzählung.</p><div class="item"><strong>Registrierte Gäste</strong><span id="overviewGuests">–</span></div><div class="item"><strong>Offene Getränkebeträge</strong><span id="overviewDebt">–</span></div><div class="item"><strong>Verfügbares Guthaben</strong><span id="overviewCredit">–</span></div><button type="button" class="primary" data-jump="guests">Gästekonten ansehen</button></article><article class="panel"><h2>Mitgliedschaften</h2><p>Einzelmitgliedschaft: <strong>25 € pro Kalenderjahr</strong></p><p>Familienmitgliedschaft: <strong>30 € pro Kalenderjahr</strong></p><div class="hint">Die Mitgliederdatenbank ist angebunden. Die Beitragsabrechnung ist noch nicht eingerichtet.</div></article></div><article class="panel"><h2>Kontostand verstehen</h2><div class="formula">Bestätigte Einzahlungen + Gutschriften − aktive Getränkebuchungen = Kontostand. Persönliche Konten und Familienkonten werden getrennt berechnet. Positiv bedeutet Guthaben, negativ bedeutet offener Betrag.</div><p class="muted">Mitgliedsbeiträge und rückwirkende Mitgliederrabatte werden erst nach Einrichtung der zugehörigen Datenbanklogik berücksichtigt.</p></article></section>
 <section id="birthdays" class="tab" hidden><article class="panel"><h2>🎂 Geburtstage</h2><p class="muted">Heute und in den kommenden 30 Tagen · nur für Vorstand und Gremium</p><p class="status" id="birthdayStatus" role="status"></p><div id="birthdayList"></div><button type="button" class="secondary-btn" id="reloadBirthdays">Aktualisieren</button></article></section>
 <section id="members" class="tab" hidden>
 <article class="panel"><h2>Mitgliederverwaltung</h2><p class="muted">Einzel- und Familienmitgliedschaften getrennt verwalten. Personen mit Mitgliedsnummer und Gastnummer.</p><div class="subtabs"><button type="button" class="active" data-member-type="single">Einzelmitgliedschaften</button><button type="button" data-member-type="family">Familienmitgliedschaften</button></div><p class="status" id="memberListStatus" role="status"></p><div class="hint">Familienaustritte beenden die Fördermitgliedschaft der Person. Ihre Mitgliedsnummer bleibt erhalten. <strong>Familienkonto-Aktivierungen bitte zunächst nur mit Testfamilien ausprobieren.</strong> Die Vorstandsübersicht und Finanzansicht werden noch auf getrennte Familienkontostände umgestellt.</div><div id="approvedMembers"></div></article>
@@ -71,7 +93,10 @@
   <div id="voidEntries" class="void-list" aria-live="polite"><p class="muted">Wähle einen Gast, um seine Getränkebuchungen zu sehen.</p></div>
   <div class="hint">Eine Papierstrichliste mit mehr als zehn gleichen Getränken wird in mehrere Buchungen aufgeteilt. Jede Buchung kann einzeln storniert werden. Der Kontostand wird nach der Stornierung neu berechnet.</div>
 </article>
-<article class="panel"><h2>Kontostände</h2><p class="muted">Aktueller Stand der Getränkekonten. Einzelne Getränkebuchungen findest du oben unter „Getränkebuchung stornieren“.</p><div id="financeList"></div></article></section>
+<article class="panel"><h2>Finanzübersicht · Getränkekonten</h2><p class="muted">Persönliche Kontostände und Familienkonten sind getrennt. Jedes Familienkonto wird in den Gesamtzahlen genau einmal gezählt. Die einzelnen Familienanteile dienen nur zur Aufschlüsselung.</p>
+<div class="hint"><strong>Abrechnungsregel:</strong> Buchungen vor einer Familienzuordnung bleiben persönlich. Getränke, Einzahlungen und Gutschriften innerhalb der Familienzugehörigkeit zählen zum gemeinsamen Familienkonto. Ehemalige Familienmitglieder bleiben für die historischen Familienbuchungen sichtbar.</div>
+<label for="financeFilter">Konten anzeigen</label><select id="financeFilter" class="finance-filter"><option value="open">Nur offene Beträge</option><option value="all">Alle Konten</option><option value="credit">Nur Guthaben</option></select>
+<div id="financeList" aria-live="polite"></div></article></section>
 <section id="paper" class="tab" hidden>
 <article class="panel">
   <h2>🧾 Papierstrichliste nachbuchen</h2>
@@ -116,7 +141,7 @@
 import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 const supabase=createClient('https://tyiskycptrrtlibpdbse.supabase.co','sb_publishable_Ctoq40heyWXiE8L8RMMFoQ_MwKCRPjp');
 const $=id=>document.getElementById(id);const money=cents=>new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR'}).format(Number(cents)/100);
-let profile=null,guests=[],balances=[],membershipRequests=[],familyRequests=[],clubMembers=[],birthdays=[],memberTypeFilter="single",editingMemberId=null;
+let profile=null,guests=[],balances=[],familyBalances=[],financeSnapshotReady=false,membershipRequests=[],familyRequests=[],clubMembers=[],birthdays=[],memberTypeFilter="single",editingMemberId=null;
 let activeFamilyAccounts=new Map(),familyActivationStatusLoaded=false;
 let boardProducts=[],paperQuantities=new Map(),paperPending=null,paperSending=false,boardUserId=null;
 let paperPriceQuote=null,paperPriceLoading=false,paperPriceRequestVersion=0;
@@ -126,7 +151,7 @@ function status(id,text,ok=false){$(id).textContent=text;$(id).classList.toggle(
 function node(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e}
 function showTab(tab){if(profile?.role==='gremium'&&tab!=='birthdays')return;if(tab==='admin'&&!profile?.is_admin)return;for(const el of document.querySelectorAll('.tab'))el.hidden=el.id!==tab;for(const b of document.querySelectorAll('#tabs button'))b.classList.toggle('active',b.dataset.tab===tab);if(tab==='paper'&&paperSelectedGuest())void loadPaperPriceQuote()}
 for(const b of document.querySelectorAll('#tabs button'))b.addEventListener('click',()=>showTab(b.dataset.tab));for(const b of document.querySelectorAll('[data-jump]'))b.addEventListener('click',()=>showTab(b.dataset.jump));
-function showLogin(error=''){$('loadingPanel').hidden=true;$('app').hidden=true;$('loginPanel').hidden=false;$('logout').hidden=true;profile=null;boardUserId=null;guests=[];balances=[];status('loginStatus',error)}
+function showLogin(error=''){$('loadingPanel').hidden=true;$('app').hidden=true;$('loginPanel').hidden=false;$('logout').hidden=true;profile=null;boardUserId=null;guests=[];balances=[];familyBalances=[];financeSnapshotReady=false;status('loginStatus',error)}
 async function initialize(){
  $('loadingPanel').hidden=false;$('loginPanel').hidden=true;$('app').hidden=true;
  const {data:{user},error}=await supabase.auth.getUser();if(error||!user){showLogin();return}
@@ -144,9 +169,166 @@ async function initialize(){
  await refreshBirthdays();
  if(board){await refreshData();await refreshMembershipRequests();await refreshFamilyRequests();await refreshClubMembers();await loadBoardPrices();renderPaperGuestOptions();renderPaperProducts();renderPaperPending()}
 }
-async function refreshData(){status('guestStatus','');const [gr,br]=await Promise.all([supabase.from('drink_guests').select('id,guest_number,display_name,is_active').order('guest_number'),supabase.from('drink_balances').select('guest_id,guest_number,display_name,balance_cents')]);if(gr.error||br.error){const detail=[gr.error?.message,br.error?.message].filter(Boolean).join(' · ');$('dataNotice').hidden=false;$('dataNotice').textContent='Gastdaten konnten nicht vollständig geladen werden. Bitte Supabase-Leserechte prüfen. '+detail;status('guestStatus','Laden fehlgeschlagen.');$('guestCount').textContent='–';$('openAmount').textContent='–';$('creditAmount').textContent='–';$('overviewGuests').textContent='–';$('overviewDebt').textContent='–';$('overviewCredit').textContent='–';$('guestList').replaceChildren();$('financeList').replaceChildren();$('paymentGuest').replaceChildren(new Option('Keine Konten verfügbar',''));$('voidGuest').replaceChildren(new Option('Keine Konten verfügbar',''));return} $('dataNotice').hidden=true;guests=gr.data||[];balances=br.data||[];const balanceMap=new Map(balances.map(b=>[b.guest_id,Number(b.balance_cents)]));const active=guests.filter(g=>g.is_active);const debt=active.reduce((sum,g)=>sum+Math.max(0,-(balanceMap.get(g.id)||0)),0);const credit=active.reduce((sum,g)=>sum+Math.max(0,balanceMap.get(g.id)||0),0);$('guestCount').textContent=active.length;$('openAmount').textContent=money(debt);$('creditAmount').textContent=money(credit);$('overviewGuests').textContent=active.length;$('overviewDebt').textContent=money(debt);$('overviewCredit').textContent=money(credit);const sel=$('paymentGuest');const selected=sel.value;sel.replaceChildren(new Option('Bitte Gast auswählen',''));for(const g of active)sel.add(new Option('#'+g.guest_number+' · '+g.display_name,g.id));if(active.some(g=>g.id===selected))sel.value=selected;renderGuests();renderFinance();renderPaperGuestOptions();renderVoidGuestOptions()}
-function renderGuests(){const root=$('guestList');root.replaceChildren();const q=$('guestSearch').value.trim().toLocaleLowerCase('de');const balanceMap=new Map(balances.map(b=>[b.guest_id,Number(b.balance_cents)]));const filtered=guests.filter(g=>String(g.guest_number).includes(q)||g.display_name.toLocaleLowerCase('de').includes(q));if(!filtered.length){root.append(node('p','Keine passenden Gastkonten.','muted'));return}for(const g of filtered){const bal=balanceMap.get(g.id)||0;const row=node('div',undefined,'item');const info=node('div');info.append(node('strong',g.display_name,'name'),node('div','Gastnummer '+g.guest_number+(g.is_active?'':' · Inaktiv'),'muted'));const badge=node('span',bal>=0?money(bal)+' Guthaben':money(-bal)+' offen','pill'+(bal<0?' debt':''));row.append(info,badge);root.append(row)}}
-function renderFinance(){const root=$('financeList');root.replaceChildren();const balanceMap=new Map(balances.map(b=>[b.guest_id,Number(b.balance_cents)]));if(!guests.length){root.append(node('p','Keine Gastkonten vorhanden.','muted'));return}for(const g of guests){const bal=balanceMap.get(g.id)||0;const row=node('div',undefined,'item');const info=node('div');info.append(node('strong',g.display_name),node('div','Gastnummer '+g.guest_number,'muted'));row.append(info,node('span',money(bal),'amount '+(bal<0?'negative':'positive')));root.append(row)}}
+// Bilanzdaten nur über eine geschützte Vorstands-RPC abrufen.
+// Keine direkten Browser-Leserechte auf Familienmitglieds-Finanzdaten.
+function signedCents(value,label){
+ const n=Number(value);
+ if(!Number.isSafeInteger(n))throw new Error('Ungültiger Geldbetrag: '+label);
+ return n;
+}
+function formatBalance(amount){
+ return amount<0?money(-amount)+' offen':amount>0?money(amount)+' Guthaben':'0,00 € ausgeglichen';
+}
+function accountMatchesFilter(amount){
+ const filter=$('financeFilter').value;
+ return filter==='all'||(filter==='open'&&amount<0)||(filter==='credit'&&amount>0);
+}
+function checkBoardFinanceSnapshot(raw,guestList){
+ if(!raw||!Array.isArray(raw.personal_accounts)||!Array.isArray(raw.family_accounts))throw new Error('Ungültige Antwort der Finanzübersicht.');
+ const seenGuests=new Set(),seenFamilies=new Set();
+ const guestIds=new Set(guestList.map(g=>g.id));
+ const personal=raw.personal_accounts.map(p=>{
+  if(!p||!guestIds.has(p.guest_id)||seenGuests.has(p.guest_id))throw new Error('Unvollständige oder doppelte persönliche Konten.');
+  seenGuests.add(p.guest_id);
+  return {guest_id:p.guest_id,balance_cents:signedCents(p.balance_cents,'Persönliches Konto')};
+ });
+ if(seenGuests.size!==guestIds.size)throw new Error('Persönliche Getränkekonten fehlen in der Finanzabfrage.');
+ const families=raw.family_accounts.map(f=>{
+  if(!f||typeof f.family_id!=='string'||seenFamilies.has(f.family_id)||!Array.isArray(f.members))throw new Error('Ungültige Familienkonten.');
+  seenFamilies.add(f.family_id);
+  const members=f.members.map(m=>({
+   guest_id:m.guest_id,display_name:String(m.display_name??''),
+   guest_number:m.guest_number,is_current_member:m.is_current_member===true,
+   is_primary:m.guest_id===f.primary_guest_id,
+   balance_cents:signedCents(m.balance_cents,'Familienanteil')
+  }));
+  const balance=signedCents(f.balance_cents,'Familienkonto');
+  const split=members.reduce((sum,m)=>sum+m.balance_cents,0);
+  if(!Number.isSafeInteger(split)||split!==balance)throw new Error('Familienkonto '+String(f.family_name||f.family_id)+' stimmt nicht mit den Einzelanteilen überein.');
+  return {family_id:f.family_id,family_name:String(f.family_name??'Familienkonto'),primary_guest_id:f.primary_guest_id,balance_cents:balance,members};
+ });
+ return {personal,families};
+}
+function accountBreakdown(){
+ const active=new Map();
+ for(const family of familyBalances){
+  for(const member of family.members){
+   if(!member.is_current_member)continue;
+   if(active.has(member.guest_id))throw new Error('Mehrere aktive Familienkonten für dasselbe Gastkonto.');
+   active.set(member.guest_id,{family,member});
+  }
+ }
+ return active;
+}
+async function refreshData(){
+ status('guestStatus','');
+ // Der Browser lädt nur die Gast-Stammdaten direkt. Salden kommen aus der geschützten RPC.
+ const [gr,summary]=await Promise.all([
+  supabase.from('drink_guests').select('id,guest_number,display_name,is_active').order('guest_number'),
+  supabase.rpc('drink_board_account_summary')
+ ]);
+ try{
+  if(gr.error||summary.error)throw new Error([gr.error?.message,summary.error?.message].filter(Boolean).join(' · '));
+  const nextGuests=gr.data||[];
+  const checked=checkBoardFinanceSnapshot(summary.data,nextGuests);
+  guests=nextGuests;balances=checked.personal;familyBalances=checked.families;
+  financeSnapshotReady=true;
+  $('dataNotice').hidden=true;
+  const financialAmounts=[...balances.map(b=>b.balance_cents),...familyBalances.map(f=>f.balance_cents)];
+  const debt=financialAmounts.reduce((sum,c)=>sum+Math.max(0,-c),0);
+  const credit=financialAmounts.reduce((sum,c)=>sum+Math.max(0,c),0);
+  if(!Number.isSafeInteger(debt)||!Number.isSafeInteger(credit))throw new Error('Finanzgesamtwerte außerhalb des gültigen Zahlenbereichs.');
+  const active=guests.filter(g=>g.is_active);
+  $('guestCount').textContent=active.length;
+  $('openAmount').textContent=money(debt);$('creditAmount').textContent=money(credit);
+  $('overviewGuests').textContent=active.length;
+  $('overviewDebt').textContent=money(debt);$('overviewCredit').textContent=money(credit);
+  const sel=$('paymentGuest'), selected=sel.value;
+  sel.replaceChildren(new Option('Bitte Gast auswählen',''));
+  for(const g of active)sel.add(new Option('#'+g.guest_number+' · '+g.display_name,g.id));
+  if(active.some(g=>g.id===selected))sel.value=selected;
+  renderGuests();renderFinance();renderPaperGuestOptions();renderVoidGuestOptions();
+ }catch(err){
+  // Keine veralteten oder irreführenden Salden anzeigen, wenn eine Abfrage fehlschlägt.
+  financeSnapshotReady=false;guests=[];balances=[];familyBalances=[];
+  const detail=err?.message||'Unbekannter Fehler';
+  $('dataNotice').hidden=false;
+  $('dataNotice').textContent='Finanzdaten konnten nicht sicher geladen werden: '+detail;
+  status('guestStatus','Finanzübersicht nicht verfügbar.');
+  for(const id of ['guestCount','openAmount','creditAmount','overviewGuests','overviewDebt','overviewCredit'])$(id).textContent='–';
+  $('guestList').replaceChildren();$('financeList').replaceChildren(node('p','Finanzdaten nicht verfügbar.','status'));
+  $('paymentGuest').replaceChildren(new Option('Keine Konten verfügbar',''));
+  $('voidGuest').replaceChildren(new Option('Keine Konten verfügbar',''));
+  $('paperGuest').replaceChildren(new Option('Keine Konten verfügbar',''));
+ }
+}
+function renderGuests(){
+ const root=$('guestList');root.replaceChildren();
+ if(!financeSnapshotReady){root.append(node('p','Finanzdaten nicht verfügbar.','status'));return}
+ const q=$('guestSearch').value.trim().toLocaleLowerCase('de');
+ const personal=new Map(balances.map(b=>[b.guest_id,b.balance_cents]));
+ const currentFamily=accountBreakdown();
+ const filtered=guests.filter(g=>String(g.guest_number).includes(q)||g.display_name.toLocaleLowerCase('de').includes(q));
+ if(!filtered.length){root.append(node('p','Keine passenden Gastkonten.','muted'));return}
+ for(const g of filtered){
+  const own=personal.get(g.id);
+  const row=node('div',undefined,'item account-item'),info=node('div');
+  info.append(node('strong',g.display_name,'name'),node('div','Gastnummer '+g.guest_number+(g.is_active?'':' · Inaktiv'),'muted'));
+  const tags=node('div',undefined,'guest-balance-tags');
+  tags.append(node('span','Persönlich: '+formatBalance(own),'pill'+(own<0?' debt':'')));
+  const link=currentFamily.get(g.id);
+  if(link){
+   info.append(node('small','Familienkonto: '+link.family.family_name,'guest-balance-sub'));
+   const share=link.member.balance_cents;
+   tags.append(node('span','Familienanteil: '+formatBalance(share),'pill'+(share<0?' debt':'')));
+  }
+  row.append(info,tags);root.append(row);
+ }
+}
+function renderFinance(){
+ const root=$('financeList');root.replaceChildren();
+ if(!financeSnapshotReady){root.append(node('p','Finanzdaten nicht verfügbar.','status'));return}
+ const shownFamilies=familyBalances.filter(f=>accountMatchesFilter(f.balance_cents));
+ const shownPersonal=balances.filter(p=>accountMatchesFilter(p.balance_cents));
+ const personalTotal=balances.reduce((sum,p)=>sum+p.balance_cents,0);
+ const familyTotal=familyBalances.reduce((sum,f)=>sum+f.balance_cents,0);
+ const net=personalTotal+familyTotal;
+ const box=node('div',undefined,'finance-summary');
+ const line=node('div',undefined,'finance-summary-line');
+ line.append(node('span','Gesamtsaldo der getrennten Konten'),node('strong',money(net),'amount '+(net<0?'negative':'positive')));
+ const explanation=node('p','Summe aus '+balances.length+' persönlichen Konten und '+familyBalances.length+' Familienkonten. Individuelle Familienanteile werden nicht zusätzlich addiert.','muted');
+ box.append(line,explanation);root.append(box);
+ root.append(node('h3','Gemeinsame Familienkonten ('+shownFamilies.length+')','account-section-title'));
+ if(!shownFamilies.length)root.append(node('p','Keine Familienkonten mit diesem Filter.','muted'));
+ for(const f of shownFamilies){
+  const details=node('details',undefined,'finance-card');
+  const summary=node('summary');
+  const title=node('div',undefined,'finance-card-title');
+  title.append(node('strong',f.family_name),node('small',f.members.length+' Beteiligte · Familienkonto nur einmal in den Gesamtzahlen'));
+  summary.append(title,node('span',formatBalance(f.balance_cents),'amount '+(f.balance_cents<0?'negative':'positive')));
+  details.append(summary);
+  const inner=node('div',undefined,'finance-breakdown');
+  for(const m of f.members){
+   const entry=node('div',undefined,'finance-member');
+   const label=node('div');
+   label.append(node('strong',m.display_name),node('small','Gastnummer '+m.guest_number+(m.is_primary?' · Hauptmitglied':'')+(m.is_current_member?'':' · Ehemaliges Familienmitglied'),'guest-balance-sub'));
+   entry.append(label,node('span',formatBalance(m.balance_cents),'amount '+(m.balance_cents<0?'negative':'positive')));
+   inner.append(entry);
+  }
+  details.append(inner);root.append(details);
+ }
+ root.append(node('h3','Persönliche Getränkekonten ('+shownPersonal.length+')','account-section-title'));
+ if(!shownPersonal.length)root.append(node('p','Keine persönlichen Konten mit diesem Filter.','muted'));
+ const guestMap=new Map(guests.map(g=>[g.id,g]));
+ for(const p of shownPersonal){
+  const guest=guestMap.get(p.guest_id);
+  const row=node('div',undefined,'item');const info=node('div');
+  info.append(node('strong',guest?.display_name||'Gastkonto'),node('div','Gastnummer '+(guest?.guest_number??'–')+(guest?.is_active?'':' · Inaktiv')+' · ausschließlich persönlicher Betrag','muted'));
+  row.append(info,node('span',formatBalance(p.balance_cents),'amount '+(p.balance_cents<0?'negative':'positive')));
+  root.append(row);
+ }
+}
+$('financeFilter').addEventListener('change',renderFinance);
 
 // Stornierungen: Buchungen nur über geschützte Vorstands-RPCs laden und ändern.
 function renderVoidGuestOptions(){
@@ -357,6 +539,7 @@ function renderApprovedMembers(){
            });
            if(error || typeof data!=='string')throw new Error(error?.message||'Keine Aktivierungsbestätigung erhalten.');
            await refreshClubMembers();
+           await refreshData();
            if(!familyActivationStatusLoaded || !activeFamilyAccounts.has(head.membership_id)){
              status('memberListStatus','Aktivierung gespeichert, aber Status konnte nicht bestätigt werden. Bitte Seite neu laden.');
            }else{
@@ -415,6 +598,7 @@ function renderApprovedMembers(){
            });
            if(error || data!==true)throw new Error(error?.message||'Keine Bestätigung von Supabase erhalten.');
            await refreshClubMembers();
+           await refreshData();
            status('memberListStatus','✅ Austritt von '+person+' gespeichert. Der Förderpreis ist für die Person beendet.',true);
          }catch(error){
            leave.disabled=false;edit.disabled=false;
@@ -567,7 +751,7 @@ $('addFamilyGuestForm').addEventListener('submit',async e=>{
   btn.disabled=false;
   if(error){status('addFamilyGuestStatus','Zuordnung fehlgeschlagen: '+error.message);return}
   status('addFamilyGuestStatus',guest.display_name+' (#'+number+') wurde der Familie zugeordnet.',true);
-  $('familyGuestNumber').value='';await refreshClubMembers();
+  $('familyGuestNumber').value='';await refreshClubMembers();await refreshData();
 });
 $('createFamilyPersonForm').addEventListener('submit',async e=>{
   e.preventDefault();
