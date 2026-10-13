@@ -52,7 +52,7 @@
 <section id="overview" class="tab"><div class="grid"><article class="panel"><h2>Getränkekonten</h2><p class="muted">Aktuelle Daten aus der Getränkeliste.</p><div class="item"><strong>Registrierte Gäste</strong><span id="overviewGuests">–</span></div><div class="item"><strong>Offene Getränkebeträge</strong><span id="overviewDebt">–</span></div><div class="item"><strong>Verfügbares Guthaben</strong><span id="overviewCredit">–</span></div><button type="button" class="primary" data-jump="guests">Gästekonten ansehen</button></article><article class="panel"><h2>Mitgliedschaften</h2><p>Einzelmitgliedschaft: <strong>25 € pro Kalenderjahr</strong></p><p>Familienmitgliedschaft: <strong>30 € pro Kalenderjahr</strong></p><div class="hint">Die Mitgliederdatenbank ist angebunden. Die Beitragsabrechnung ist noch nicht eingerichtet.</div></article></div><article class="panel"><h2>Kontostand verstehen</h2><div class="formula">Einzahlungen und Gutschriften − Getränkeverbrauch = Kontostand. Positiv bedeutet Guthaben, negativ bedeutet offener Betrag.</div><p class="muted">Mitgliedsbeiträge und rückwirkende Mitgliederrabatte werden erst nach Einrichtung der zugehörigen Datenbanklogik berücksichtigt.</p></article></section>
 <section id="birthdays" class="tab" hidden><article class="panel"><h2>🎂 Geburtstage</h2><p class="muted">Heute und in den kommenden 30 Tagen · nur für Vorstand und Gremium</p><p class="status" id="birthdayStatus" role="status"></p><div id="birthdayList"></div><button type="button" class="secondary-btn" id="reloadBirthdays">Aktualisieren</button></article></section>
 <section id="members" class="tab" hidden>
-<article class="panel"><h2>Mitgliederverwaltung</h2><p class="muted">Einzel- und Familienmitgliedschaften getrennt verwalten. Personen mit Mitgliedsnummer und Gastnummer.</p><div class="subtabs"><button type="button" class="active" data-member-type="single">Einzelmitgliedschaften</button><button type="button" data-member-type="family">Familienmitgliedschaften</button></div><p class="status" id="memberListStatus" role="status"></p><div id="approvedMembers"></div></article>
+<article class="panel"><h2>Mitgliederverwaltung</h2><p class="muted">Einzel- und Familienmitgliedschaften getrennt verwalten. Personen mit Mitgliedsnummer und Gastnummer.</p><div class="subtabs"><button type="button" class="active" data-member-type="single">Einzelmitgliedschaften</button><button type="button" data-member-type="family">Familienmitgliedschaften</button></div><p class="status" id="memberListStatus" role="status"></p><div class="hint">Familienaustritte beenden die Fördermitgliedschaft der Person. Ihre Mitgliedsnummer bleibt erhalten. <strong>Während der Testphase bitte nur mit Testmitgliedern ausprobieren:</strong> Die gemeinsame Familienabrechnung ist noch nicht vollständig mit den Konten verbunden.</div><div id="approvedMembers"></div></article>
 <article class="panel" id="memberEditorPanel" hidden><h2>Mitgliederakte bearbeiten</h2><p class="muted" id="editMemberDescription"></p><form id="editMemberForm"><div class="fieldrow"><div><label for="editFirst">Vorname</label><input id="editFirst" required maxlength="100"></div><div><label for="editLast">Nachname</label><input id="editLast" required maxlength="100"></div><div><label for="editBirth">Geburtsdatum</label><input id="editBirth" type="date"></div><div><label for="editEmail">E-Mail</label><input id="editEmail" type="email"></div><div><label for="editPhone">Telefon</label><input id="editPhone" type="tel"></div><div><label for="editStreet">Straße</label><input id="editStreet"></div><div><label for="editHouse">Hausnummer</label><input id="editHouse"></div><div><label for="editPostcode">PLZ</label><input id="editPostcode" inputmode="numeric"></div><div><label for="editCity">Ort</label><input id="editCity"></div></div><label for="editNotes">Interne Bemerkungen</label><textarea id="editNotes" rows="3"></textarea><div class="member-actions"><button class="primary" id="saveMemberBtn" type="submit">Änderungen speichern</button><button type="button" class="secondary-btn" id="cancelMemberEdit">Abbrechen</button></div></form><p class="status" id="editMemberStatus" role="status"></p></article>
 <article class="panel"><h2>Mitglied hinzufügen</h2><p class="muted">Auch ohne bisheriges Getränkekonto. Die Gastnummer wird automatisch erstellt.</p>
 <form id="createMemberForm"><div class="fieldrow"><div><label for="memberFirst">Vorname</label><input id="memberFirst" required maxlength="100" autocomplete="off"></div><div><label for="memberLast">Nachname</label><input id="memberLast" required maxlength="100" autocomplete="off"></div><div><label for="memberType">Mitgliedschaft</label><select id="memberType"><option value="single">Einzelmitgliedschaft · 25 €/Jahr</option><option value="family">Familienmitgliedschaft · 30 €/Jahr</option></select></div><div><label for="memberStart">Eintrittsdatum</label><input id="memberStart" type="date" required></div></div><button class="primary" id="createMemberBtn" type="submit">Mitglied anlegen</button></form><p class="status" id="createMemberStatus" role="status"></p><div id="createdGuestCard" class="panel" hidden style="border:2px solid #c9a56b;background:#f1f6f0;margin-top:12px"><strong id="createdGuestName">Mitglied angelegt</strong><p class="muted">Zugewiesene Gastnummer</p><div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap"><strong id="createdGuestNumber" style="font-size:34px;letter-spacing:2px">#0000</strong><button type="button" class="primary" id="copyCreatedNumber" style="margin:0">Nummer kopieren</button></div><p class="muted">Der Getränkezugang muss separat sicher aktiviert werden.</p></div><div class="hint">Bei Familienmitgliedschaften wird zunächst das Hauptmitglied angelegt. Bereits registrierte Gäste können unten einer bestehenden Familie zugeordnet werden. Der Zugang zum Getränkekonto muss vor Nutzung sicher aktiviert werden.</div></article>
@@ -290,7 +290,46 @@ function renderApprovedMembers(){
        if(m.left_reason)info.append(node('div','Grund: '+m.left_reason,'muted'));
      }
      const edit=node('button','Bearbeiten','secondary-btn');edit.type='button';edit.addEventListener('click',()=>openMemberEditor(m));
-     row.append(info,edit);box.append(row);
+     const actions=node('div',undefined,'member-actions');
+     actions.append(edit);
+     // Ein Familienhauptmitglied kann hier nicht austreten. Einzelmitglieder
+     // und bereits ausgetretene Personen erhalten ebenfalls keinen Button.
+     if(m.membership_type==='family' && m.member_status==='aktiv' && !m.is_primary){
+       const leave=node('button','Aus Familie austragen','secondary-btn');
+       leave.type='button';leave.style.borderColor='var(--red)';leave.style.color='var(--red)';
+       leave.addEventListener('click',async()=>{
+         const person=m.first_name+' '+m.last_name;
+         const reason=prompt('Austrittsgrund für '+person+' eingeben (5–500 Zeichen):');
+         if(reason===null)return;
+         const cleaned=reason.trim();
+         if(cleaned.length<5 || cleaned.length>500){
+           status('memberListStatus','Bitte einen Austrittsgrund mit 5 bis 500 Zeichen angeben.');return;
+         }
+         const message='Familienaustritt wirklich durchführen?\n\n'
+           +person+' · Mitgliedsnummer '+(m.member_number??'–')+'\n\n'
+           +'Die Fördermitgliedschaft dieser Person endet sofort.\n'
+           +'Ab dann gelten normale Getränkepreise und neue Buchungen sind persönlich.\n'
+           +'Alte Buchungen und die Mitgliedsnummer bleiben erhalten.\n\n'
+           +'Grund: '+cleaned+'\n\n'
+           +'Dieser Vorgang kann hier nicht rückgängig gemacht werden.';
+         if(!confirm(message))return;
+         leave.disabled=true;edit.disabled=true;
+         status('memberListStatus','Austritt für '+person+' wird gespeichert …');
+         try{
+           const {data,error}=await supabase.rpc('club_board_leave_family',{
+             p_member_id:m.member_id,p_reason:cleaned
+           });
+           if(error || data!==true)throw new Error(error?.message||'Keine Bestätigung von Supabase erhalten.');
+           await refreshClubMembers();
+           status('memberListStatus','✅ Austritt von '+person+' gespeichert. Der Förderpreis ist für die Person beendet.',true);
+         }catch(error){
+           leave.disabled=false;edit.disabled=false;
+           status('memberListStatus','Austritt fehlgeschlagen: '+(error?.message||'Unbekannter Fehler'));
+         }
+       });
+       actions.append(leave);
+     }
+     row.append(info,actions);box.append(row);
    }
    root.append(box);
  }
