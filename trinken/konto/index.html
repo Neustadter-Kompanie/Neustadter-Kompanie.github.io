@@ -64,6 +64,14 @@
     <div class="total"><span id="balanceLabel">Kontostand</span><strong id="balance">–</strong></div>
     <p class="muted">Buchungen vor dem Familienbeitritt bleiben getrennt.</p>
   </section>
+  <section class="card">
+    <div class="eyebrow">Vereinsbeiträge</div>
+    <h2>Mitgliedsbeiträge &amp; Umbuchungen</h2>
+    <p class="muted">Die Jahresbeiträge werden separat gebucht und sind bereits in deinem persönlichen oder gemeinsamen Familienkontostand enthalten. Eine Umbuchung schließt frühere Familienbeträge ab.</p>
+    <ul class="history" id="nkMembershipFees"></ul>
+    <h3>Abgeschlossene Familienkonten</h3>
+    <ul class="history" id="nkFormerFamilyTransfers"></ul>
+  </section>
 </div>
 <section class="card" id="membershipArea" hidden role="tabpanel" aria-labelledby="tabMembership"><div class="eyebrow">Fördermitgliedschaft</div><h2 id="membershipHeading">Mitgliedschaft bestätigen lassen</h2><p class="muted" id="membershipIntro">Der offizielle Mitgliedsantrag wird weiterhin als PDF per E-Mail eingereicht. Hier meldest du nur, dass du bereits Fördermitglied bist beziehungsweise deinen Mitgliedsantrag eingereicht hast. Der Vorstand prüft deine Angaben.</p><div class="member-state" id="membershipState">Mitgliedsstatus wird geladen …</div><form id="membershipForm" hidden><label for="membershipType">Welche Fördermitgliedschaft soll bestätigt werden?</label><select id="membershipType" required><option value="family" selected>Familienmitgliedschaft</option><option value="single">Einzelmitgliedschaft</option></select><label class="member-option" for="memberConfirm"><input type="checkbox" id="memberConfirm" required><span>Ich bestätige, dass ich bereits Fördermitglied bin oder den PDF-Mitgliedsantrag per E-Mail eingereicht habe.</span></label><button class="primary" type="submit" id="membershipSubmit">Bestätigung beim Vorstand anfragen</button></form><p id="membershipStatus" class="status" role="status" aria-live="polite"></p><section id="familyManagement" class="family-fields" hidden><h3>Familienmitglieder einreichen</h3><p class="muted">Jede Person benötigt bereits ein eigenes Getränkekonto. Trage den vollständigen Namen und die Gastnummer ein. Der Vorstand prüft jede Person einzeln. Bis zur Freischaltung gelten die normalen Preise.</p><form id="familyMemberForm"><div class="family-inputs"><div><label for="familyFullName">Vor- und Nachname</label><input id="familyFullName" type="text" maxlength="120" autocomplete="off" required placeholder="z. B. Max Mustermann"></div><div><label for="familyGuestNumber">Gastnummer</label><input id="familyGuestNumber" type="text" inputmode="numeric" pattern="[0-9]{1,4}" maxlength="4" required placeholder="z. B. 2345"></div></div><button class="primary" id="familyMemberSubmit" type="submit">Person zur Prüfung einreichen</button></form><p id="familyMemberStatus" class="status" role="status" aria-live="polite"></p><h3>Bereits eingereichte Personen</h3><div id="familyMemberList"><p class="muted">Wird geladen …</p></div><button class="secondary" type="button" id="refreshFamilyMembers">Prüfstatus aktualisieren</button></section><p class="muted">Die Anfrage schaltet noch keine Mitgliederpreise frei. Familienmitglieder werden erst nach Prüfung durch den Vorstand verknüpft.</p></section>
 </div><p id="accountStatus" role="status" aria-live="polite"></p>
@@ -315,6 +323,14 @@ async function loadAccount(){
   addHistory("payments",result.payments||[],p=>p.payment_method==="cash"?"Barzahlung":p.payment_method==="paypal"?"PayPal":"Sonstige Einzahlung",p=>"+"+euro(p.amount_cents));
   const credits=Array.isArray(result.credits)?result.credits:[];
   addHistory("credits",credits,c=>"Fördermitgliederrabatt · "+(Number(c.quantity)>1?c.quantity+" × ":"")+(c.product_name||"Getränk"),c=>"+"+euro(Number(c.amount_cents)||0));
+  const fees=Array.isArray(result.membership_fees)?result.membership_fees:[];
+  addHistory("nkMembershipFees",fees,
+    f=>"Fördermitgliedschaft "+f.fee_year+" · "+(f.fee_type==="family"?"Familie":"Einzel")+(f.months<12?" ("+f.months+" Monate)":"")+(f.family_id?" · Familienkonto":" · persönliches Konto"),
+    f=>"−"+euro(Number(f.amount_cents)||0));
+  const transfers=Array.isArray(result.former_family_transfers)?result.former_family_transfers:[];
+  addHistory("nkFormerFamilyTransfers",transfers,
+    t=>"Übertrag nach Auflösung des Familienkontos · "+new Date(t.effective_on+"T12:00:00").toLocaleDateString("de-DE"),
+    t=>(Number(t.amount_cents)>=0?"+":"−")+euro(Math.abs(Number(t.amount_cents)||0)));
   const creditsTotal=document.getElementById("creditsTotal"),creditSum=credits.reduce((sum,c)=>sum+(Number(c.amount_cents)||0),0);
   creditsTotal.hidden=!credits.length;
   creditsTotal.textContent="Bisherige Fördermitglieder-Gutschriften: +"+euro(creditSum);
