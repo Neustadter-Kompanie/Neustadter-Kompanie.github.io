@@ -241,6 +241,101 @@ header .nav a{border-radius:10px}
 #main-navigation a[href="/trinken/"]:hover,#main-navigation a[href="/intern/"]:hover{background:rgba(255,255,255,.14)}
 @media(max-width:900px){#main-navigation a[href="/trinken/"],#main-navigation a[href="/intern/"]{padding:12px}}
 
+
+/* Layoutkorrektur 13.10.2026: Karussell, Veranstaltungsliste, Navigationsabstände. */
+/* Bilder bewusst kompakter als der vollständige 1160px-Seiteninhalt. */
+.gallery-section .carousel-wrap{
+  width:100%; max-width:950px; margin-inline:auto;
+  border-radius:16px;
+}
+.gallery-section .carousel{
+  aspect-ratio:auto;
+  height:clamp(295px,34vw,450px);
+}
+/* Die Veranstaltungen bleiben Karten statt Bildschirm-breiter Balken. */
+.event-section > .shell{
+  width:min(980px,calc(100% - 48px));
+}
+.event-section .event-card{
+  margin-top:14px;
+}
+/* Gleichmäßige Abstände zwischen allen Menüpunkten auf großen Bildschirmen. */
+@media (min-width:1021px){
+  header #main-navigation{
+    display:flex; align-items:center; justify-content:flex-end;
+    width:auto; gap:8px; flex-wrap:nowrap; white-space:nowrap;
+    padding:0; overflow:visible;
+  }
+  header #main-navigation > a{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding:10px 12px; min-height:42px; margin:0;
+    border:1px solid transparent; border-radius:10px;
+    line-height:1.15; font-size:.77rem;
+  }
+  header #main-navigation > a[href="/trinken/"],
+  header #main-navigation > a[href="/intern/"]{
+    padding:10px 12px;
+    border:1px solid var(--line);
+    border-radius:10px;
+  }
+  header #main-navigation > a.nav-cta{
+    color:white; background:var(--wine);
+    padding:10px 14px;
+  }
+  header #main-navigation > a:hover:not(.nav-cta){
+    color:var(--wine); background:#efe8d9;
+  }
+}
+/* Das ausgeklappte Mobilmenü bleibt vertikal und gleichmäßig. */
+@media (max-width:1020px){
+  header #main-navigation{display:none;gap:0;width:100%;align-items:stretch;}
+  header #main-navigation.is-open{display:flex;}
+  header #main-navigation > a,
+  header #main-navigation > a[href="/trinken/"],
+  header #main-navigation > a[href="/intern/"]{
+    display:flex; width:100%; justify-content:flex-start;
+    padding:12px 14px; margin:0;
+    border:0; border-bottom:1px solid var(--line);
+    border-radius:0; min-height:46px;
+  }
+  header #main-navigation > a.nav-cta{
+    justify-content:center; margin-top:9px;
+    border-radius:9px; border-bottom:0;
+  }
+}
+@media (max-width:680px){
+  .gallery-section .carousel{height:260px;}
+  .gallery-section .carousel-wrap{border-radius:12px;}
+  .event-section > .shell{width:min(980px,calc(100% - 34px));}
+  .event-section .event-card{margin-top:12px;}
+}
+
+
+/* Carouselpunkte in einer Zeile, nicht ueber der Bildbeschreibung. */
+.gallery-section .carousel-dots{
+  width:min(420px,calc(100% - 38px));
+  max-width:none;
+  flex-wrap:nowrap;
+  justify-content:center;
+}
+@media (max-width:680px){
+  .gallery-section .slide-caption{bottom:47px;left:17px;right:17px;}
+  .gallery-section .slide-caption strong{font-size:1.27rem;}
+  .gallery-section .slide-caption span{font-size:.78rem;line-height:1.4;}
+  .gallery-section .carousel-dots{gap:5px;bottom:15px;}
+  .gallery-section .carousel-dots button{width:8px;height:8px;flex:0 0 8px;}
+  .gallery-section .carousel-btn{top:38%;}
+}
+
+/* Schmale Handys: Logo und Menue duerfen nicht aus dem Bildschirm ragen. */
+@media (max-width:360px){
+  header .nav{gap:8px;}
+  header .brand{flex:1 1 auto;min-width:0;max-width:calc(100% - 91px);gap:8px;}
+  header .brand-logo{width:37px;height:37px;flex:0 0 37px;object-fit:contain;}
+  header .brand-title{font-size:.84rem;white-space:nowrap;}
+  header .brand-subtitle{font-size:.48rem;letter-spacing:.035em;white-space:nowrap;}
+  header .menu-toggle{padding:8px 9px;gap:5px;flex-shrink:0;}
+}
 </style>
 
   
