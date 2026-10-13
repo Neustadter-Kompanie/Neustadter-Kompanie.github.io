@@ -108,7 +108,7 @@
 </article>
 </section>
 <section id="prices" class="tab" hidden><article class="panel"><h2>🍻 Getränkepreise verwalten</h2><p class="muted">Normalpreis und Fördermitgliederpreis bearbeiten. Änderungen gelten für künftige Buchungen; bestehende Buchungen bleiben unverändert.</p><p class="hint">Bestätigte Fördermitglieder erhalten ihre hinterlegten Förderpreise automatisch beim Getränkebuchen und Nachtragen von Papierstrichlisten.</p><p id="priceStatus" class="status" role="status" aria-live="polite"></p><div id="priceList"></div><button type="button" id="reloadPrices" class="secondary-btn">Preise aktualisieren</button></article></section>
-<section id="requests" class="tab" hidden><article class="panel"><h2>Mitgliedschaftsanträge</h2><p class="muted">Hier werden nur Bestätigungsanfragen zu bereits per PDF/E-Mail beantragten Fördermitgliedschaften angezeigt. Bitte Mitgliedschaft anhand der Vereinsunterlagen prüfen.</p><p id="membershipStatus" class="status" role="status"></p><div id="membershipRequests"></div></article><article class="panel"><h2>Familienmitglieder prüfen</h2><p class="muted">Jede Person einzeln anhand der Mitgliedsunterlagen bestätigen oder ablehnen. Die gemeinsame Familienabrechnung folgt später. Aktive Fördermitglieder erhalten bereits ihre hinterlegten Getränke-Förderpreise.</p><p id="familyStatus" class="status" role="status"></p><div id="familyRequests"></div></article></section>
+<section id="requests" class="tab" hidden><article class="panel"><h2>Mitgliedschaftsanträge</h2><p class="muted">Hier werden nur Bestätigungsanfragen zu bereits per PDF/E-Mail beantragten Fördermitgliedschaften angezeigt. Bitte Mitgliedschaft anhand der Vereinsunterlagen prüfen.</p><p id="membershipStatus" class="status" role="status"></p><div id="membershipRequests"></div><h3 style="margin-top:24px">Bestätigte Einzelmitglieder ins Mitgliederverzeichnis übernehmen</h3><p class="muted">Bereits bestätigte Gastkonten hier mit ihrem tatsächlichen Eintrittsdatum übernehmen. Gastnummer und Getränkekonto bleiben bestehen; die Mitgliedsnummer wird automatisch vergeben. Familienmitgliedschaften folgen gesondert.</p><div id="approvedMemberImports"></div></article><article class="panel"><h2>Familienmitglieder prüfen</h2><p class="muted">Jede Person einzeln anhand der Mitgliedsunterlagen bestätigen oder ablehnen. Die gemeinsame Familienabrechnung folgt später. Aktive Fördermitglieder erhalten bereits ihre hinterlegten Getränke-Förderpreise.</p><p id="familyStatus" class="status" role="status"></p><div id="familyRequests"></div></article></section>
 <section id="admin" class="tab" hidden><article class="panel"><h2>Administration</h2><p id="adminIdentity" class="muted"></p><div class="hint">Dieser Reiter erscheint nur für Benutzer mit <code>is_admin = true</code>. Preisverwaltung, Benutzerrechte und Systemeinstellungen werden erst nach Einrichtung zusätzlicher geschützter Datenbankfunktionen freigeschaltet.</div></article></section>
 </div><footer>Neustadter Kompanie · Geschützter Vorstandsbereich</footer>
 </main>
@@ -265,7 +265,54 @@ function renderMembershipRequests(){
     }
     row.append(info,controls);root.append(row)
   }
+  renderApprovedImports();
   renderApprovedMembers();
+}
+
+function renderApprovedImports(){
+  const root=$('approvedMemberImports');root.replaceChildren();
+  const linkedGuests=new Set(clubMembers.filter(m=>m.guest_id).map(m=>m.guest_id));
+  const linkedNumbers=new Set(clubMembers.filter(m=>m.guest_number!=null).map(m=>Number(m.guest_number)));
+  const approved=membershipRequests.filter(r=>r.request_status==='approved'&&r.membership_type==='single');
+  const unlinked=approved.filter(r=>!linkedGuests.has(r.guest_id)&&!linkedNumbers.has(Number(r.guest_number)));
+  if(!unlinked.length){root.append(node('p',approved.length?'Alle bestätigten Einzelmitglieder sind bereits im Mitgliederverzeichnis oder wurden verarbeitet.':'Aktuell keine bestätigten Einzelmitgliedschaften zum Übernehmen.','muted'));return}
+  for(const r of unlinked){
+    const box=node('div',undefined,'member-card');
+    box.append(node('strong',r.display_name+' · Gastnummer #'+r.guest_number));
+    box.append(node('p','Bestätigtes Einzelmitglied – bitte tatsächliches Eintrittsdatum eintragen.','muted'));
+    const form=node('form');
+    const fields=node('div',undefined,'fieldrow');
+    const parts=String(r.display_name||'').trim().split(/\s+/);
+    const first=parts.slice(0,-1).join(' ')||parts[0]||'';
+    const last=parts.length>1?parts[parts.length-1]:'';
+    const inputField=(text,value,type='text')=>{
+      const wrap=node('div'),lab=node('label',text),el=node('input');
+      el.type=type;el.required=true;if(type==='text')el.maxLength=100;el.value=value;lab.append(el);wrap.append(lab);fields.append(wrap);return el;
+    };
+    const firstInput=inputField('Vorname',first);
+    const lastInput=inputField('Nachname',last);
+    const dateInput=inputField('Tatsächliches Eintrittsdatum','','date');
+    dateInput.max=new Date().toLocaleDateString('en-CA');
+    const submit=node('button','Ins Mitgliederverzeichnis übernehmen','primary');submit.type='submit';
+    const result=node('p','','status');result.setAttribute('role','status');
+    form.append(fields,submit,result);
+    form.addEventListener('submit',async event=>{
+      event.preventDefault();if(profile?.role!=='vorstand')return;
+      const f=firstInput.value.trim(),l=lastInput.value.trim(),date=dateInput.value;
+      if(!f||!l||!date)return;
+      if(!confirm(r.display_name+' (#'+r.guest_number+') mit Eintrittsdatum '+new Date(date+'T12:00:00').toLocaleDateString('de-DE')+' ins Mitgliederverzeichnis übernehmen?\n\nDas bestehende Gastkonto bleibt unverändert.'))return;
+      submit.disabled=true;result.textContent='Mitglied wird übernommen …';result.classList.remove('ok');
+      const {data,error}=await supabase.rpc('club_board_import_approved_single',{
+        p_request_id:r.request_id,p_first_name:f,p_last_name:l,p_start_date:date
+      });
+      if(error){result.textContent='Übernahme fehlgeschlagen: '+error.message;submit.disabled=false;return}
+      const saved=Array.isArray(data)?data[0]:data;
+      result.textContent='✅ Übernommen: Gastnummer #'+r.guest_number+', Mitgliedsnummer '+(saved?.member_number??'–');
+      result.classList.add('ok');
+      await refreshClubMembers();
+    });
+    box.append(form);root.append(box);
+  }
 }
 function renderApprovedMembers(){
  const root=$('approvedMembers');root.replaceChildren();
@@ -387,7 +434,7 @@ async function refreshClubMembers(){
   const {data,error}=await supabase.rpc('club_board_list_members_v2');
   if(error){status('memberListStatus','Mitglieder konnten nicht geladen werden: '+error.message);clubMembers=[]}
   else{status('memberListStatus','');clubMembers=data||[]}
-  renderApprovedMembers();renderPaperSummary();
+  renderApprovedMembers();renderApprovedImports();renderPaperSummary();
 }
 
 async function refreshFamilyRequests(){
