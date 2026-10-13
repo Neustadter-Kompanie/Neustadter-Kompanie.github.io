@@ -40,7 +40,7 @@
   <button id="tabMembership" type="button" role="tab" aria-selected="false" aria-controls="membershipArea">Fördermitgliedschaft</button>
 </div>
 <div id="drinkArea" role="tabpanel" aria-labelledby="tabDrinks">
-<section class="card"><div class="eyebrow">Getränkekarte</div><h2>Getränke buchen 🍻</h2><p class="muted">Stelle mit + und − die Anzahl ein (maximal 10 je Buchung). Erst beim Bestätigen wird gebucht. Eigene Buchungen kannst du innerhalb von 5 Minuten unter „Getränkebuchungen“ stornieren. Vom Vorstand nachgetragene Papierstrichlisten sind davon ausgenommen.</p><div id="productList" class="grid" aria-live="polite"><p class="muted">Getränke werden geladen …</p></div><p id="bookingStatus" class="status" role="status" aria-live="polite"></p><button id="refreshAccount" type="button" class="secondary">Kontostand aktualisieren</button></section>
+<section class="card"><div class="eyebrow">Getränkekarte</div><h2>Getränke buchen 🍻</h2><p class="muted">Stelle mit + und − die Anzahl ein (maximal 10 je Buchung). Erst beim Bestätigen wird gebucht. Eigene Buchungen kannst du innerhalb von 5 Minuten unter „Getränkebuchungen“ stornieren. Vom Vorstand nachgetragene Papierstrichlisten sind davon ausgenommen.</p><div id="productList" class="grid" aria-live="polite"><p class="muted">Artikel werden geladen …</p></div><p id="bookingStatus" class="status" role="status" aria-live="polite"></p><button id="refreshAccount" type="button" class="secondary">Kontostand aktualisieren</button></section>
 <div class="columns">
   <section class="card"><div class="eyebrow">Verbrauch</div><h2>Meine Getränkebuchungen</h2><ul class="history" id="entries"></ul></section>
   <section class="card"><div class="eyebrow">Einzahlungen</div><h2>Meine Zahlungen</h2><ul class="history" id="payments"></ul></section>
@@ -102,15 +102,23 @@ function productRows(payload){
 }
 async function loadProducts(){
   const root=document.getElementById("productList"),status=document.getElementById("bookingStatus");
-  root.replaceChildren();root.append(document.createTextNode("Getränke werden geladen …"));
+  root.replaceChildren();root.append(document.createTextNode("Artikel werden geladen …"));
   try{
     const token=sessionStorage.getItem("drink_guest_token");
     if(!token)throw new Error("Sitzung abgelaufen. Bitte erneut anmelden.");
     const result=await drinkRequest("products",{token});
     const rows=productRows(result).filter(p=>p.is_active!==false&&p.active!==false);
     root.replaceChildren();
-    if(!rows.length){root.append(document.createTextNode("Keine buchbaren Getränke verfügbar."));return;}
+    if(!rows.length){root.append(document.createTextNode("Momentan keine buchbaren Artikel verfügbar."));return;}
+    let categoryHeading="";
     for(const p of rows){
+      const category=String(p.category_name||"Getränke");
+      if(category!==categoryHeading){
+        categoryHeading=category;
+        const title=document.createElement("h3");title.textContent=category;
+        title.style.gridColumn="1 / -1";title.style.margin="16px 0 0";
+        root.append(title);
+      }
       const id=p.id??p.product_id;
       const name=p.name??p.product_name??p.title;
       const cents=Number(p.price_cents??p.normal_price_cents??p.unit_price_cents);
