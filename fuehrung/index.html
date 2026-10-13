@@ -52,11 +52,11 @@
 <section id="overview" class="tab"><div class="grid"><article class="panel"><h2>Getränkekonten</h2><p class="muted">Aktuelle Daten aus der Getränkeliste.</p><div class="item"><strong>Registrierte Gäste</strong><span id="overviewGuests">–</span></div><div class="item"><strong>Offene Getränkebeträge</strong><span id="overviewDebt">–</span></div><div class="item"><strong>Verfügbares Guthaben</strong><span id="overviewCredit">–</span></div><button type="button" class="primary" data-jump="guests">Gästekonten ansehen</button></article><article class="panel"><h2>Mitgliedschaften</h2><p>Einzelmitgliedschaft: <strong>25 € pro Kalenderjahr</strong></p><p>Familienmitgliedschaft: <strong>30 € pro Kalenderjahr</strong></p><div class="hint">Die Mitgliederdatenbank ist angebunden. Die Beitragsabrechnung ist noch nicht eingerichtet.</div></article></div><article class="panel"><h2>Kontostand verstehen</h2><div class="formula">Einzahlungen und Gutschriften − Getränkeverbrauch = Kontostand. Positiv bedeutet Guthaben, negativ bedeutet offener Betrag.</div><p class="muted">Mitgliedsbeiträge und rückwirkende Mitgliederrabatte werden erst nach Einrichtung der zugehörigen Datenbanklogik berücksichtigt.</p></article></section>
 <section id="birthdays" class="tab" hidden><article class="panel"><h2>🎂 Geburtstage</h2><p class="muted">Heute und in den kommenden 30 Tagen · nur für Vorstand und Gremium</p><p class="status" id="birthdayStatus" role="status"></p><div id="birthdayList"></div><button type="button" class="secondary-btn" id="reloadBirthdays">Aktualisieren</button></article></section>
 <section id="members" class="tab" hidden>
-<article class="panel"><h2>Mitgliederverwaltung</h2><p class="muted">Einzel- und Familienmitgliedschaften getrennt verwalten. Personen mit Mitgliedsnummer und Gastnummer.</p><div class="subtabs"><button type="button" class="active" data-member-type="single">Einzelmitgliedschaften</button><button type="button" data-member-type="family">Familienmitgliedschaften</button></div><p class="status" id="memberListStatus" role="status"></p><div class="hint">Familienaustritte beenden die Fördermitgliedschaft der Person. Ihre Mitgliedsnummer bleibt erhalten. <strong>Während der Testphase bitte nur mit Testmitgliedern ausprobieren:</strong> Die gemeinsame Familienabrechnung ist noch nicht vollständig mit den Konten verbunden.</div><div id="approvedMembers"></div></article>
+<article class="panel"><h2>Mitgliederverwaltung</h2><p class="muted">Einzel- und Familienmitgliedschaften getrennt verwalten. Personen mit Mitgliedsnummer und Gastnummer.</p><div class="subtabs"><button type="button" class="active" data-member-type="single">Einzelmitgliedschaften</button><button type="button" data-member-type="family">Familienmitgliedschaften</button></div><p class="status" id="memberListStatus" role="status"></p><div class="hint">Familienaustritte beenden die Fördermitgliedschaft der Person. Ihre Mitgliedsnummer bleibt erhalten. <strong>Familienkonto-Aktivierungen bitte zunächst nur mit Testfamilien ausprobieren.</strong> Die Vorstandsübersicht und Finanzansicht werden noch auf getrennte Familienkontostände umgestellt.</div><div id="approvedMembers"></div></article>
 <article class="panel" id="memberEditorPanel" hidden><h2>Mitgliederakte bearbeiten</h2><p class="muted" id="editMemberDescription"></p><form id="editMemberForm"><div class="fieldrow"><div><label for="editFirst">Vorname</label><input id="editFirst" required maxlength="100"></div><div><label for="editLast">Nachname</label><input id="editLast" required maxlength="100"></div><div><label for="editBirth">Geburtsdatum</label><input id="editBirth" type="date"></div><div><label for="editEmail">E-Mail</label><input id="editEmail" type="email"></div><div><label for="editPhone">Telefon</label><input id="editPhone" type="tel"></div><div><label for="editStreet">Straße</label><input id="editStreet"></div><div><label for="editHouse">Hausnummer</label><input id="editHouse"></div><div><label for="editPostcode">PLZ</label><input id="editPostcode" inputmode="numeric"></div><div><label for="editCity">Ort</label><input id="editCity"></div></div><label for="editNotes">Interne Bemerkungen</label><textarea id="editNotes" rows="3"></textarea><div class="member-actions"><button class="primary" id="saveMemberBtn" type="submit">Änderungen speichern</button><button type="button" class="secondary-btn" id="cancelMemberEdit">Abbrechen</button></div></form><p class="status" id="editMemberStatus" role="status"></p></article>
 <article class="panel"><h2>Mitglied hinzufügen</h2><p class="muted">Auch ohne bisheriges Getränkekonto. Die Gastnummer wird automatisch erstellt.</p>
 <form id="createMemberForm"><div class="fieldrow"><div><label for="memberFirst">Vorname</label><input id="memberFirst" required maxlength="100" autocomplete="off"></div><div><label for="memberLast">Nachname</label><input id="memberLast" required maxlength="100" autocomplete="off"></div><div><label for="memberType">Mitgliedschaft</label><select id="memberType"><option value="single">Einzelmitgliedschaft · 25 €/Jahr</option><option value="family">Familienmitgliedschaft · 30 €/Jahr</option></select></div><div><label for="memberStart">Eintrittsdatum</label><input id="memberStart" type="date" required></div></div><button class="primary" id="createMemberBtn" type="submit">Mitglied anlegen</button></form><p class="status" id="createMemberStatus" role="status"></p><div id="createdGuestCard" class="panel" hidden style="border:2px solid #c9a56b;background:#f1f6f0;margin-top:12px"><strong id="createdGuestName">Mitglied angelegt</strong><p class="muted">Zugewiesene Gastnummer</p><div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap"><strong id="createdGuestNumber" style="font-size:34px;letter-spacing:2px">#0000</strong><button type="button" class="primary" id="copyCreatedNumber" style="margin:0">Nummer kopieren</button></div><p class="muted">Der Getränkezugang muss separat sicher aktiviert werden.</p></div><div class="hint">Bei Familienmitgliedschaften wird zunächst das Hauptmitglied angelegt. Bereits registrierte Gäste können unten einer bestehenden Familie zugeordnet werden. Der Zugang zum Getränkekonto muss vor Nutzung sicher aktiviert werden.</div></article>
-<article class="panel" id="familyManagementPanel"><h2>Bestehenden Gast zu Familie hinzufügen</h2><p class="muted">Für alle Familien in der zentralen Mitgliederdatenbank – unabhängig davon, ob sie online bestätigt oder manuell angelegt wurden.</p><form id="addFamilyGuestForm"><label for="familyTarget">Familie auswählen</label><select id="familyTarget" required><option value="">Familie auswählen …</option></select><label for="familyGuestNumber">Vorhandene Gastnummer</label><input id="familyGuestNumber" type="number" inputmode="numeric" min="1000" max="9999" required placeholder="z. B. 7736"><button class="primary" id="addFamilyGuestBtn" type="submit">Gast zur Familie hinzufügen</button></form><p class="status" id="addFamilyGuestStatus" role="status"></p><h3 style="margin-top:22px">Neue Person direkt in diese Familie aufnehmen</h3><p class="muted">Die oben ausgewählte Familie wird übernommen. Für die neue Person wird eine freie Gastnummer erstellt; es entsteht kein weiterer Jahresbeitrag.</p><form id="createFamilyPersonForm"><div class="fieldrow"><div><label for="familyPersonFirst">Vorname</label><input id="familyPersonFirst" required maxlength="100" autocomplete="off"></div><div><label for="familyPersonLast">Nachname</label><input id="familyPersonLast" required maxlength="100" autocomplete="off"></div></div><button class="primary" type="submit" id="createFamilyPersonBtn">Neues Familienmitglied anlegen</button></form><p class="status" id="createFamilyPersonStatus" role="status"></p><div id="familyPersonResult" class="panel" hidden style="border:2px solid #c9a56b;background:#f1f6f0;margin-top:12px"><strong id="familyPersonResultName"></strong><p class="muted">Neue Gastnummer</p><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><strong id="familyPersonResultNumber" style="font-size:34px;letter-spacing:2px"></strong><button type="button" class="primary" style="margin:0" id="copyFamilyPersonNumber">Nummer kopieren</button></div><p class="muted">Der Getränkezugang muss separat sicher aktiviert werden.</p></div><div class="hint">Das bestehende Gastkonto bleibt erhalten. Gemeinsame Abrechnung und Mitgliederrabatte werden dadurch noch nicht aktiviert.</div></article>
+<article class="panel" id="familyManagementPanel"><h2>Bestehenden Gast zu Familie hinzufügen</h2><p class="muted">Für alle Familien in der zentralen Mitgliederdatenbank – unabhängig davon, ob sie online bestätigt oder manuell angelegt wurden.</p><form id="addFamilyGuestForm"><label for="familyTarget">Familie auswählen</label><select id="familyTarget" required><option value="">Familie auswählen …</option></select><label for="familyGuestNumber">Vorhandene Gastnummer</label><input id="familyGuestNumber" type="number" inputmode="numeric" min="1000" max="9999" required placeholder="z. B. 7736"><button class="primary" id="addFamilyGuestBtn" type="submit">Gast zur Familie hinzufügen</button></form><p class="status" id="addFamilyGuestStatus" role="status"></p><h3 style="margin-top:22px">Neue Person direkt in diese Familie aufnehmen</h3><p class="muted">Die oben ausgewählte Familie wird übernommen. Für die neue Person wird eine freie Gastnummer erstellt; es entsteht kein weiterer Jahresbeitrag.</p><form id="createFamilyPersonForm"><div class="fieldrow"><div><label for="familyPersonFirst">Vorname</label><input id="familyPersonFirst" required maxlength="100" autocomplete="off"></div><div><label for="familyPersonLast">Nachname</label><input id="familyPersonLast" required maxlength="100" autocomplete="off"></div></div><button class="primary" type="submit" id="createFamilyPersonBtn">Neues Familienmitglied anlegen</button></form><p class="status" id="createFamilyPersonStatus" role="status"></p><div id="familyPersonResult" class="panel" hidden style="border:2px solid #c9a56b;background:#f1f6f0;margin-top:12px"><strong id="familyPersonResultName"></strong><p class="muted">Neue Gastnummer</p><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><strong id="familyPersonResultNumber" style="font-size:34px;letter-spacing:2px"></strong><button type="button" class="primary" style="margin:0" id="copyFamilyPersonNumber">Nummer kopieren</button></div><p class="muted">Der Getränkezugang muss separat sicher aktiviert werden.</p></div><div class="hint">Das bestehende Gastkonto bleibt erhalten. Die gemeinsame Abrechnung beginnt erst nach dem separaten Klick auf „Familienkonto aktivieren“ in der Familienliste.</div></article>
 </section>
 <section id="guests" class="tab" hidden><article class="panel"><h2>Gäste</h2><p class="muted">Echte Konten aus Supabase. Ein positiver Kontostand ist Guthaben, ein negativer Betrag ist offen.</p><input id="guestSearch" class="search" placeholder="Nach Name oder Gastnummer suchen …" aria-label="Gäste suchen"><p id="guestStatus" class="status" role="status"></p><div id="guestList"></div></article></section>
 <section id="finance" class="tab" hidden><article class="panel"><h2>Einzahlung oder Gutschrift erfassen</h2><p class="muted">Jede bestätigte Buchung wird in der Datenbank mit dem ausführenden Vorstandsmitglied gespeichert.</p><form id="paymentForm"><div class="fieldrow"><div><label for="paymentGuest">Gastkonto</label><select id="paymentGuest" required><option value="">Bitte Gast auswählen</option></select></div><div><label for="paymentMethod">Buchungsart</label><select id="paymentMethod" required><option value="cash">Bareinzahlung</option><option value="paypal">PayPal-Einzahlung</option><option value="other">Sonstige Gutschrift (kein Geldeingang)</option></select></div><div><label for="paymentAmount">Betrag in Euro</label><input id="paymentAmount" type="text" inputmode="decimal" placeholder="z. B. 10,00" required></div><div><label for="paymentReason">Grund / Vermerk</label><input id="paymentReason" type="text" maxlength="500" placeholder="z. B. Einzahlung am Wagen" required></div></div><button class="primary" id="paymentBtn" type="submit">Buchung speichern</button></form><p class="status" id="paymentStatus" role="status"></p><div class="hint"><strong>Wichtig:</strong> „Sonstige Gutschrift“ verändert den Getränkekontostand, ist aber keine tatsächliche Einnahme. Getränkekorrekturen erfolgen weiter unten über die Stornierfunktion. Auszahlungen und Mitgliedsbeiträge werden gesondert verwaltet.</div></article><article class="panel" id="voidPanel">
@@ -117,6 +117,7 @@ import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2
 const supabase=createClient('https://tyiskycptrrtlibpdbse.supabase.co','sb_publishable_Ctoq40heyWXiE8L8RMMFoQ_MwKCRPjp');
 const $=id=>document.getElementById(id);const money=cents=>new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR'}).format(Number(cents)/100);
 let profile=null,guests=[],balances=[],membershipRequests=[],familyRequests=[],clubMembers=[],birthdays=[],memberTypeFilter="single",editingMemberId=null;
+let activeFamilyAccounts=new Map(),familyActivationStatusLoaded=false;
 let boardProducts=[],paperQuantities=new Map(),paperPending=null,paperSending=false,boardUserId=null;
 let paperPriceQuote=null,paperPriceLoading=false,paperPriceRequestVersion=0;
 let voidEntries=[],voidLoading=false,voidProcessing=false,voidRequestSequence=0;
@@ -326,6 +327,52 @@ function renderApprovedMembers(){
    const box=node('div',undefined,'member-card');
    const activeCount=members.filter(m=>m.member_status==='aktiv').length;
    box.append(node('strong',head.first_name+' '+head.last_name+(memberTypeFilter==='family'?' · Familie':'')),node('div',activeCount+' aktiv · '+members.length+' insgesamt · '+money(head.annual_fee_cents)+' / Jahr · '+(head.membership_status==='active'?'Mitgliedschaft aktiv':'Mitgliedschaft inaktiv'),'muted'));
+   // Aktivierung des gemeinsamen Getränkekontos, bewusst getrennt von der Vereinsmitgliedschaft.
+   if(memberTypeFilter==='family'){
+     const familyInfo=node('div',undefined,'hint');
+     const activated=activeFamilyAccounts.get(head.membership_id);
+     if(!familyActivationStatusLoaded){
+       familyInfo.textContent='Status des gemeinsamen Getränkekontos nicht verfügbar. Aktivierung vorsichtshalber gesperrt.';
+     }else if(activated){
+       familyInfo.textContent='✅ Gemeinsames Getränkekonto aktiv. Neue Getränke und Einzahlungen werden seit der Aktivierung gemeinsam abgerechnet.';
+     }else if(head.membership_status==='active' && head.member_status==='aktiv' && head.guest_id && activeCount===members.length && members.every(m=>m.guest_id)){
+       familyInfo.textContent='Das gemeinsame Getränkekonto ist noch nicht aktiviert. Bisherige Buchungen bleiben persönlich.';
+       const activate=node('button','Familienkonto aktivieren','primary');
+       activate.type='button';
+       activate.style.display='block';
+       activate.addEventListener('click',async()=>{
+         if(profile?.role!=='vorstand')return;
+         const membersText=members.map(m=>m.first_name+' '+m.last_name+' (#'+m.guest_number+')').join('\n');
+         const message='Gemeinsames Getränkekonto für diese Familie JETZT aktivieren?\n\n'
+           +membersText+'\n\n'
+           +'Ab der Aktivierung werden NEUE Getränke und Einzahlungen aller Familienmitglieder gemeinsam verrechnet.\n'
+           +'Bisherige Buchungen und Einzahlungen bleiben auf den persönlichen Konten.\n\n'
+           +'Während der Testphase bitte nur mit Testfamilien durchführen.';
+         if(!confirm(message))return;
+         activate.disabled=true;
+         status('memberListStatus','Familienkonto wird aktiviert …');
+         try{
+           const {data,error}=await supabase.rpc('drink_board_activate_family',{
+             p_membership_id:head.membership_id
+           });
+           if(error || typeof data!=='string')throw new Error(error?.message||'Keine Aktivierungsbestätigung erhalten.');
+           await refreshClubMembers();
+           if(!familyActivationStatusLoaded || !activeFamilyAccounts.has(head.membership_id)){
+             status('memberListStatus','Aktivierung gespeichert, aber Status konnte nicht bestätigt werden. Bitte Seite neu laden.');
+           }else{
+             status('memberListStatus','✅ Gemeinsames Getränkekonto für '+head.first_name+' '+head.last_name+' aktiviert.',true);
+           }
+         }catch(err){
+           activate.disabled=false;
+           status('memberListStatus','Aktivierung fehlgeschlagen: '+(err?.message||'Unbekannter Fehler'));
+         }
+       });
+       familyInfo.append(activate);
+     }else{
+       familyInfo.textContent='Aktivierung momentan nicht möglich. Bitte prüfen, ob die Familienmitgliedschaft aktiv ist und alle Personen ein Gastkonto haben.';
+     }
+     box.append(familyInfo);
+   }
    for(const m of members){
      const row=node('div',undefined,'item');const info=node('div');
      info.append(node('strong',m.first_name+' '+m.last_name),node('div','Mitgliedsnummer '+(m.member_number??'–')+' · Gastnummer #'+(m.guest_number??'–')+(m.is_primary?' · Hauptmitglied':''),'muted'));
@@ -430,10 +477,22 @@ async function refreshBirthdays(){
 }
 $('reloadBirthdays').addEventListener('click',refreshBirthdays);
 
+async function refreshFamilyActivationStatus(){
+  familyActivationStatusLoaded=false;
+  activeFamilyAccounts.clear();
+  const {data,error}=await supabase.rpc('drink_board_list_family_accounts');
+  if(error){
+    status('memberListStatus','Familienkonto-Status konnte nicht geladen werden: '+error.message);
+    return;
+  }
+  for(const family of data||[])activeFamilyAccounts.set(family.membership_id,family);
+  familyActivationStatusLoaded=true;
+}
 async function refreshClubMembers(){
   const {data,error}=await supabase.rpc('club_board_list_members_v2');
   if(error){status('memberListStatus','Mitglieder konnten nicht geladen werden: '+error.message);clubMembers=[]}
   else{status('memberListStatus','');clubMembers=data||[]}
+  await refreshFamilyActivationStatus();
   renderApprovedMembers();renderApprovedImports();renderPaperSummary();
 }
 
