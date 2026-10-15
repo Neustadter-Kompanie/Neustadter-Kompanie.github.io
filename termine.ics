@@ -1,76 +1,78 @@
 BEGIN:VCALENDAR
 VERSION:2.0
+PRODID:-//Neustadter Kompanie n.e.V.//Veranstaltungskalender//DE
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-PRODID:-//Neustadter Kompanie n.e.V.//Veranstaltungen//DE
-X-WR-CALNAME:Neustadter Kompanie - Veranstaltungen
-X-WR-TIMEZONE:Europe/Berlin
-BEGIN:VTIMEZONE
-TZID:Europe/Berlin
-X-LIC-LOCATION:Europe/Berlin
-BEGIN:DAYLIGHT
-TZOFFSETFROM:+0100
-TZOFFSETTO:+0200
-TZNAME:CEST
-DTSTART:19700329T020000
-RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
-END:DAYLIGHT
-BEGIN:STANDARD
-TZOFFSETFROM:+0200
-TZOFFSETTO:+0100
-TZNAME:CET
-DTSTART:19701025T030000
-RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
-END:STANDARD
-END:VTIMEZONE
+X-WR-CALNAME:Neustadter Kompanie - Feste
 BEGIN:VEVENT
-UID:20261204-2026-12-04-weihnachtsfeier@neustadter-kompanie.de
-DTSTAMP:20261010T120000Z
-DTSTART;TZID=Europe/Berlin:20261204T130000
-SUMMARY:Weihnachtsfeier am Wagen - Neustadter Kompanie
-DESCRIPTION:Wir feiern gemeinsam den Jahresabschluss am Wagen und werfen 
- den Grill an. Der Anmeldelink folgt. Beginn: 13:00 Uhr. Ende offen.
-LOCATION:Am Wagen - Neustadter Kompanie
+UID:2026-12-04-weihnachtsfeier@neustadter-kompanie.de
+DTSTAMP:20261015T120000Z
+DTSTART:20261204T120000Z
+DTEND:20261204T130000Z
+SUMMARY:Weihnachtsfeier am Wagen
+DESCRIPTION:Wir feiern gemeinsam den Jahresabschluss am Partywagen der Ne
+ ustadter Kompanie. Anmeldung bis 30.11.2026: https://forms.gle/LrC3A2gMM
+ uAp9utA6 Beginn 13:00 Uhr. Das Kalender-Zeitfenster bis 14:00 Uhr ist nu
+ r ein technischer Platzhalter. Das Ende der Veranstaltung steht noch nic
+ ht fest.
+LOCATION:Partywagen Neustadter Kompanie\, Neustadt an der Weinstraße
+URL:https://neustadter-kompanie.de/
 STATUS:CONFIRMED
 END:VEVENT
 BEGIN:VEVENT
-UID:20270305-2027-03-05-erstes-fest@neustadter-kompanie.de
-DTSTAMP:20261010T120000Z
-DTSTART;TZID=Europe/Berlin:20270305T130000
-SUMMARY:Erstes Fest 2027 - Neustadter Kompanie
-DESCRIPTION:Wir starten zusammen in das neue Veranstaltungsjahr am Wagen.
-  Weitere Informationen folgen. Beginn: 13:00 Uhr. Ende offen.
-LOCATION:Am Wagen - Neustadter Kompanie
+UID:2027-03-05-erstes-fest@neustadter-kompanie.de
+DTSTAMP:20261015T120000Z
+DTSTART:20270305T120000Z
+DTEND:20270305T130000Z
+SUMMARY:Erstes Fest 2027
+DESCRIPTION:Saisonauftakt am Partywagen der Neustadter Kompanie. Weitere 
+ Informationen folgen. Beginn 13:00 Uhr. Das Kalender-Zeitfenster bis 14:
+ 00 Uhr ist nur ein technischer Platzhalter. Das Ende der Veranstaltung s
+ teht noch nicht fest.
+LOCATION:Partywagen Neustadter Kompanie\, Neustadt an der Weinstraße
+URL:https://neustadter-kompanie.de/
 STATUS:CONFIRMED
 END:VEVENT
 BEGIN:VEVENT
-UID:20270625-2027-06-25-sommerfest@neustadter-kompanie.de
-DTSTAMP:20261010T120000Z
-DTSTART;TZID=Europe/Berlin:20270625T130000
-SUMMARY:Sommerfest - Neustadter Kompanie
-DESCRIPTION:Gemeinsam den Sommer am Wagen genießen. Weitere Informatione
- n folgen. Beginn: 13:00 Uhr. Ende offen.
-LOCATION:Am Wagen - Neustadter Kompanie
+UID:2027-06-25-sommerfest@neustadter-kompanie.de
+DTSTAMP:20261015T120000Z
+DTSTART:20270625T110000Z
+DTEND:20270625T120000Z
+SUMMARY:Sommerfest
+DESCRIPTION:Sommerfest am Partywagen der Neustadter Kompanie. Weitere Inf
+ ormationen folgen. Beginn 13:00 Uhr. Das Kalender-Zeitfenster bis 14:00 
+ Uhr ist nur ein technischer Platzhalter. Das Ende der Veranstaltung steh
+ t noch nicht fest.
+LOCATION:Partywagen Neustadter Kompanie\, Neustadt an der Weinstraße
+URL:https://neustadter-kompanie.de/
 STATUS:CONFIRMED
 END:VEVENT
 BEGIN:VEVENT
-UID:20270924-2027-09-24-herbstfest@neustadter-kompanie.de
-DTSTAMP:20261010T120000Z
-DTSTART;TZID=Europe/Berlin:20270924T130000
-SUMMARY:Herbstfest - Neustadter Kompanie
-DESCRIPTION:Ein gemeinsamer Herbstnachmittag am Wagen. Weitere Informatio
- nen folgen. Beginn: 13:00 Uhr. Ende offen.
-LOCATION:Am Wagen - Neustadter Kompanie
+UID:2027-09-24-herbstfest@neustadter-kompanie.de
+DTSTAMP:20261015T120000Z
+DTSTART:20270924T110000Z
+DTEND:20270924T120000Z
+SUMMARY:Herbstfest
+DESCRIPTION:Herbstfest am Partywagen der Neustadter Kompanie. Weitere Inf
+ ormationen folgen. Beginn 13:00 Uhr. Das Kalender-Zeitfenster bis 14:00 
+ Uhr ist nur ein technischer Platzhalter. Das Ende der Veranstaltung steh
+ t noch nicht fest.
+LOCATION:Partywagen Neustadter Kompanie\, Neustadt an der Weinstraße
+URL:https://neustadter-kompanie.de/
 STATUS:CONFIRMED
 END:VEVENT
 BEGIN:VEVENT
-UID:20271203-2027-12-03-weihnachtsfeier@neustadter-kompanie.de
-DTSTAMP:20261010T120000Z
-DTSTART;TZID=Europe/Berlin:20271203T130000
-SUMMARY:Weihnachtsfeier am Wagen - Neustadter Kompanie
-DESCRIPTION:Gemeinsamer Jahresausklang bei der Neustadter Kompanie. Weite
- re Informationen folgen. Beginn: 13:00 Uhr. Ende offen.
-LOCATION:Am Wagen - Neustadter Kompanie
+UID:2027-12-03-weihnachtsfeier@neustadter-kompanie.de
+DTSTAMP:20261015T120000Z
+DTSTART:20271203T120000Z
+DTEND:20271203T130000Z
+SUMMARY:Weihnachtsfeier am Wagen
+DESCRIPTION:Gemeinsamer Jahresausklang am Partywagen der Neustadter Kompa
+ nie. Weitere Informationen folgen. Beginn 13:00 Uhr. Das Kalender-Zeitfe
+ nster bis 14:00 Uhr ist nur ein technischer Platzhalter. Das Ende der Ve
+ ranstaltung steht noch nicht fest.
+LOCATION:Partywagen Neustadter Kompanie\, Neustadt an der Weinstraße
+URL:https://neustadter-kompanie.de/
 STATUS:CONFIRMED
 END:VEVENT
 END:VCALENDAR

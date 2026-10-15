@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Neustadter Kompanie n.e.V.//Veranstaltungskalender//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Neustadter Kompanie - Feste
+BEGIN:VEVENT
+UID:2026-12-04-weihnachtsfeier@neustadter-kompanie.de
+DTSTAMP:20261015T120000Z
+DTSTART:20261204T120000Z
+DTEND:20261204T130000Z
+SUMMARY:Weihnachtsfeier am Wagen
+DESCRIPTION:Wir feiern gemeinsam den Jahresabschluss am Partywagen der Ne
+ ustadter Kompanie. Anmeldung bis 30.11.2026: https://forms.gle/LrC3A2gMM
+ uAp9utA6 Beginn 13:00 Uhr. Das Kalender-Zeitfenster bis 14:00 Uhr ist nu
+ r ein technischer Platzhalter. Das Ende der Veranstaltung steht noch nic
+ ht fest.
+LOCATION:Partywagen Neustadter Kompanie\, Neustadt an der Weinstraße
+URL:https://neustadter-kompanie.de/
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR

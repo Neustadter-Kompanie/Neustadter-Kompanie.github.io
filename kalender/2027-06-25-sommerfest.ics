@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Neustadter Kompanie n.e.V.//Veranstaltungskalender//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Neustadter Kompanie - Feste
+BEGIN:VEVENT
+UID:2027-06-25-sommerfest@neustadter-kompanie.de
+DTSTAMP:20261015T120000Z
+DTSTART:20270625T110000Z
+DTEND:20270625T120000Z
+SUMMARY:Sommerfest
+DESCRIPTION:Sommerfest am Partywagen der Neustadter Kompanie. Weitere Inf
+ ormationen folgen. Beginn 13:00 Uhr. Das Kalender-Zeitfenster bis 14:00 
+ Uhr ist nur ein technischer Platzhalter. Das Ende der Veranstaltung steh
+ t noch nicht fest.
+LOCATION:Partywagen Neustadter Kompanie\, Neustadt an der Weinstraße
+URL:https://neustadter-kompanie.de/
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR
