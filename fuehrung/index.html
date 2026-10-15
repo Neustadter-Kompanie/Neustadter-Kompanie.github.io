@@ -123,6 +123,42 @@ button{min-height:40px}button:not(:disabled):hover{filter:brightness(.98)}
 @media(max-width:800px){#tabs{align-items:flex-start}#tabs .nk-tab-main{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}#tabs .nk-tab-main button{font-size:.78rem;padding:9px 6px}#tabs .nk-nav-dropdown{right:0}.nk-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr))}header .nk-crossnav{margin-left:0}}
 @media(max-width:500px){#tabs{gap:6px;flex-wrap:wrap}#tabs .nk-tab-main{grid-template-columns:repeat(3,minmax(0,1fr));width:100%}#tabs .nk-more-nav{width:100%}#tabs .nk-more-nav>summary{text-align:center}#tabs .nk-nav-dropdown{left:0;right:0;min-width:unset;max-width:100%}.nk-shortcuts button{min-height:66px}}
 
+
+/* Lager-/Einkaufsverwaltung im bestehenden Vereinsdesign */
+.nk-inventory-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:10px 0}
+.nk-inventory-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+.nk-inventory-grid .panel{min-width:0}
+.nk-inventory-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.nk-inv-card{background:#fffdf7;border:1px solid #ddd9cd;border-radius:14px;padding:17px;min-width:0}
+.nk-inv-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.nk-inv-card-head>strong{font:normal 1.25rem Georgia,serif;color:#183a30}
+.nk-inv-stock{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:12px 0}
+.nk-inv-stock>div{background:#f5f5ef;padding:11px;border-radius:10px;display:flex;flex-direction:column;gap:4px}
+.nk-inv-stock strong{font-size:1.15rem}
+.nk-inv-stock .nk-inv-discrepancy{background:#fbeee8;color:#963d37}
+.nk-inv-check{display:flex;align-items:center;gap:8px;margin:10px 0}
+.nk-inv-check input{width:auto}
+.nk-inv-recipe-rows{margin:12px 0 14px}
+.nk-inv-recipe-rows .item{border-top:1px solid #eee5db;gap:10px;align-items:center}
+.nk-inv-recipe-rows .item>div{flex:1;min-width:0}
+.nk-inv-recipe-rows .item button{white-space:nowrap}
+@media(max-width:900px){.nk-inventory-grid,.nk-inventory-list{grid-template-columns:1fr}}
+
+
+/* NK · Cloudflare Web Analytics und sichere Gastkonten-Zusammenführung */
+.nk-website-stats{margin:14px 0 20px;border-top:4px solid var(--green);background:#fffef9}
+.nk-web-top{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+.nk-web-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}
+.nk-web-tile{padding:16px;border:1px solid #d5dcd2;background:#edf2ec;border-radius:12px}
+.nk-web-tile small{display:block;color:#556b5e}.nk-web-tile strong{font-size:2rem;font-family:Georgia,serif}
+.nk-web-day{display:flex;align-items:center;gap:9px;padding:6px 0;font-size:.89rem}
+.nk-web-day-label{width:75px;flex-shrink:0;color:#59645c}.nk-web-bar-wrap{background:#edf1eb;height:12px;border-radius:10px;flex:1;min-width:16px;overflow:hidden}
+.nk-web-bar{height:100%;background:#1d4939;display:block;border-radius:10px}
+.nk-web-day-count{width:55px;text-align:right;font-variant-numeric:tabular-nums}
+.nk-merge-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.nk-merge-grid select{max-width:100%}
+.nk-merge-preview{padding:14px;margin-top:12px;border:1px solid #d5dcd2;border-radius:12px;background:#f8f7ef}
+.nk-merge-preview ul{padding-left:20px;margin:6px 0;color:#973535}
+@media(max-width:650px){.nk-merge-grid{grid-template-columns:1fr}.nk-web-tile strong{font-size:1.6rem}}
 </style>
 <link rel="icon" type="image/png" href="/favicon-96x96.png">
 </head>
@@ -137,9 +173,19 @@ button{min-height:40px}button:not(:disabled):hover{filter:brightness(.98)}
 <div id="app" hidden>
 <div class="notice" id="dataNotice" hidden></div>
 <section class="stats" aria-label="Kennzahlen"><div class="stat"><div class="value" id="memberCount">–</div><div class="label">Fördermitglieder · Personen</div></div><div class="stat"><div class="value" id="guestCount">–</div><div class="label">Gästekonten</div></div><div class="stat"><div class="value" id="openAmount">–</div><div class="label">Offene Getränkebeträge · getrennte Konten</div></div><div class="stat"><div class="value" id="creditAmount">–</div><div class="label">Getränkeguthaben · getrennte Konten</div></div></section>
-<nav id="tabs" aria-label="Bereiche"><div class="nk-tab-main"><button class="active" data-tab="overview" type="button">⌂ Übersicht</button><button class="board-only" data-tab="members" type="button">Mitglieder</button><button class="board-only" data-tab="guests" type="button">Gäste</button><button class="board-only" data-tab="finance" type="button">Kasse</button><button class="board-only" data-tab="nkfest" type="button">🎉 Feste &amp; Artikel</button><button class="board-only" data-tab="nkstats" type="button">📊 Auswertungen</button><button data-tab="birthdays" type="button">🎂 Geburtstage <span hidden="" id="birthdayBadge"></span></button></div><details class="nk-more-nav board-only"><summary>Weitere Werkzeuge ▾</summary><div class="nk-nav-dropdown"><button class="board-only" data-tab="paper" type="button">🧾 Papierlisten</button><button class="board-only" data-tab="prices" type="button">🍻 Getränkepreise</button><button class="board-only" data-tab="requests" type="button">Anträge</button><button data-tab="admin" hidden="" id="adminTab" type="button">⚙ Verwaltung</button></div></details></nav>
+<nav id="tabs" aria-label="Bereiche"><div class="nk-tab-main"><button class="active" data-tab="overview" type="button">⌂ Übersicht</button><button class="board-only" data-tab="members" type="button">Mitglieder</button><button class="board-only" data-tab="guests" type="button">Gäste</button><button class="board-only" data-tab="finance" type="button">Kasse</button><button class="board-only" data-tab="nkfest" type="button">🎉 Feste &amp; Artikel</button><button class="board-only" data-tab="nkstats" type="button">📊 Auswertungen</button><button class="board-only" data-tab="nkinventory" type="button">📦 Bestand</button><button data-tab="birthdays" type="button">🎂 Geburtstage <span hidden="" id="birthdayBadge"></span></button></div><details class="nk-more-nav board-only"><summary>Weitere Werkzeuge ▾</summary><div class="nk-nav-dropdown"><button class="board-only" data-tab="paper" type="button">🧾 Papierlisten</button><button class="board-only" data-tab="prices" type="button">🍻 Getränkepreise</button><button class="board-only" data-tab="requests" type="button">Anträge</button><button data-tab="admin" hidden="" id="adminTab" type="button">⚙ Verwaltung</button></div></details></nav>
 <section id="overview" class="tab"><div class="nk-overview-lead"><h2>Alles Wichtige im Blick</h2><p>Mitgliedschaften, Getränkekonten, Feste und Aufgaben schnell erreichen.</p></div>
-<div class="nk-shortcuts"><button type="button" class="board-only" data-jump="paper">🧾 Strichliste buchen<span>Nachträge erfassen</span></button><button type="button" class="board-only" data-jump="finance">💶 Einzahlung erfassen<span>Konten und Zahlungen</span></button><button type="button" class="board-only" data-jump="members">👥 Mitglieder verwalten<span>Anträge und Beiträge</span></button><button type="button" class="board-only" data-jump="nkfest">🎉 Fest verwalten<span>Artikel und Festmodus</span></button></div><div class="grid"><article class="panel"><h2>Getränkekonten</h2><p class="muted">Persönliche Konten und Familienkonten ohne Doppelzählung.</p><div class="item"><strong>Registrierte Gäste</strong><span id="overviewGuests">–</span></div><div class="item"><strong>Offene Getränkebeträge</strong><span id="overviewDebt">–</span></div><div class="item"><strong>Verfügbares Guthaben</strong><span id="overviewCredit">–</span></div><button type="button" class="primary" data-jump="guests">Gästekonten ansehen</button></article><article class="panel"><h2>Mitgliedschaften</h2><p>Einzelmitgliedschaft: <strong>25 € pro Kalenderjahr</strong></p><p>Familienmitgliedschaft: <strong>30 € pro Kalenderjahr</strong></p><div class="hint">Mitgliedsbeiträge werden getrennt von Getränkeverkäufen geführt. Die automatische Abrechnung ist für 2027 eingerichtet; den ersten Echtlauf prüfen wir vor der Freigabe.</div></article></div><article class="panel"><h2>Kontostand verstehen</h2><div class="formula">Bestätigte Einzahlungen + Gutschriften − aktive Artikelbuchungen − Mitgliedsbeiträge ± dokumentierte Umbuchungen = Kontostand. Persönliche und Familienkonten werden getrennt berechnet; Familienanteile nicht doppelt zählen.</div><p class="muted">Getränkebuchungen, Familienanteile und Mitgliedsbeiträge bleiben einzeln nachvollziehbar.</p></article></section>
+<div class="nk-shortcuts"><button type="button" class="board-only" data-jump="paper">🧾 Strichliste buchen<span>Nachträge erfassen</span></button><button type="button" class="board-only" data-jump="finance">💶 Einzahlung erfassen<span>Konten und Zahlungen</span></button><button type="button" class="board-only" data-jump="members">👥 Mitglieder verwalten<span>Anträge und Beiträge</span></button><button type="button" class="board-only" data-jump="nkfest">🎉 Fest verwalten<span>Artikel und Festmodus</span></button></div>
+<article class="panel nk-website-stats board-only" id="nkWebStatsPanel">
+ <div class="nk-web-top"><div><h2>🌐 Besucherstatistik</h2><p class="muted">Öffentliche Webseiten · aggregierte Cloudflare Web Analytics</p></div>
+ <div class="actions"><button class="secondary-btn" type="button" id="nkWeb7">7 Tage</button><button class="secondary-btn" type="button" id="nkWeb30">30 Tage</button></div></div>
+ <p id="nkWebStatus" class="status" role="status">Noch nicht geladen.</p>
+ <div class="nk-web-tiles"><div class="nk-web-tile"><small>Seitenaufrufe</small><strong id="nkWebViews">–</strong></div><div class="nk-web-tile"><small>Besuche (keine eindeutigen Personen)</small><strong id="nkWebVisits">–</strong></div></div>
+ <div id="nkWebDays" aria-label="Seitenaufrufe nach Tag"></div>
+ <h3>Meistbesuchte Seiten</h3><div id="nkWebPaths"></div>
+ <p class="muted" style="font-size:.83rem;margin-top:13px">Messung erst ab Einbindung des Cloudflare-Skripts auf den öffentlichen Seiten; keine Auswertung von Gremium, Vorstand oder persönlichen Konten. Cloudflare-Werte können verzögert sein.</p>
+</article>
+<div class="grid"><article class="panel"><h2>Getränkekonten</h2><p class="muted">Persönliche Konten und Familienkonten ohne Doppelzählung.</p><div class="item"><strong>Registrierte Gäste</strong><span id="overviewGuests">–</span></div><div class="item"><strong>Offene Getränkebeträge</strong><span id="overviewDebt">–</span></div><div class="item"><strong>Verfügbares Guthaben</strong><span id="overviewCredit">–</span></div><button type="button" class="primary" data-jump="guests">Gästekonten ansehen</button></article><article class="panel"><h2>Mitgliedschaften</h2><p>Einzelmitgliedschaft: <strong>25 € pro Kalenderjahr</strong></p><p>Familienmitgliedschaft: <strong>30 € pro Kalenderjahr</strong></p><div class="hint">Mitgliedsbeiträge werden getrennt von Getränkeverkäufen geführt. Die automatische Abrechnung ist für 2027 eingerichtet; den ersten Echtlauf prüfen wir vor der Freigabe.</div></article></div><article class="panel"><h2>Kontostand verstehen</h2><div class="formula">Bestätigte Einzahlungen + Gutschriften − aktive Artikelbuchungen − Mitgliedsbeiträge ± dokumentierte Umbuchungen = Kontostand. Persönliche und Familienkonten werden getrennt berechnet; Familienanteile nicht doppelt zählen.</div><p class="muted">Getränkebuchungen, Familienanteile und Mitgliedsbeiträge bleiben einzeln nachvollziehbar.</p></article></section>
 <section id="birthdays" class="tab" hidden><article class="panel"><h2>🎂 Geburtstage</h2><p class="muted">Heute und in den kommenden 30 Tagen · nur für Vorstand und Gremium</p><p class="status" id="birthdayStatus" role="status"></p><div id="birthdayList"></div><button type="button" class="secondary-btn" id="reloadBirthdays">Aktualisieren</button></article></section>
 <section id="members" class="tab" hidden>
 <article class="panel"><h2>Mitgliederverwaltung</h2><p class="muted">Einzel- und Familienmitgliedschaften getrennt verwalten. Personen mit Mitgliedsnummer und Gastnummer.</p><div class="subtabs"><button type="button" class="active" data-member-type="single">Einzelmitgliedschaften</button><button type="button" data-member-type="family">Familienmitgliedschaften</button></div><p class="status" id="memberListStatus" role="status"></p><div class="hint">Familienaustritte beenden die Fördermitgliedschaft der Person. Ihre Mitgliedsnummer bleibt erhalten. <strong>In der Testphase Änderungen an Familienkonten bitte weiterhin nur mit Testpersonen durchführen.</strong> Die getrennte Finanzübersicht berücksichtigt die Familienkonten bereits.</div><div id="approvedMembers"></div></article>
@@ -173,7 +219,18 @@ button{min-height:40px}button:not(:disabled):hover{filter:brightness(.98)}
 <form id="createMemberForm"><div class="fieldrow"><div><label for="memberFirst">Vorname</label><input id="memberFirst" required maxlength="100" autocomplete="off"></div><div><label for="memberLast">Nachname</label><input id="memberLast" required maxlength="100" autocomplete="off"></div><div><label for="memberType">Mitgliedschaft</label><select id="memberType"><option value="single">Einzelmitgliedschaft · 25 €/Jahr</option><option value="family">Familienmitgliedschaft · 30 €/Jahr</option></select></div><div><label for="memberStart">Eintrittsdatum</label><input id="memberStart" type="date" required></div></div><button class="primary" id="createMemberBtn" type="submit">Mitglied anlegen</button></form><p class="status" id="createMemberStatus" role="status"></p><div id="createdGuestCard" class="panel" hidden style="border:2px solid #c9a56b;background:#f1f6f0;margin-top:12px"><strong id="createdGuestName">Mitglied angelegt</strong><p class="muted">Zugewiesene Gastnummer</p><div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap"><strong id="createdGuestNumber" style="font-size:34px;letter-spacing:2px">#0000</strong><button type="button" class="primary" id="copyCreatedNumber" style="margin:0">Nummer kopieren</button></div><p class="muted">Der Getränkezugang muss separat sicher aktiviert werden.</p></div><div class="hint">Bei Familienmitgliedschaften wird zunächst das Hauptmitglied angelegt. Bereits registrierte Gäste können unten einer bestehenden Familie zugeordnet werden. Der Zugang zum Getränkekonto muss vor Nutzung sicher aktiviert werden.</div></article>
 <article class="panel" id="familyManagementPanel"><h2>Bestehenden Gast zu Familie hinzufügen</h2><p class="muted">Für alle Familien in der zentralen Mitgliederdatenbank – unabhängig davon, ob sie online bestätigt oder manuell angelegt wurden.</p><form id="addFamilyGuestForm"><label for="familyTarget">Familie auswählen</label><select id="familyTarget" required><option value="">Familie auswählen …</option></select><label for="familyGuestNumber">Vorhandene Gastnummer</label><input id="familyGuestNumber" type="number" inputmode="numeric" min="1000" max="9999" required placeholder="z. B. 7736"><button class="primary" id="addFamilyGuestBtn" type="submit">Gast zur Familie hinzufügen</button></form><p class="status" id="addFamilyGuestStatus" role="status"></p><h3 style="margin-top:22px">Neue Person direkt in diese Familie aufnehmen</h3><p class="muted">Die oben ausgewählte Familie wird übernommen. Für die neue Person wird eine freie Gastnummer erstellt; es entsteht kein weiterer Jahresbeitrag.</p><form id="createFamilyPersonForm"><div class="fieldrow"><div><label for="familyPersonFirst">Vorname</label><input id="familyPersonFirst" required maxlength="100" autocomplete="off"></div><div><label for="familyPersonLast">Nachname</label><input id="familyPersonLast" required maxlength="100" autocomplete="off"></div></div><button class="primary" type="submit" id="createFamilyPersonBtn">Neues Familienmitglied anlegen</button></form><p class="status" id="createFamilyPersonStatus" role="status"></p><div id="familyPersonResult" class="panel" hidden style="border:2px solid #c9a56b;background:#f1f6f0;margin-top:12px"><strong id="familyPersonResultName"></strong><p class="muted">Neue Gastnummer</p><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><strong id="familyPersonResultNumber" style="font-size:34px;letter-spacing:2px"></strong><button type="button" class="primary" style="margin:0" id="copyFamilyPersonNumber">Nummer kopieren</button></div><p class="muted">Der Getränkezugang muss separat sicher aktiviert werden.</p></div><div class="hint">Das bestehende Gastkonto bleibt erhalten. Die gemeinsame Abrechnung beginnt erst nach dem separaten Klick auf „Familienkonto aktivieren“ in der Familienliste.</div></article>
 </section>
-<section id="guests" class="tab" hidden><article class="panel"><h2>Gäste</h2><p class="muted">Echte Konten aus Supabase. Ein positiver Kontostand ist Guthaben, ein negativer Betrag ist offen.</p><input id="guestSearch" class="search" placeholder="Nach Name oder Gastnummer suchen …" aria-label="Gäste suchen"><p id="guestStatus" class="status" role="status"></p><div id="guestList"></div></article></section>
+<section id="guests" class="tab" hidden><article class="panel"><h2>Gäste</h2><p class="muted">Echte Konten aus Supabase. Ein positiver Kontostand ist Guthaben, ein negativer Betrag ist offen.</p><input id="guestSearch" class="search" placeholder="Nach Name oder Gastnummer suchen …" aria-label="Gäste suchen"><p id="guestStatus" class="status" role="status"></p><div id="guestList"></div></article>
+<article class="panel board-only" id="nkGuestMergePanel"><h2>↪ Doppelte Gastkonten zusammenführen</h2>
+ <p class="muted">Beispiel: Ein Gast hat seine Nummer vergessen und sich erneut registriert. Wähle das Konto, dessen Nummer bleiben soll, und das überflüssige Konto. Das System prüft Finanzbuchungen, Familien- und Mitgliedschaftsverknüpfungen.</p>
+ <div class="nk-merge-grid"><div><label for="nkMergeKeep">Behalten – diese Gastnummer bleibt aktiv</label><select id="nkMergeKeep"><option value="">Zielkonto wählen</option></select></div>
+ <div><label for="nkMergeRemove">Zusammenführen und Nummer freigeben</label><select id="nkMergeRemove"><option value="">Quellkonto wählen</option></select></div></div>
+ <button id="nkMergeCheck" class="secondary-btn" type="button" style="margin-top:12px">Zusammenführung prüfen</button>
+ <p class="status" id="nkMergeStatus" role="status"></p>
+ <div class="nk-merge-preview" id="nkMergePreview" hidden></div>
+ <button id="nkMergeApply" type="button" style="margin-top:12px" hidden disabled>Geprüfte Zusammenführung bestätigen</button>
+ <p class="muted" style="font-size:.85rem;margin-top:14px">Familienkonten mit umzuverteilenden Buchungen werden aus Sicherheitsgründen blockiert. Die Kontonummer wird erst nach einer erfolgreichen Übertragung wieder frei.</p>
+</article>
+</section>
 <section id="finance" class="tab" hidden><article class="panel"><h2>Einzahlung oder Gutschrift erfassen</h2><p class="muted">Jede bestätigte Buchung wird in der Datenbank mit dem ausführenden Vorstandsmitglied gespeichert.</p><form id="paymentForm"><div class="fieldrow"><div><label for="paymentGuest">Gastkonto</label><select id="paymentGuest" required><option value="">Bitte Gast auswählen</option></select></div><div><label for="paymentMethod">Buchungsart</label><select id="paymentMethod" required><option value="cash">Bareinzahlung</option><option value="paypal">PayPal-Einzahlung</option><option value="other">Sonstige Gutschrift (kein Geldeingang)</option></select></div><div><label for="paymentAmount">Betrag in Euro</label><input id="paymentAmount" type="text" inputmode="decimal" placeholder="z. B. 10,00" required></div><div><label for="paymentReason">Grund / Vermerk</label><input id="paymentReason" type="text" maxlength="500" placeholder="z. B. Einzahlung am Wagen" required></div></div><button class="primary" id="paymentBtn" type="submit">Buchung speichern</button></form><p class="status" id="paymentStatus" role="status"></p><div class="hint"><strong>Wichtig:</strong> „Sonstige Gutschrift“ verändert den Getränkekontostand, ist aber keine tatsächliche Einnahme. Getränkekorrekturen erfolgen weiter unten über die Stornierfunktion. Auszahlungen und Mitgliedsbeiträge werden gesondert verwaltet.</div></article><article class="panel" id="voidPanel">
   <h2>↩️ Getränkebuchung stornieren</h2>
   <p class="muted">Nur für den Vorstand. Selbstbuchungen und nachgetragene Papierstrichlisten können ohne Zeitlimit storniert werden. Die ursprüngliche Buchung bleibt im Verlauf sichtbar.</p>
@@ -234,6 +291,38 @@ button{min-height:40px}button:not(:disabled):hover{filter:brightness(.98)}
 <form id="nkProductForm"><input type="hidden" id="nkProductId"><div class="fieldrow"><div><label for="nkProductName">Artikelname</label><input id="nkProductName" maxlength="100" required placeholder="z. B. Currywurst mit Pommes"></div><div><label for="nkProductCategory">Kategorie</label><select id="nkProductCategory" required></select></div><div><label for="nkProductPrice">Normalpreis (€)</label><input id="nkProductPrice" required inputmode="decimal" placeholder="5,00"></div><div><label for="nkProductMember">Förderpreis (€), leer = Normalpreis</label><input id="nkProductMember" inputmode="decimal" placeholder="5,00"></div><div><label for="nkProductFrom">Verfügbar ab (optional)</label><input id="nkProductFrom" type="datetime-local"></div><div><label for="nkProductUntil">Verfügbar bis (optional)</label><input id="nkProductUntil" type="datetime-local"></div></div><label><input type="checkbox" id="nkProductActive" style="width:auto" checked> Artikel aktiv</label><div class="member-actions"><button class="primary" type="submit">Artikel speichern</button><button type="button" class="secondary-btn" id="nkProductClear">Neuer Artikel</button></div></form><p id="nkProductStatus" class="status"></p><div id="nkProductList"></div></article></section>
 <section id="nkstats" class="tab" hidden><article class="panel"><h2>📊 Bestellstatistik</h2><p class="muted">Stornierte Buchungen werden ausgeschlossen; berücksichtigte Fördergutschriften mindern den Warenwert.</p><label for="nkStatsEvent">Auswertung</label><select id="nkStatsEvent"><option value="">Alle Bestellungen</option></select><button id="nkStatsReload" class="secondary-btn" type="button" style="margin-top:12px">Aktualisieren</button><p class="status" id="nkStatsStatus"></p><div id="nkStatsResults"></div></article>
 <article class="panel"><h2>Gast-Bestellhistorie</h2><label for="nkHistoryGuest">Gast auswählen</label><select id="nkHistoryGuest"><option value="">Bitte auswählen</option></select><p class="status" id="nkHistoryStatus"></p><div id="nkHistoryEntries"></div><button class="secondary-btn" type="button" id="nkHistoryMore" hidden>Weitere Buchungen</button><p class="muted">Festzuordnungen können hier für einzelne Bestellungen korrigiert werden. Der Kontostand wird dabei nicht verändert.</p></article></section>
+<section id="nkinventory" class="tab" hidden>
+<div class="nk-overview-lead"><h2>📦 Einkäufe &amp; Bestand</h2><p>Wareneinkäufe erfassen, Verbrauch aus tatsächlich gebuchten Artikeln berechnen und Bestände abgleichen.</p></div>
+<article class="panel">
+<h2>Bestandsübersicht</h2><p class="muted"><strong>Sollbestand</strong> = Anfangsbestand + Einkäufe + manuelle Korrekturen − gebuchter Verbrauch. <strong>Istbestand</strong> stammt aus einer manuellen Zählung. Abweichungen können auch Schwund, Bruch, Freigetränke oder Erfassungsfehler sein – sie beweisen keine unbezahlte Bestellung.</p>
+<div class="nk-inventory-toolbar"><button class="secondary-btn" type="button" id="nkInvReload">↻ Übersicht aktualisieren</button><button class="secondary-btn" type="button" data-jump="finance">💶 Offene Konten prüfen</button><span class="muted" id="nkInvLatest">Noch nicht geladen</span></div>
+<p class="status" id="nkInvStatus" role="status"></p>
+<div id="nkInvSummary" class="nk-inventory-list"></div>
+</article>
+<div class="nk-inventory-grid">
+<article class="panel"><h2>1. Lagerartikel anlegen</h2><p class="muted">Beispiel: Bierflasche, Snickers, Bratwurst oder Pommes (kg). Anfangsbestand nur für bereits vorhandene Ware; spätere Einkäufe separat buchen.</p>
+<form id="nkInvItemForm"><input type="hidden" id="nkInvItemId"><label for="nkInvItemName">Bezeichnung</label><input id="nkInvItemName" maxlength="120" placeholder="z. B. Bier 0,5 l" required>
+<div class="fieldrow"><div><label for="nkInvItemUnit">Einheit</label><select id="nkInvItemUnit"><option value="Stück">Stück</option><option value="Flaschen">Flaschen</option><option value="Dosen">Dosen</option><option value="kg">kg</option><option value="Liter">Liter</option><option value="Portionen">Portionen</option><option value="Packungen">Packungen</option></select></div><div><label for="nkInvOpening">Anfangsbestand</label><input id="nkInvOpening" inputmode="decimal" value="0" required></div></div>
+<label class="nk-inv-check"><input id="nkInvItemActive" type="checkbox" checked> Lagerartikel aktiv</label>
+<div class="member-actions"><button class="primary" type="submit">Lagerartikel speichern</button><button class="secondary-btn" id="nkInvItemReset" type="button">Neuer Artikel</button></div>
+</form><p class="status" id="nkInvItemStatus"></p></article>
+<article class="panel"><h2>2. Einkauf erfassen</h2><p class="muted">Gekaufte Menge in der Einheit des Lagerartikels eintragen: z. B. 24 Flaschen oder 2,5 kg. Kein automatischer Zahlungseintrag.</p>
+<form id="nkInvPurchaseForm"><label for="nkInvPurchaseItem">Lagerartikel</label><select id="nkInvPurchaseItem" required></select>
+<div class="fieldrow"><div><label for="nkInvPurchaseQty">Gekaufte Menge</label><input id="nkInvPurchaseQty" inputmode="decimal" placeholder="24" required></div><div><label for="nkInvPurchaseDate">Einkaufsdatum</label><input id="nkInvPurchaseDate" type="date" required></div><div><label for="nkInvPurchaseCost">Gesamtkosten (€)</label><input id="nkInvPurchaseCost" inputmode="decimal" placeholder="29,99" value="0" required></div></div>
+<label for="nkInvPurchaseNote">Notiz (optional)</label><input id="nkInvPurchaseNote" maxlength="500" placeholder="z. B. 1 Kasten à 24 Flaschen">
+<button class="primary" type="submit">Einkauf erfassen</button></form><p class="status" id="nkInvPurchaseStatus"></p></article>
+<article class="panel"><h2>3. Verbrauch automatisch zuordnen</h2><p class="muted">Ein verkaufter Artikel kann mehrere Lagerartikel verbrauchen. Beispiel: 1 × Currywurst mit Pommes = 1 Wurst + 0,25 kg Pommes. Die Zuordnung gilt ab dem Speichern für neue Bestellungen.</p>
+<label for="nkInvProduct">Verkaufsartikel</label><select id="nkInvProduct"></select>
+<div id="nkInvRecipeRows" class="nk-inv-recipe-rows"></div>
+<form id="nkInvRecipeForm"><div class="fieldrow"><div><label for="nkInvRecipeItem">Verbrauchter Lagerartikel</label><select id="nkInvRecipeItem" required></select></div><div><label for="nkInvRecipeQty">Menge je 1 Verkauf</label><input id="nkInvRecipeQty" inputmode="decimal" placeholder="1" required></div></div><button class="primary" type="submit">Zuordnung speichern</button></form><p class="status" id="nkInvRecipeStatus"></p></article>
+<article class="panel"><h2>4. Istbestand zählen</h2><p class="muted">Beim Zählen wird die Differenz zum damaligen Sollbestand festgehalten. Die Zählung ändert keine Buchung.</p>
+<form id="nkInvCountForm"><label for="nkInvCountItem">Lagerartikel</label><select id="nkInvCountItem" required></select><label for="nkInvCountQty">Tatsächlich vorhanden</label><input id="nkInvCountQty" inputmode="decimal" required placeholder="z. B. 18">
+<label for="nkInvCountNote">Notiz (optional)</label><input id="nkInvCountNote" maxlength="500" placeholder="z. B. Inventur nach Sommerfest"><button class="primary" type="submit">Istbestand speichern</button></form><p class="status" id="nkInvCountStatus"></p></article>
+<article class="panel"><h2>5. Schwund und Korrekturen</h2><p class="muted">Gratis abgegeben, beschädigt oder fehlgebucht? Änderung mit Begründung erfassen, damit diese nicht als ungeklärte Fehlmenge erscheint. <strong>Bereits gebuchte Getränke nicht noch einmal abziehen.</strong></p>
+<form id="nkInvAdjustForm"><label for="nkInvAdjustItem">Lagerartikel</label><select id="nkInvAdjustItem" required></select><label for="nkInvAdjustQty">Bestandsänderung (+ / −)</label><input id="nkInvAdjustQty" inputmode="decimal" placeholder="-2" required>
+<label for="nkInvAdjustReason">Begründung</label><input id="nkInvAdjustReason" required minlength="5" maxlength="500" placeholder="z. B. 2 Flaschen zerbrochen"><button class="primary" type="submit">Bestandskorrektur erfassen</button></form><p class="status" id="nkInvAdjustStatus"></p></article>
+<article class="panel"><h2>Letzte Einkäufe</h2><p class="muted">Diese Liste zeigt bereits gekaufte Ware – keine Einkaufsvorschläge.</p><div id="nkInvPurchases"></div></article>
+</div></section>
 <section id="requests" class="tab" hidden><article class="panel"><h2>Mitgliedschaftsanträge</h2><p class="muted">Hier werden nur Bestätigungsanfragen zu bereits per PDF/E-Mail beantragten Fördermitgliedschaften angezeigt. Bitte Mitgliedschaft anhand der Vereinsunterlagen prüfen.</p><p id="membershipStatus" class="status" role="status"></p><div id="membershipRequests"></div><h3 style="margin-top:24px">Bestätigte Einzelmitglieder ins Mitgliederverzeichnis übernehmen</h3><p class="muted">Bereits bestätigte Gastkonten hier mit ihrem tatsächlichen Eintrittsdatum übernehmen. Gastnummer und Getränkekonto bleiben bestehen; die Mitgliedsnummer wird automatisch vergeben. Familienmitgliedschaften folgen gesondert.</p><div id="approvedMemberImports"></div></article><article class="panel"><h2>Familienmitglieder prüfen</h2><p class="muted">Jede Person einzeln anhand der Mitgliedsunterlagen bestätigen oder ablehnen. Für aktive Familien ist die gemeinsame Abrechnung bereits eingerichtet. Fördermitglieder erhalten die hinterlegten Förderpreise.</p><p id="familyStatus" class="status" role="status"></p><div id="familyRequests"></div></article></section>
 <section id="admin" class="tab" hidden><article class="panel"><h2>Administration</h2><p id="adminIdentity" class="muted"></p><div class="hint">Dieser Reiter erscheint nur für Benutzer mit <code>is_admin = true</code>. Preisverwaltung, Benutzerrechte und Systemeinstellungen werden erst nach Einrichtung zusätzlicher geschützter Datenbankfunktionen freigeschaltet.</div></article></section>
 </div><footer>Neustadter Kompanie · Geschützter Vorstandsbereich</footer>
@@ -251,7 +340,7 @@ let nkCatalog={categories:[],products:[],events:[]},nkHistoryOffset=0,nkHistoryG
 const PAPER_PENDING_PREFIX="nk_paper_pending_v1_";
 function status(id,text,ok=false){$(id).textContent=text;$(id).classList.toggle('ok',ok)}
 function node(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e}
-function showTab(tab){if(profile?.role==='gremium'&&tab!=='birthdays')return;if(tab==='admin'&&!profile?.is_admin)return;for(const el of document.querySelectorAll('.tab'))el.hidden=el.id!==tab;for(const b of document.querySelectorAll('#tabs button'))b.classList.toggle('active',b.dataset.tab===tab);if(tab==='paper'&&paperSelectedGuest())void loadPaperPriceQuote();if(tab==='nkstats')void nkLoadStats()}
+function showTab(tab){if(profile?.role==='gremium'&&tab!=='birthdays')return;if(tab==='admin'&&!profile?.is_admin)return;for(const el of document.querySelectorAll('.tab'))el.hidden=el.id!==tab;for(const b of document.querySelectorAll('#tabs button'))b.classList.toggle('active',b.dataset.tab===tab);if(tab==='paper'&&paperSelectedGuest())void loadPaperPriceQuote();if(tab==='nkstats')void nkLoadStats();if(tab==='nkinventory')void nkInvLoad()}
 for(const b of document.querySelectorAll('#tabs button'))b.addEventListener('click',()=>{showTab(b.dataset.tab);const more=document.querySelector('#tabs .nk-more-nav');if(more&&more.contains(b))more.open=false;});for(const b of document.querySelectorAll('[data-jump]'))b.addEventListener('click',()=>showTab(b.dataset.jump));
 function showLogin(error=''){$('loadingPanel').hidden=true;$('app').hidden=true;$('loginPanel').hidden=false;$('logout').hidden=true;profile=null;boardUserId=null;guests=[];balances=[];familyBalances=[];financeSnapshotReady=false;status('loginStatus',error)}
 async function initialize(){
@@ -269,7 +358,7 @@ async function initialize(){
  document.querySelector('[data-tab="overview"]').hidden=!board;
  showTab(board?'overview':'birthdays');
  await refreshBirthdays();
- if(board){await refreshData();await refreshMembershipRequests();await refreshFamilyRequests();await refreshClubMembers();await loadBoardPrices();renderPaperGuestOptions();renderPaperProducts();renderPaperPending();await nkLoadCatalog()}
+ if(board){void nkLoadWebStats(7);await refreshData();await refreshMembershipRequests();await refreshFamilyRequests();await refreshClubMembers();await loadBoardPrices();renderPaperGuestOptions();renderPaperProducts();renderPaperPending();await nkLoadCatalog()}
 }
 // Bilanzdaten nur über eine geschützte Vorstands-RPC abrufen.
 // Keine direkten Browser-Leserechte auf Familienmitglieds-Finanzdaten.
@@ -333,7 +422,7 @@ async function refreshData(){
   if(gr.error||summary.error)throw new Error([gr.error?.message,summary.error?.message].filter(Boolean).join(' · '));
   const nextGuests=gr.data||[];
   const checked=checkBoardFinanceSnapshot(summary.data,nextGuests);
-  guests=nextGuests;balances=checked.personal;familyBalances=checked.families;
+  guests=nextGuests;balances=checked.personal;familyBalances=checked.families;nkMergeFill();
   financeSnapshotReady=true;
   $('dataNotice').hidden=true;
   const financialAmounts=[...balances.map(b=>b.balance_cents),...familyBalances.map(f=>f.balance_cents)];
@@ -1353,5 +1442,258 @@ $('loginForm').addEventListener('submit',async e=>{e.preventDefault();const btn=
 $('logout').addEventListener('click',async()=>{await supabase.auth.signOut();showLogin()});
 $('paymentForm').addEventListener('submit',async e=>{e.preventDefault();if(profile?.role!=='vorstand')return;const guest=$('paymentGuest').value,method=$('paymentMethod').value,reason=$('paymentReason').value.trim();const raw=$('paymentAmount').value.trim().replace(/\s/g,'');const valid=/^\d+(?:[,.]\d{1,2})?$/.test(raw);const amount=valid?Math.round(Number(raw.replace(',','.'))*100):NaN;if(!guest||!guests.some(g=>g.id===guest&&g.is_active)||!['cash','paypal','other'].includes(method)||!Number.isSafeInteger(amount)||amount<=0||amount>100000||!reason){status('paymentStatus','Bitte Gast, Betrag (maximal 1.000 €), Buchungsart und Begründung prüfen.');return}const g=guests.find(g=>g.id===guest);const kind=method==='other'?'Gutschrift':method==='cash'?'Bareinzahlung':'PayPal-Einzahlung';if(!confirm(kind+' über '+money(amount)+' für '+g.display_name+' (#'+g.guest_number+') wirklich buchen?'))return;const btn=$('paymentBtn');btn.disabled=true;status('paymentStatus','Buchung wird gespeichert …');const {error}=await supabase.rpc('drink_record_payment',{p_guest_id:guest,p_amount_cents:amount,p_payment_method:method,p_reference:reason});btn.disabled=false;if(error){status('paymentStatus','Buchung fehlgeschlagen: '+error.message);return}status('paymentStatus','Buchung erfolgreich gespeichert.',true);$('paymentAmount').value='';$('paymentReason').value='';await refreshData();await refreshMembershipRequests();await refreshFamilyRequests()});
 await initialize();
+
+// Einkaufs-/Bestandsuebersicht; ausschliesslich vorstandsberechtigte RPCs.
+let nkInvSnapshot={items:[],products:[],recipes:[],recent_purchases:[]};
+const nkInvNumber=(input,positive=false)=>{
+ const raw=String(input??'').trim().replace(',','.');
+ if(!/^[+-]?\d+(?:\.\d{1,3})?$/.test(raw))throw new Error('Bitte eine gueltige Menge mit max. 3 Dezimalstellen eingeben.');
+ const value=Number(raw);
+ if(!Number.isFinite(value)||Math.abs(value)>1000000||(positive&&value<=0))throw new Error('Bitte eine zulaessige Menge eingeben.');
+ return value;
+};
+const nkInvMoney=(input)=>{
+ const raw=String(input??'').trim().replace(',','.');
+ if(!/^(?:\d+)(?:\.\d{1,2})?$/.test(raw))throw new Error('Bitte einen Euro-Betrag wie 12,50 eingeben.');
+ const cents=Math.round(Number(raw)*100);
+ if(!Number.isSafeInteger(cents)||cents>1000000000)throw new Error('Betrag zu gross');
+ return cents;
+};
+const nkInvQty=n=>Number(n||0).toLocaleString('de-DE',{maximumFractionDigits:3});
+function nkInvSelect(id,items,key='name'){
+ const sel=$(id),old=sel.value;
+ sel.replaceChildren(new Option('Bitte auswaehlen',''));
+ for(const o of items)sel.add(new Option(o[key],o.id));
+ if([...sel.options].some(x=>x.value===old))sel.value=old;
+}
+const nkInvItemLabel=id=>nkInvSnapshot.items.find(i=>i.id===id)?.name||'Unbekannter Lagerartikel';
+function nkInvRow(root,heading,detail,actionLabel,onClick){
+ const line=node('div',undefined,'item'),info=node('div');
+ info.append(node('strong',heading),node('div',detail,'muted'));line.append(info);
+ if(actionLabel){const btn=node('button',actionLabel,'secondary-btn');btn.type='button';btn.addEventListener('click',onClick);line.append(btn)}
+ root.append(line);
+}
+function nkInvRenderRecipe(){
+ const root=$('nkInvRecipeRows');root.replaceChildren();const product=$('nkInvProduct').value;
+ const recipes=(nkInvSnapshot.recipes||[]).filter(r=>r.product_id===product);
+ if(!product){root.append(node('p','Zuerst Verkaufsartikel waehlen.','muted'));return}
+ if(!recipes.length)root.append(node('p','Noch keine Lagerartikel zugeordnet. Bestellungen vor der Zuordnung bleiben unberuecksichtigt.','muted'));
+ for(const r of recipes){
+  const label=nkInvItemLabel(r.item_id)+' · '+nkInvQty(r.qty_per_sale)+' '+(nkInvSnapshot.items.find(i=>i.id===r.item_id)?.unit||'')+' pro Verkauf';
+  nkInvRow(root,label,'Gilt für neue Bestellungen','Entfernen',async()=>{
+   if(!confirm('Diese Lagerzuordnung ab jetzt entfernen? Fruehere Verbraeuche bleiben erhalten.'))return;
+   try{await nkInvSaveRecipe(recipes.filter(x=>x.item_id!==r.item_id));}
+   catch(e){nkStatus('nkInvRecipeStatus','Entfernen fehlgeschlagen: '+e.message)}
+  });
+ }
+}
+async function nkInvSaveRecipe(recipes){
+ const prod=$('nkInvProduct').value;if(!prod)throw new Error('Verkaufsartikel fehlt');
+ await nkRpc('nk_inv_board_set_recipe',{p_product_id:prod,p_ingredients:recipes.map(r=>({item_id:r.item_id,qty:String(r.qty_per_sale)}))});
+ await nkInvLoad();nkStatus('nkInvRecipeStatus','Lagerzuordnung gespeichert. Aeltere Bestellungen bleiben unveraendert.',true);
+}
+async function nkInvLoad(){
+ if(profile?.role!=='vorstand')return;
+ try{
+  nkStatus('nkInvStatus','Einkaufs- und Bestandsdaten werden geladen …');
+  const result=await nkRpc('nk_inv_board_snapshot');
+  if(!result||!Array.isArray(result.items)||!Array.isArray(result.products)||!Array.isArray(result.recipes))throw new Error('Ungueltige Serverantwort');
+  nkInvSnapshot=result;
+  nkInvSelect('nkInvPurchaseItem',result.items.filter(i=>i.active));
+  nkInvSelect('nkInvCountItem',result.items);
+  nkInvSelect('nkInvAdjustItem',result.items);
+  nkInvSelect('nkInvRecipeItem',result.items.filter(i=>i.active));
+  nkInvSelect('nkInvProduct',result.products);
+  nkInvRenderRecipe();
+  const root=$('nkInvSummary');root.replaceChildren();
+  const list=(result.items||[]).slice().sort((a,b)=>a.name.localeCompare(b.name,'de'));
+  if(!list.length)root.append(node('p','Noch keine Lagerartikel vorhanden. Lege unten den ersten Lagerartikel an.','muted'));
+  for(const i of list){
+   const block=node('article',undefined,'nk-inv-card');
+   const headline=node('div',undefined,'nk-inv-card-head');
+   headline.append(node('strong',i.name),node('span',i.active?'Aktiv':'Inaktiv','muted'));
+   const edit=node('button','Bearbeiten','secondary-btn');edit.type='button';edit.addEventListener('click',()=>{
+    $('nkInvItemId').value=i.id;$('nkInvItemName').value=i.name;
+    $('nkInvItemUnit').value=i.unit;$('nkInvOpening').value=nkInvQty(i.opening_qty).replaceAll('.','');
+    $('nkInvItemActive').checked=!!i.active;
+    $('nkInvItemName').focus();$('nkInvItemForm').scrollIntoView({behavior:'smooth',block:'center'});
+   });headline.append(edit);block.append(headline);
+   const stock=node('div',undefined,'nk-inv-stock');
+   const qty=node('div');qty.append(node('span','Sollbestand','muted'),node('strong',nkInvQty(i.expected_qty)+' '+i.unit));
+   stock.append(qty);
+   if(i.counted_at){
+    const counted=node('div');counted.append(node('span','Letzte Zaehlung','muted'),node('strong',nkInvQty(i.counted_qty)+' '+i.unit));stock.append(counted);
+    const difference=node('div');const d=Number(i.difference_at_count);
+    difference.append(node('span','Abweichung bei Zaehlung','muted'),node('strong',(d>0?'+':'')+nkInvQty(d)+' '+i.unit));
+    if(d!==0)difference.classList.add('nk-inv-discrepancy');stock.append(difference);
+   }
+   block.append(stock);
+   const info=node('p','Anfang: '+nkInvQty(i.opening_qty)+' · Eingekauft: '+nkInvQty(i.purchased)+' · Gebucht verbraucht: '+nkInvQty(i.consumed)+' · Korrekturen: '+nkInvQty(i.adjusted)+' · Einkaufskosten: '+money(Number(i.spent_cents||0)),'muted');
+   block.append(info);
+   if(i.counted_at)block.append(node('p','Letzte Zaehlung: '+new Date(i.counted_at).toLocaleString('de-DE')+' · Hochgerechneter Istbestand: '+nkInvQty(i.projected_from_last_count)+' '+i.unit,'muted'));
+   root.append(block);
+  }
+  const purchaseRoot=$('nkInvPurchases');purchaseRoot.replaceChildren();
+  const purchases=result.recent_purchases||[];
+  if(!purchases.length)purchaseRoot.append(node('p','Noch keine Einkaeufe erfasst.','muted'));
+  for(const p of purchases)nkInvRow(purchaseRoot,nkInvItemLabel(p.item_id)+' · '+nkInvQty(p.qty)+' '+(result.items.find(i=>i.id===p.item_id)?.unit||''),
+    String(p.receipt_date)+' · '+money(Number(p.total_cost_cents))+(p.note?' · '+p.note:''));
+  $('nkInvLatest').textContent='Stand: '+new Date().toLocaleString('de-DE');
+  nkStatus('nkInvStatus','Bestandsuebersicht aktualisiert.',true);
+ }catch(err){nkStatus('nkInvStatus','Bestandsuebersicht nicht verfuegbar: '+err.message)}
+}
+$('nkInvReload').addEventListener('click',nkInvLoad);
+$('nkInvItemReset').addEventListener('click',()=>{$('nkInvItemForm').reset();$('nkInvItemId').value='';$('nkInvOpening').value='0'});
+$('nkInvItemForm').addEventListener('submit',async ev=>{
+ ev.preventDefault();const btn=ev.submitter;btn.disabled=true;
+ try{
+  await nkRpc('nk_inv_board_save_item',{p_id:$('nkInvItemId').value||null,p_name:$('nkInvItemName').value.trim(),p_unit:$('nkInvItemUnit').value,p_opening_qty:nkInvNumber($('nkInvOpening').value),p_active:$('nkInvItemActive').checked});
+  $('nkInvItemReset').click();await nkInvLoad();nkStatus('nkInvItemStatus','Lagerartikel gespeichert.',true);
+ }catch(e){nkStatus('nkInvItemStatus','Fehler: '+e.message)}finally{btn.disabled=false}
+});
+$('nkInvPurchaseDate').value=(()=>{const t=new Date(),pad=v=>String(v).padStart(2,'0');return t.getFullYear()+'-'+pad(t.getMonth()+1)+'-'+pad(t.getDate())})();
+$('nkInvPurchaseForm').addEventListener('submit',async ev=>{
+ ev.preventDefault();const btn=ev.submitter;btn.disabled=true;
+ try{
+  const args={p_item_id:$('nkInvPurchaseItem').value,p_qty:nkInvNumber($('nkInvPurchaseQty').value,true),p_receipt_date:$('nkInvPurchaseDate').value,p_total_cost_cents:nkInvMoney($('nkInvPurchaseCost').value),p_note:$('nkInvPurchaseNote').value.trim()};
+  if(!confirm('Einkauf verbuchen: '+nkInvQty(args.p_qty)+' '+nkInvItemLabel(args.p_item_id)+'?'))return;
+  await nkRpc('nk_inv_board_purchase',args);
+  $('nkInvPurchaseQty').value='';$('nkInvPurchaseCost').value='0';$('nkInvPurchaseNote').value='';
+  await nkInvLoad();nkStatus('nkInvPurchaseStatus','Wareneingang erfasst.',true);
+ }catch(e){nkStatus('nkInvPurchaseStatus','Fehler: '+e.message)}finally{btn.disabled=false}
+});
+$('nkInvProduct').addEventListener('change',nkInvRenderRecipe);
+$('nkInvRecipeForm').addEventListener('submit',async ev=>{
+ ev.preventDefault();const btn=ev.submitter;btn.disabled=true;
+ try{
+  const product=$('nkInvProduct').value, item=$('nkInvRecipeItem').value;
+  if(!product||!item)throw new Error('Artikel und Lagerartikel auswaehlen');
+  const qty=nkInvNumber($('nkInvRecipeQty').value,true);
+  const next=nkInvSnapshot.recipes.filter(r=>r.product_id===product&&r.item_id!==item)
+   .concat([{item_id:item,qty_per_sale:qty}]);
+  if(!confirm('Zuordnung fuer neue Bestellungen speichern? Fruehere Bestellungen bleiben unberuecksichtigt.'))return;
+  await nkInvSaveRecipe(next);$('nkInvRecipeQty').value='';
+ }catch(e){nkStatus('nkInvRecipeStatus','Fehler: '+e.message)}finally{btn.disabled=false}
+});
+$('nkInvCountForm').addEventListener('submit',async ev=>{
+ ev.preventDefault();const btn=ev.submitter;btn.disabled=true;
+ try{
+  const item=$('nkInvCountItem').value,qty=nkInvNumber($('nkInvCountQty').value);
+  if(qty<0)throw new Error('Zaehlen kann nicht negativ sein');
+  if(!confirm('Istbestand '+nkInvQty(qty)+' fuer '+nkInvItemLabel(item)+' speichern?'))return;
+  await nkRpc('nk_inv_board_count',{p_item_id:item,p_counted_qty:qty,p_note:$('nkInvCountNote').value.trim()});
+  $('nkInvCountQty').value='';$('nkInvCountNote').value='';await nkInvLoad();nkStatus('nkInvCountStatus','Zaehlstand gespeichert.',true);
+ }catch(e){nkStatus('nkInvCountStatus','Fehler: '+e.message)}finally{btn.disabled=false}
+});
+$('nkInvAdjustForm').addEventListener('submit',async ev=>{
+ ev.preventDefault();const btn=ev.submitter;btn.disabled=true;
+ try{
+  const item=$('nkInvAdjustItem').value,delta=nkInvNumber($('nkInvAdjustQty').value);
+  if(delta===0)throw new Error('Aenderung darf nicht 0 sein');
+  const reason=$('nkInvAdjustReason').value.trim();if(reason.length<5)throw new Error('Bitte Grund angeben');
+  if(!confirm('Bestand um '+nkInvQty(delta)+' '+(nkInvSnapshot.items.find(i=>i.id===item)?.unit||'')+' korrigieren?'))return;
+  await nkRpc('nk_inv_board_adjust',{p_item_id:item,p_delta_qty:delta,p_reason:reason});
+  $('nkInvAdjustQty').value='';$('nkInvAdjustReason').value='';await nkInvLoad();nkStatus('nkInvAdjustStatus','Korrektur erfasst.',true);
+ }catch(e){nkStatus('nkInvAdjustStatus','Fehler: '+e.message)}finally{btn.disabled=false}
+});
+
+
+// Website analytics – direct board-only access; API token stays in Supabase Edge Function Secrets.
+const nkNumber=new Intl.NumberFormat('de-DE');
+let nkCurrentWebDays=7;
+async function nkLoadWebStats(days=7){
+ if(profile?.role!=='vorstand')return;
+ nkCurrentWebDays=days;
+ $('nkWebStatus').textContent='Cloudflare-Daten werden geladen …';
+ $('nkWeb7').disabled=$('nkWeb30').disabled=true;
+ try{
+  const {data,error}=await supabase.functions.invoke('cloudflare-stats',{body:{days}});
+  if(error)throw new Error(error.message||'Edge Function nicht erreichbar');
+  if(!data||data.error)throw new Error(data?.error||'Keine Daten erhalten');
+  if(!Number.isSafeInteger(Number(data.views))||!Number.isSafeInteger(Number(data.visits)))throw new Error('Ungueltige Kennzahlen');
+  $('nkWebViews').textContent=nkNumber.format(data.views);
+  $('nkWebVisits').textContent=nkNumber.format(data.visits);
+  const daysRoot=$('nkWebDays');daysRoot.replaceChildren();
+  const points=Array.isArray(data.daily)?data.daily:[];
+  const max=Math.max(1,...points.map(p=>Number(p.views)||0));
+  for(const point of points){
+   const value=Math.max(0,Number(point.views)||0);
+   const row=node('div',undefined,'nk-web-day');
+   row.append(node('span',point.date,'nk-web-day-label'));
+   const barWrap=node('span',undefined,'nk-web-bar-wrap');
+   const bar=node('span',undefined,'nk-web-bar');bar.style.width=Math.min(100,100*value/max)+'%';barWrap.append(bar);
+   row.append(barWrap,node('strong',nkNumber.format(value),'nk-web-day-count'));daysRoot.append(row);
+  }
+  const pathsRoot=$('nkWebPaths');pathsRoot.replaceChildren();
+  const paths=Array.isArray(data.paths)?data.paths:[];
+  for(const p of paths){
+   const row=node('div',undefined,'item');
+   row.append(node('span',String(p.path||''),'muted'),node('strong',nkNumber.format(Number(p.views)||0)));
+   pathsRoot.append(row);
+  }
+  if(!paths.length)pathsRoot.append(node('p','Noch keine gemessenen Aufrufe vorhanden.','muted'));
+  $('nkWebStatus').textContent='Zeitraum: letzte '+days+' Tage · Stand: '+new Date(data.updated_at).toLocaleString('de-DE');
+ }catch(e){
+  $('nkWebStatus').textContent='Statistik noch nicht verfügbar: '+String(e.message||e);
+ }finally{$('nkWeb7').disabled=$('nkWeb30').disabled=false;}
+}
+$('nkWeb7').addEventListener('click',()=>nkLoadWebStats(7));
+$('nkWeb30').addEventListener('click',()=>nkLoadWebStats(30));
+
+// Gaste-Zusammenfuehrung: nur zwei-stufig ueber Vorstands-RPC, kein Browser-Direktzugriff.
+let nkMergeChecked=null;
+function nkMergeFill(){
+ const keep=$('nkMergeKeep'),remove=$('nkMergeRemove');
+ const oldKeep=keep.value,oldRemove=remove.value;
+ for(const select of [keep,remove]){
+  select.replaceChildren(new Option('Bitte Gastkonto wählen',''));
+  for(const g of guests)select.add(new Option('#'+g.guest_number+' – '+g.display_name+(g.is_active?'':' (inaktiv)'),g.id));
+ }
+ if(guests.some(g=>g.id===oldKeep))keep.value=oldKeep;
+ if(guests.some(g=>g.id===oldRemove))remove.value=oldRemove;
+}
+function nkMergeReset(){nkMergeChecked=null;$('nkMergePreview').hidden=true;$('nkMergeApply').hidden=true;$('nkMergeApply').disabled=true;}
+for(const el of [$('nkMergeKeep'),$('nkMergeRemove')])el.addEventListener('change',nkMergeReset);
+$('nkMergeCheck').addEventListener('click',async()=>{
+ nkMergeReset();const target=$('nkMergeKeep').value,source=$('nkMergeRemove').value;
+ if(!target||!source||target===source){status('nkMergeStatus','Zwei verschiedene Gastkonten auswählen.');return;}
+ $('nkMergeCheck').disabled=true;
+ try{
+  const {data,error}=await supabase.rpc('nk_board_guest_merge_preview',{p_target_id:target,p_source_id:source});
+  if(error)throw error;
+  nkMergeChecked=data;
+  const box=$('nkMergePreview');box.replaceChildren();box.hidden=false;
+  box.append(node('strong','Gastnummer #'+data.source.number+' wird freigegeben; #'+data.target.number+' bleibt aktiv.'));
+  box.append(node('p','Übertragen: '+data.source_entries+' Buchungen, '+data.source_payments+' Zahlungen, '+data.source_paper_batches+' Papierlisten.','muted'));
+  if(!data.ready){
+   box.append(node('strong','Automatische Zusammenführung aus Sicherheitsgründen gesperrt.'));
+   const reasons=node('ul');for(const s of data.blockers||[])reasons.append(node('li',String(s)));box.append(reasons);
+  }else{
+   status('nkMergeStatus','Vorschau erfolgreich. Bitte beide Namen und Nummern prüfen.',true);
+   $('nkMergeApply').hidden=false;$('nkMergeApply').disabled=false;
+  }
+ }catch(e){status('nkMergeStatus','Prüfung fehlgeschlagen: '+e.message);}
+ finally{$('nkMergeCheck').disabled=false;}
+});
+$('nkMergeApply').addEventListener('click',async()=>{
+ const v=nkMergeChecked;
+ if(!v?.ready||v.target.id!==$('nkMergeKeep').value||v.source.id!==$('nkMergeRemove').value)return;
+ if(!confirm('Wirklich Konto #'+v.source.number+' ('+v.source.name+') in #'+v.target.number+' ('+v.target.name+') zusammenführen? Die Gastnummer #'+v.source.number+' wird wieder frei.'))return;
+ const typed=prompt('Zur zusätzlichen Bestätigung exakt ZUSAMMENFUEHREN eingeben:');
+ if(typed!=='ZUSAMMENFUEHREN')return;
+ $('nkMergeApply').disabled=true;
+ try{
+  const {data,error}=await supabase.rpc('nk_board_guest_merge',{
+   p_target_id:v.target.id,p_source_id:v.source.id,
+   p_target_number:v.target.number,p_source_number:v.source.number,p_confirmation:typed,
+  });
+  if(error)throw error;
+  nkMergeReset();$('nkMergeKeep').value='';$('nkMergeRemove').value='';
+  status('nkMergeStatus','Zusammenführung erfolgreich. Gastnummer #'+data.freed_number+' ist wieder frei.',true);
+  await refreshData();
+  await refreshClubMembers();
+ }catch(e){status('nkMergeStatus','Zusammenführung abgebrochen: '+e.message);$('nkMergeApply').disabled=false;}
+});
+
 </script>
 </body></html>
