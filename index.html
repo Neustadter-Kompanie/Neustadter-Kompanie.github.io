@@ -237,9 +237,6 @@ header{box-shadow:0 4px 18px rgba(16,45,37,.14)}
 header .nav a{border-radius:10px}
 .event-card,.member-section .member-card,.gallery-card{border-radius:var(--nk-radius)}
 .hero .eyebrow,.kicker{letter-spacing:.14em}
-#main-navigation a[href="/trinken/"],#main-navigation a[href="/intern/"]{border:1px solid rgba(255,255,255,.3);padding:10px 13px;border-radius:11px}
-#main-navigation a[href="/trinken/"]:hover,#main-navigation a[href="/intern/"]:hover{background:rgba(255,255,255,.14)}
-@media(max-width:900px){#main-navigation a[href="/trinken/"],#main-navigation a[href="/intern/"]{padding:12px}}
 
 
 /* Layoutkorrektur 13.10.2026: Karussell, Veranstaltungsliste, Navigationsabstände. */
@@ -271,12 +268,6 @@ header .nav a{border-radius:10px}
     padding:10px 12px; min-height:42px; margin:0;
     border:1px solid transparent; border-radius:10px;
     line-height:1.15; font-size:.77rem;
-  }
-  header #main-navigation > a[href="/trinken/"],
-  header #main-navigation > a[href="/intern/"]{
-    padding:10px 12px;
-    border:1px solid var(--line);
-    border-radius:10px;
   }
   header #main-navigation > a.nav-cta{
     color:white; background:var(--wine);
@@ -343,6 +334,8 @@ header .nav a{border-radius:10px}
   
   
   
+<!-- Cloudflare Web Analytics – öffentliche Seiten, keine Kontoinhalte -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"3d0c8bcc78de429f938368e66f2bf1c0"}'></script>
 </head>
 <body>
   <a class="skip" href="#inhalt">Zum Inhalt springen</a>
