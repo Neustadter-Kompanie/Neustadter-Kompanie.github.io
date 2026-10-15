@@ -83,7 +83,25 @@
   @media(max-width:900px){.hero-inner{grid-template-columns:1fr;gap:26px}.hero-aside{max-width:600px}.layout{grid-template-columns:minmax(0,1fr) minmax(250px,.8fr)}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.nav-shell{flex-wrap:wrap;justify-content:center}.nav-links{justify-content:center}}
   @media(max-width:680px){.overline{font-size:8px;letter-spacing:.16em}.nav-shell{padding:12px 14px;justify-content:space-between;gap:10px}.brand img{width:43px;height:43px}.brand-name{font-size:16px}.brand-sub{font-size:8px}.nav-links{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.nav-links a{padding:10px 5px;font-size:12px;text-align:center;white-space:normal}.hero-inner{padding:40px 18px}.hero-aside{padding:18px 20px}.hero-aside strong{font-size:20px}h1{font-size:clamp(2.3rem,10vw,3.1rem)}main{padding:19px 13px 50px}.layout{grid-template-columns:1fr;gap:13px}.card,.hint-card{padding:22px 19px}.grid{grid-template-columns:1fr;gap:9px}.drink{padding:15px 16px}.prices{margin-top:24px}.prices-heading{margin-bottom:14px}}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.tab{transition:none}}
-  </style>
+  
+/* Deutlicher Registrierungs-Hinweis und barrierearmes Code-Infofenster. */
+.nk-code-label{display:flex;align-items:center;gap:9px;margin-top:12px}
+.nk-code-label label{margin:0}
+.nk-info-trigger{display:inline-grid!important;place-items:center;flex:0 0 25px!important;width:25px!important;min-width:25px!important;height:25px!important;min-height:25px!important;border-radius:50%!important;background:#e8ede7!important;color:#183a30!important;border:1px solid #8fa497!important;font:700 14px Georgia,serif!important;padding:0!important;cursor:pointer}
+.nk-info-trigger:hover,.nk-info-trigger:focus-visible{background:#dce6db!important;outline-offset:2px}
+.nk-code-warning{display:flex;align-items:flex-start;gap:13px;background:#fff5e5;color:#3c3025;border:2px solid #bf975f;border-left:6px solid #873d3b;border-radius:12px;padding:18px;margin:16px 0 20px;line-height:1.5}
+.nk-code-warning strong{display:block;font-size:1.08rem;color:#762d30;margin-bottom:6px}
+.nk-code-warning p{margin:0;font-size:.93rem}
+.nk-warning-mark{display:grid;place-items:center;flex:0 0 31px;height:31px;width:31px;border-radius:50%;background:#873d3b;color:white;font-weight:800;font-size:1.1rem}
+.nk-code-dialog{max-width:min(420px,calc(100vw - 32px));padding:26px;border:1px solid #b7c4b8;border-radius:16px;background:#fffdf7;color:#183a30;box-shadow:0 20px 65px #122e2799}
+.nk-code-dialog::backdrop{background:#0d2828a6}
+.nk-code-dialog h2{font:normal 1.5rem Georgia,serif;margin:0 0 12px}
+.nk-code-dialog p{line-height:1.6}
+.nk-code-dialog button{margin-top:10px}
+
+</style>
+<!-- Cloudflare Web Analytics – öffentliche Seiten, keine Kontoinhalte -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"3d0c8bcc78de429f938368e66f2bf1c0"}'></script>
 </head>
 <body>
   <div class="overline">GEMEINSCHAFT · GESCHICHTE · GEMÜTLICHKEIT</div>
@@ -129,8 +147,9 @@
         <form id="loginForm">
           <label for="loginName">Vor- und Nachname</label>
           <input id="loginName" autocomplete="name" placeholder="Dein vollständiger Name" minlength="2" maxlength="120" required>
-          <label for="loginNumber">Gastnummer</label>
+          <div class="nk-code-label"><label for="loginNumber">Gastnummer / persönlicher Code</label><button id="loginNumberInfo" class="nk-info-trigger" type="button" aria-label="Informationen zum persönlichen Code" aria-haspopup="dialog" aria-controls="guestCodeDialog" title="Wo finde ich meinen Code?">i</button></div>
           <input id="loginNumber" inputmode="numeric" pattern="[0-9]{1,4}" maxlength="4" placeholder="z. B. 2852" required>
+          <dialog id="guestCodeDialog" class="nk-code-dialog" aria-labelledby="guestCodeTitle"><h2 id="guestCodeTitle">Wo finde ich meinen Code?</h2><p>Bitte hier den Code eintragen, den du bei der Registrierung bekommen hast. Das ist deine persönliche Gastnummer.</p><p><strong>Code vergessen?</strong> Wende dich bitte an den Vorstand der Neustadter Kompanie.</p><button id="closeGuestCodeDialog" type="button" class="primary">Verstanden</button></dialog>
           <button id="loginButton" class="primary" type="submit">Zum Getränkekonto <span aria-hidden="true">→</span></button>
           <p id="loginStatus" class="status" role="status" aria-live="polite"></p>
         </form>
@@ -141,7 +160,7 @@
             <div class="eyebrow">Fördermitglied werden</div>
             <p class="muted">Mit der Registrierung erstellst du zunächst ein kostenloses Gastkonto. Eine Fördermitgliedschaft kannst du danach im Getränkekonto beantragen. Über die Aufnahme entscheidet der Vorstand.</p>
           </div>
-          <p class="muted">Du bekommst eine persönliche Gastnummer. Notiere sie dir für die spätere Anmeldung.</p>
+          <div class="nk-code-warning" role="note"><span class="nk-warning-mark" aria-hidden="true">!</span><div><strong>Wichtig: Deinen persönlichen Code unbedingt merken!</strong><p>Nach der Registrierung bekommst du eine Gastnummer. <b>Schreibe sie dir auf oder bewahre sie sicher auf.</b> Du brauchst sie bei jeder neuen Anmeldung. Falls du sie vergisst, wende dich an den Vorstand.</p></div></div>
           <button id="registerButton" class="primary" type="submit">Kostenlos registrieren</button>
           <div id="registerStatus" class="status" role="status" aria-live="polite"></div>
         </form>
@@ -237,6 +256,15 @@ async function loadPublicDrinks(){
   }
 }
 loadPublicDrinks();
+const guestCodeDialog=document.getElementById("guestCodeDialog");
+document.getElementById("loginNumberInfo").addEventListener("click",()=>{
+  if(typeof guestCodeDialog.showModal==="function")guestCodeDialog.showModal();
+  else guestCodeDialog.setAttribute("open","");
+});
+document.getElementById("closeGuestCodeDialog").addEventListener("click",()=>{
+  if(typeof guestCodeDialog.close==="function")guestCodeDialog.close();
+  else guestCodeDialog.removeAttribute("open");
+});
 const loginForm=document.getElementById("loginForm");
 const loginName=document.getElementById("loginName");
 const loginNumber=document.getElementById("loginNumber");
@@ -273,7 +301,7 @@ registerForm.addEventListener("submit",async event=>{
     registerStatus.replaceChildren();
     const heading=document.createElement("p");heading.textContent="Registrierung erfolgreich! Deine Gastnummer:";
     const number=document.createElement("div");number.className="number-result";number.textContent=String(result.guest.number);
-    const note=document.createElement("p");note.textContent="Bitte merke dir diese Nummer. Du kannst dich jetzt mit deinem Namen und deiner Gastnummer anmelden.";
+    const note=document.createElement("p");note.textContent="WICHTIG: Merke dir diese Nummer oder notiere sie dir jetzt! Du brauchst sie für die nächste Anmeldung. Falls du sie vergisst, wende dich an den Vorstand.";
     const switchButton=document.createElement("button");switchButton.type="button";switchButton.className="secondary";switchButton.textContent="Jetzt anmelden";
     switchButton.addEventListener("click",()=>{loginName.value=result.guest.name||registerName.value.trim();loginNumber.value=String(result.guest.number);showTab(false);loginButton.focus();});
     registerStatus.append(heading,number,note,switchButton);
