@@ -80,6 +80,24 @@ button{border-radius:10px;min-height:41px}button:not(:disabled):hover{filter:bri
 .hero{background:linear-gradient(115deg,var(--nk-pine),#285347);border:1px solid rgba(255,255,255,.08)}
 @media(max-width:760px){header .nk-header-wrap{justify-content:space-between}#logout{margin-left:0}main{padding:0 14px}}
 
+
+/* Freiwillige Gremiums-Rangliste im Vereinsdesign */
+.nk-score-controls{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;align-items:end;margin:13px 0 20px}
+.nk-score-controls label{margin-top:0}.nk-score-controls>[hidden]{display:none!important}
+.nk-score-entry{display:grid;grid-template-columns:minmax(130px,180px) 1fr 58px;gap:13px;align-items:center;margin:12px 0}
+.nk-score-name{font-weight:700;overflow-wrap:anywhere}
+.nk-score-track{height:25px;background:#ece6da;border-radius:8px;overflow:hidden}
+.nk-score-bar{height:100%;min-width:0;background:linear-gradient(90deg,#873d3b,#c6a66c);border-radius:8px;transition:width .2s}
+.nk-score-qty{text-align:right;font-variant-numeric:tabular-nums;font-weight:800}
+.nk-score-optin{display:flex;align-items:center;gap:11px;background:#f4efe3;border:1px solid #ded6c7;border-radius:10px;padding:12px;margin:14px 0}
+.nk-score-optin input{width:22px;height:22px;accent-color:var(--green)}
+.nk-score-empty{padding:18px;background:#f4f1e9;border-radius:10px;color:var(--muted)}
+.nk-score-pick-heading{font:normal 1.12rem Georgia,serif;margin:10px 0 8px}
+.nk-score-drink-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px;align-items:center;overflow-x:auto;padding:3px 1px 8px}
+.nk-score-drink-tabs button{min-height:40px;background:#fffdf7;color:var(--green);border:1px solid var(--line);border-radius:999px;padding:9px 15px;font-size:.86rem;white-space:nowrap}
+.nk-score-drink-tabs button.active{background:var(--wine);border-color:var(--wine);color:#fff}
+.nk-score-drink-tabs button:disabled{opacity:.6}
+@media(max-width:700px){.nk-score-controls{grid-template-columns:1fr}.nk-score-drink-tabs{flex-wrap:nowrap}.nk-score-entry{grid-template-columns:minmax(85px,120px) 1fr 38px;gap:7px;font-size:12px}.nk-score-track{height:21px}}
 </style><link rel="icon" type="image/png" href="/favicon-96x96.png">
 </head><body>
 <header><div class="nk-header-wrap">
@@ -90,7 +108,7 @@ button{border-radius:10px;min-height:41px}button:not(:disabled):hover{filter:bri
 <p class="intro" id="welcome">Bitte melde dich mit deiner E-Mail-Adresse und deinem Passwort an.</p>
 <form id="login" class="login-card"><h2>Anmelden</h2><label for="email">E-Mail-Adresse</label><input id="email" type="email" autocomplete="username" required><label for="password">Passwort</label><input id="password" type="password" autocomplete="current-password" required><button id="login-submit" type="submit">Anmelden</button><p id="login-error" class="status" role="alert"></p></form>
 <div id="dashboard" hidden>
-<nav class="portal-nav" aria-label="Interne Navigation"><button class="nav-btn active" data-tab="home" type="button">⌂ Übersicht</button><button class="nav-btn" data-tab="news" type="button">✦ Aktuelles</button><button class="nav-btn" data-tab="polls" type="button">◉ Abstimmungen</button><button class="nav-btn" data-tab="tasks" type="button">✓ Aufgaben</button><button class="nav-btn" data-tab="birthdays" type="button" id="birthday-nav">🎂 Geburtstage</button><button class="nav-btn" data-tab="documents" type="button">▤ Strichlisten</button></nav>
+<nav class="portal-nav" aria-label="Interne Navigation"><button class="nav-btn active" data-tab="home" type="button">⌂ Übersicht</button><button class="nav-btn" data-tab="news" type="button">✦ Aktuelles</button><button class="nav-btn" data-tab="polls" type="button">◉ Abstimmungen</button><button class="nav-btn" data-tab="tasks" type="button">✓ Aufgaben</button><button class="nav-btn" data-tab="birthdays" type="button" id="birthday-nav">🎂 Geburtstage</button><button class="nav-btn" data-tab="documents" type="button">▤ Strichlisten</button><button class="nav-btn" data-tab="scoreboard" type="button">🏆 Scoreboard</button></nav>
 <section id="tab-home" class="portal-tab"><div class="hero"><div><p class="hero-kicker">NEUSTADTER KOMPANIE · INTERN</p><h2>Gemeinsam mehr bewegen.</h2><p>Alles Wichtige für unser Gremium auf einen Blick.</p></div><span class="hero-mark">NK</span></div><div class="overview-shortcuts" aria-label="Schnellzugriff">
 <button type="button" class="shortcut" data-shortcut="news"><span class="symbol">📌</span><strong>Aktuelles</strong><small>Mitteilungen & Termine</small></button>
 <button type="button" class="shortcut" data-shortcut="birthdays"><span class="symbol">🎂</span><strong>Geburtstage</strong><small id="birthday-shortcut-note">Heute & demnächst</small></button>
@@ -104,6 +122,28 @@ Enthaltung</textarea><label for="poll-end">Abstimmungsende</label><input id="pol
 <section id="tab-tasks" class="portal-tab" hidden><div class="section-heading"><p class="label">Gemeinsam organisieren</p><h2>Aufgaben & Termine</h2></div><section class="card"><form id="todo-form"><label for="todo-title">Neue Aufgabe</label><input id="todo-title" maxlength="180" placeholder="Was ist zu erledigen?" required><div class="inline-form"><div><label for="todo-due">Fällig am (optional)</label><input id="todo-due" type="date"></div><div><label for="todo-assignee">Zuständig (optional)</label><select id="todo-assignee"><option value="">Nicht zugewiesen</option></select></div><button type="submit">Hinzufügen</button></div></form><p id="todo-status" class="status" role="status"></p><div id="todos" class="stack" aria-live="polite"></div></section></section>
 <section id="tab-birthdays" class="portal-tab" hidden><div class="section-heading"><p class="label">Unsere Fördermitglieder</p><h2>🎂 Geburtstage</h2><p class="small">Heute und in den kommenden 30 Tagen. Für Vorstand und Gremium.</p></div><section class="card"><div class="row"><h2>Die nächsten Geburtstage</h2><button class="ghost" type="button" id="refresh-birthdays">Aktualisieren</button></div><p id="birthday-status" class="status" role="status"></p><div id="birthday-list" aria-live="polite"></div><p class="birthday-note">Geburtstage werden nur intern angezeigt. Persönliche Kontaktdaten sind hier nicht abrufbar.</p></section></section>
 <section id="tab-documents" class="portal-tab" hidden><div class="section-heading"><p class="label">Geschützte Dokumente</p><h2>Strichlisten</h2></div><section class="card"><p class="small">Die Dateien liegen in einem privaten Supabase-Speicherbereich. Der Vorstand kann Dateien hochladen und löschen.</p><form id="file-form" hidden><div class="inline-form"><div><label for="file-title">Bezeichnung</label><input id="file-title" maxlength="160" placeholder="z. B. Sommerfest 2026" required></div><div><label for="file-date">Veranstaltungsdatum (optional)</label><input id="file-date" type="date"></div><div><label for="file-input">Datei (PDF, Excel oder Bild, max. 10 MB)</label><input id="file-input" type="file" accept=".pdf,.xlsx,.xls,.csv,.jpg,.jpeg,.png,.webp,application/pdf,image/jpeg,image/png,image/webp" required></div><button type="submit">Hochladen</button></div></form><p id="file-status" class="status" role="status"></p><div id="files" class="files" aria-live="polite"></div></section></section>
+
+<section id="tab-scoreboard" class="portal-tab" hidden>
+<div class="section-heading"><p class="label">Gemeinsame Rangliste</p><h2>🏆 Gremiums-Scoreboard</h2><p class="small">Gezählt werden gebuchte alkoholische Getränke. Stornierte Bestellungen werden nicht berücksichtigt; die tatsächliche Trinkmenge wird nicht erfasst.</p></div>
+<section class="card"><div class="row"><div><h2>Deine Teilnahme</h2><p class="small">Freiwillig und jederzeit ausschaltbar. Nur verknüpfte, teilnehmende Gremiumsmitglieder erscheinen mit ihren Bestellzahlen.</p></div></div>
+<label class="nk-score-optin"><input id="nkScoreOptIn" type="checkbox" disabled> Meine alkoholischen Bestellungen im internen Scoreboard anzeigen</label>
+<p class="small" id="nkScoreMyLink">Kontoverknüpfung wird geprüft …</p><p class="status" id="nkScoreOptStatus" role="status"></p></section>
+<section class="card" style="margin-top:18px"><div class="row"><div><p class="label">Gremium</p><h2>Wer liegt vorne?</h2></div><button class="secondary" type="button" id="nkScoreReload">↻ Aktualisieren</button></div>
+<div class="nk-score-controls">
+<div><label for="nkScorePeriod">Zeitraum</label><select id="nkScorePeriod"><option value="fest">Fest</option><option value="month">Monat</option><option value="year">Jahr</option><option value="all" selected>All Time</option></select></div>
+<div id="nkScoreFestWrap" hidden><label for="nkScoreFest">Fest wählen</label><select id="nkScoreFest"><option value="">Fest wählen</option></select></div>
+<div id="nkScoreMonthWrap" hidden><label for="nkScoreMonth">Monat</label><input type="month" id="nkScoreMonth"></div>
+<div id="nkScoreYearWrap" hidden><label for="nkScoreYear">Jahr</label><input type="number" id="nkScoreYear" min="2025" max="2100"></div>
+</div>
+<h3 class="nk-score-pick-heading">Getränk auswählen</h3>
+<nav class="nk-score-drink-tabs" id="nkScoreDrinkTabs" aria-label="Getränke-Scoreboard">
+<button type="button" class="active" aria-pressed="true" data-group="">Alle Getränke</button>
+</nav>
+<p class="small" id="nkScoreSelection">Alle alkoholischen Getränke</p>
+<p class="status" id="nkScoreStatus" role="status"></p><div id="nkScoreRows" aria-live="polite"></div>
+<p class="small" style="margin-top:16px">Das Scoreboard wertet ausschließlich die persönlichen Getränkebuchungen aus – nicht das gesamte Familienkonto. Alkoholische Produkte werden vom Vorstand gekennzeichnet. Nicht teilnehmende Personen erscheinen nicht in der Rangliste.</p>
+</section>
+</section>
 </div><a class="footer-link" href="/">← Zurück zur öffentlichen Website</a></main>
 <script type="module">
 import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
@@ -151,7 +191,7 @@ $('refresh-birthdays').addEventListener('click',loadBirthdays);
 for(const b of document.querySelectorAll('[data-shortcut]'))b.addEventListener('click',()=>showTab(b.dataset.shortcut));
 
 // Dashboard navigation
-function showTab(tab){for(const el of document.querySelectorAll('.portal-tab'))el.hidden=el.id!=='tab-'+tab;for(const b of document.querySelectorAll('.nav-btn')){const selected=b.dataset.tab===tab;b.classList.toggle('active',selected);b.setAttribute('aria-current',selected?'page':'false')}window.scrollTo({top:0,behavior:'smooth'})}
+function showTab(tab){for(const el of document.querySelectorAll('.portal-tab'))el.hidden=el.id!=='tab-'+tab;for(const b of document.querySelectorAll('.nav-btn')){const selected=b.dataset.tab===tab;b.classList.toggle('active',selected);b.setAttribute('aria-current',selected?'page':'false')}if(tab==='scoreboard')void nkLoadScoreboard();window.scrollTo({top:0,behavior:'smooth'})}
 for(const b of document.querySelectorAll('.nav-btn'))b.addEventListener('click',()=>showTab(b.dataset.tab));
 for(const b of document.querySelectorAll('.jump'))b.addEventListener('click',()=>showTab(b.dataset.jump));
 function renderHomeDates(tasks){const root=$('home-dates');root.replaceChildren();const upcoming=tasks.filter(t=>!t.completed&&t.due_date).sort((a,b)=>a.due_date.localeCompare(b.due_date)).slice(0,4);if(!upcoming.length){root.append(item('p','small','Keine anstehenden Aufgaben mit Termin.'));return}for(const t of upcoming){const el=item('div','entry');const body=item('div','entry-content');body.append(item('strong','',t.title),item('div','small','Fällig: '+dateText(t.due_date)));el.append(body);root.append(el)}}
@@ -166,4 +206,88 @@ $('poll-form').addEventListener('submit',async e=>{e.preventDefault();if(profile
 
 $('login').addEventListener('submit',async e=>{e.preventDefault();const btn=$('login-submit');btn.disabled=true;message('login-error','');try{const {error}=await supabase.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error)throw error;$('password').value='';await render()}catch(e){message('login-error','Anmeldung fehlgeschlagen. Bitte E-Mail und Passwort prüfen.')}finally{btn.disabled=false}});
 $('logout').addEventListener('click',async()=>{await supabase.auth.signOut();resetUI()});await render();
+
+
+// Geschuetztes Gremium-Scoreboard: Daten ausschliesslich aus serverseitiger RPC.
+let nkScoreLoading=false,nkScoreOptBusy=false,nkScoreSelectedGroup=null;
+const nkScoreToday=new Date();
+$('nkScoreMonth').value=nkScoreToday.getFullYear()+'-'+String(nkScoreToday.getMonth()+1).padStart(2,'0');
+$('nkScoreYear').value=String(nkScoreToday.getFullYear());
+function nkScoreFilters(){
+ const p=$('nkScorePeriod').value;
+ $('nkScoreFestWrap').hidden=p!=='fest';$('nkScoreMonthWrap').hidden=p!=='month';$('nkScoreYearWrap').hidden=p!=='year';
+}
+async function nkLoadScoreboard(){
+ if(!currentUser||nkScoreLoading)return;
+ nkScoreLoading=true;nkScoreFilters();const btn=$('nkScoreReload');btn.disabled=true;
+ message('nkScoreStatus','Rangliste wird geladen …');
+ const period=$('nkScorePeriod').value;
+ const month=$('nkScoreMonth').value||null;
+ const year=Number($('nkScoreYear').value)||null;
+ const event=$('nkScoreFest').value||null;
+ if(period==='fest'&&!event){
+   const {data,error}=await supabase.rpc('nk_gremium_scoreboard',{p_period:'all',p_event:null,p_month:null,p_year:null,p_group:nkScoreSelectedGroup});
+   if(error){message('nkScoreStatus','Fehler: '+error.message);nkScoreLoading=false;btn.disabled=false;return}
+   nkScoreLoading=false;btn.disabled=false;nkScoreUpdateMetadata(data);if($('nkScoreFest').value){return nkLoadScoreboard()}
+   $('nkScoreRows').replaceChildren(item('div','nk-score-empty','Bitte zuerst ein Fest auswählen.'));
+   message('nkScoreStatus','');nkScoreLoading=false;btn.disabled=false;return;
+ }
+ const {data,error}=await supabase.rpc('nk_gremium_scoreboard',{
+   p_period:period,p_month:period==='month'&&month?month+'-01':null,
+   p_year:period==='year'?year:null,p_event:period==='fest'?event:null,
+   p_group:nkScoreSelectedGroup
+ });
+ nkScoreLoading=false;btn.disabled=false;
+ if(error){message('nkScoreStatus','Rangliste konnte nicht geladen werden: '+error.message);return}
+ nkScoreUpdateMetadata(data);nkScoreRender(data?.rows||[]);message('nkScoreStatus','');
+}
+function nkScoreUpdateMetadata(data){
+ const select=$('nkScoreFest'),previous=select.value;
+ select.replaceChildren(new Option('Fest wählen …',''));
+ for(const ev of data?.events||[])select.add(new Option(ev.name+' · '+dateText(ev.event_date),ev.id));
+ if([...select.options].some(x=>x.value===previous))select.value=previous;
+ nkScoreRenderDrinkTabs(data?.groups||[]);
+ $('nkScoreMyLink').textContent=data?.linked?'Dein Gremium-Login ist mit deinem Fördermitglieds- und Gastkonto verknüpft.':'Dein Gremium-Login ist noch nicht mit einem persönlichen Gastkonto verknüpft. Bitte den Vorstand um Zuordnung bitten.';
+ const cb=$('nkScoreOptIn');cb.disabled=!data?.linked||nkScoreOptBusy;cb.checked=!!data?.opt_in;
+}
+function nkScoreRenderDrinkTabs(groups){
+ const root=$('nkScoreDrinkTabs');root.replaceChildren();
+ const choices=[{value:null,label:'Alle Getränke'},...(groups||[]).map(g=>({value:String(g),label:String(g)}))];
+ if(nkScoreSelectedGroup!==null&&!choices.some(c=>c.value===nkScoreSelectedGroup))nkScoreSelectedGroup=null;
+ for(const c of choices){
+  const b=document.createElement('button');b.type='button';b.textContent=c.label;
+  const active=c.value===nkScoreSelectedGroup;b.classList.toggle('active',active);
+  b.setAttribute('aria-pressed',active?'true':'false');b.disabled=nkScoreLoading;
+  b.addEventListener('click',()=>{
+   if(nkScoreLoading||nkScoreSelectedGroup===c.value)return;
+   nkScoreSelectedGroup=c.value;void nkLoadScoreboard();
+  });root.append(b);
+ }
+ $('nkScoreSelection').textContent=nkScoreSelectedGroup===null?'Alle alkoholischen Getränke':
+   'Getränk: '+nkScoreSelectedGroup;
+}
+function nkScoreRender(rows){
+ const root=$('nkScoreRows');root.replaceChildren();
+ if(!rows.length){root.append(item('div','nk-score-empty','Noch keine freiwillig teilnehmenden Gremiumsmitglieder.'));return}
+ const maximum=Math.max(1,...rows.map(r=>Math.max(0,Number(r.quantity)||0)));
+ for(const r of rows){
+  const row=item('div','nk-score-entry'),name=item('div','nk-score-name',r.name);
+  const track=item('div','nk-score-track'),bar=item('div','nk-score-bar');
+  bar.style.width=Math.max(0,Math.min(100,(Number(r.quantity)||0)/maximum*100))+'%';
+  track.append(bar);row.append(name,track,item('div','nk-score-qty',String(r.quantity||0)));root.append(row);
+ }
+}
+$('nkScorePeriod').addEventListener('change',()=>{nkScoreFilters();void nkLoadScoreboard()});
+for(const id of ['nkScoreFest','nkScoreMonth','nkScoreYear'])$(id).addEventListener('change',()=>void nkLoadScoreboard());
+$('nkScoreReload').addEventListener('click',()=>void nkLoadScoreboard());
+$('nkScoreOptIn').addEventListener('change',async()=>{
+ if(nkScoreOptBusy)return;nkScoreOptBusy=true;
+ const cb=$('nkScoreOptIn');cb.disabled=true;
+ const checked=cb.checked;
+ const {error}=await supabase.rpc('nk_gremium_scoreboard_opt_in',{p_enabled:checked});
+ nkScoreOptBusy=false;
+ if(error){cb.checked=!checked;message('nkScoreOptStatus','Änderung fehlgeschlagen: '+error.message);cb.disabled=false;return}
+ message('nkScoreOptStatus',checked?'Du nimmst jetzt freiwillig teil.':'Deine Teilnahme ist ausgeschaltet.',true);
+ await nkLoadScoreboard();
+});
 </script></body></html>
