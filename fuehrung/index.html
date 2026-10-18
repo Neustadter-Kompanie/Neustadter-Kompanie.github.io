@@ -238,6 +238,23 @@ header .wrap{max-width:1490px}
  .nk-board-workspace .panel{padding:14px}
  .nk-section-intro h2{font-size:1.48rem}
 }
+
+/* Gremiumsverknuepfung und Scoreboard-Produkte (nur Vorstand) */
+.nk-link-layout{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:10px 0}
+.nk-link-layout select{min-width:0}
+.nk-link-list{margin:14px 0}
+.nk-link-item{display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between;border-top:1px solid var(--line);padding:12px 0}
+.nk-link-item strong{display:block}
+.nk-link-item small{display:block;color:var(--muted)}
+.nk-link-item button{margin:0;min-height:36px}
+.nk-score-product{display:flex;align-items:center;justify-content:space-between;gap:14px;border-top:1px solid var(--line);padding:9px 0}
+.nk-score-product label{display:flex;align-items:center;gap:9px;margin:0;font-weight:500}
+.nk-score-group-edit{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.nk-score-group-edit input{width:165px;min-width:125px;padding:9px}
+.nk-score-group-edit button{margin:0;min-height:39px}
+@media(max-width:760px){.nk-score-product{align-items:flex-start;flex-direction:column}.nk-score-group-edit{width:100%}.nk-score-group-edit input{flex:1;width:100%}}
+.nk-score-product input[type=checkbox]{width:20px;height:20px;accent-color:var(--nk-pine)}
+@media(max-width:700px){.nk-link-layout{grid-template-columns:1fr}}
 </style>
 <link rel="icon" type="image/png" href="/favicon-96x96.png">
 </head>
@@ -326,6 +343,16 @@ header .wrap{max-width:1490px}
 <article class="panel"><h2>Mitglied hinzufügen</h2><p class="muted">Auch ohne bisheriges Getränkekonto. Die Gastnummer wird automatisch erstellt.</p>
 <form id="createMemberForm"><div class="fieldrow"><div><label for="memberFirst">Vorname</label><input id="memberFirst" required maxlength="100" autocomplete="off"></div><div><label for="memberLast">Nachname</label><input id="memberLast" required maxlength="100" autocomplete="off"></div><div><label for="memberType">Mitgliedschaft</label><select id="memberType"><option value="single">Einzelmitgliedschaft · 25 €/Jahr</option><option value="family">Familienmitgliedschaft · 30 €/Jahr</option></select></div><div><label for="memberStart">Eintrittsdatum</label><input id="memberStart" type="date" required></div></div><button class="primary" id="createMemberBtn" type="submit">Mitglied anlegen</button></form><p class="status" id="createMemberStatus" role="status"></p><div id="createdGuestCard" class="panel" hidden style="border:2px solid #c9a56b;background:#f1f6f0;margin-top:12px"><strong id="createdGuestName">Mitglied angelegt</strong><p class="muted">Zugewiesene Gastnummer</p><div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap"><strong id="createdGuestNumber" style="font-size:34px;letter-spacing:2px">#0000</strong><button type="button" class="primary" id="copyCreatedNumber" style="margin:0">Nummer kopieren</button></div><p class="muted">Der Getränkezugang muss separat sicher aktiviert werden.</p></div><div class="hint">Bei Familienmitgliedschaften wird zunächst das Hauptmitglied angelegt. Bereits registrierte Gäste können unten einer bestehenden Familie zugeordnet werden. Der Zugang zum Getränkekonto muss vor Nutzung sicher aktiviert werden.</div></article>
 <article class="panel" id="familyManagementPanel"><h2>Bestehenden Gast zu Familie hinzufügen</h2><p class="muted">Für alle Familien in der zentralen Mitgliederdatenbank – unabhängig davon, ob sie online bestätigt oder manuell angelegt wurden.</p><form id="addFamilyGuestForm"><label for="familyTarget">Familie auswählen</label><select id="familyTarget" required><option value="">Familie auswählen …</option></select><label for="familyGuestNumber">Vorhandene Gastnummer</label><input id="familyGuestNumber" type="number" inputmode="numeric" min="1000" max="9999" required placeholder="z. B. 7736"><button class="primary" id="addFamilyGuestBtn" type="submit">Gast zur Familie hinzufügen</button></form><p class="status" id="addFamilyGuestStatus" role="status"></p><h3 style="margin-top:22px">Neue Person direkt in diese Familie aufnehmen</h3><p class="muted">Die oben ausgewählte Familie wird übernommen. Für die neue Person wird eine freie Gastnummer erstellt; es entsteht kein weiterer Jahresbeitrag.</p><form id="createFamilyPersonForm"><div class="fieldrow"><div><label for="familyPersonFirst">Vorname</label><input id="familyPersonFirst" required maxlength="100" autocomplete="off"></div><div><label for="familyPersonLast">Nachname</label><input id="familyPersonLast" required maxlength="100" autocomplete="off"></div></div><button class="primary" type="submit" id="createFamilyPersonBtn">Neues Familienmitglied anlegen</button></form><p class="status" id="createFamilyPersonStatus" role="status"></p><div id="familyPersonResult" class="panel" hidden style="border:2px solid #c9a56b;background:#f1f6f0;margin-top:12px"><strong id="familyPersonResultName"></strong><p class="muted">Neue Gastnummer</p><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><strong id="familyPersonResultNumber" style="font-size:34px;letter-spacing:2px"></strong><button type="button" class="primary" style="margin:0" id="copyFamilyPersonNumber">Nummer kopieren</button></div><p class="muted">Der Getränkezugang muss separat sicher aktiviert werden.</p></div><div class="hint">Das bestehende Gastkonto bleibt erhalten. Die gemeinsame Abrechnung beginnt erst nach dem separaten Klick auf „Familienkonto aktivieren“ in der Familienliste.</div></article>
+
+<article class="panel board-only" id="nkGremiumLinkPanel">
+<h2>🔗 Gremium-Zugang mit Mitglied verknüpfen</h2>
+<p class="muted">Ein Gremiumsmitglied registriert zuerst ein normales Gastkonto und wird als Fördermitglied bestätigt. Anschließend kannst du hier sein bestehendes Gremium-Login mit der Gastnummer verbinden. Dies gibt keine zusätzlichen Zugriffsrechte und ändert keine Abrechnungen.</p>
+<div class="nk-link-layout"><div><label for="nkGremiumProfile">Gremium-Login</label><select id="nkGremiumProfile"><option value="">Login wählen …</option></select></div><div><label for="nkGremiumMember">Bestätigtes Fördermitglied</label><select id="nkGremiumMember"><option value="">Mitglied wählen …</option></select></div></div>
+<div class="member-actions"><button type="button" id="nkGremiumLinkSave" class="primary">Verknüpfung speichern</button><button type="button" id="nkGremiumLinkReload" class="secondary-btn">Aktualisieren</button></div>
+<p id="nkGremiumLinkStatus" class="status" role="status"></p>
+<h3 style="margin-top:20px">Bestehende Gremiums-Zuordnungen</h3><div id="nkGremiumLinkList" class="nk-link-list"></div>
+<div class="hint">Die Mitglieder entscheiden im Gremiumsbereich selbst, ob ihre alkoholischen Bestellzahlen in der Rangliste erscheinen. Gastnummer, Mitgliedschaft und bisherige Buchungen bleiben unverändert.</div>
+</article>
 </section>
 <section id="guests" class="tab" hidden><div class="nk-section-intro"><div class="nk-kicker">PERSONEN</div><h2>Gäste</h2><p>Gastkonten suchen, prüfen und doppelte Registrierungen zusammenführen.</p></div><article class="panel"><h2>Gäste</h2><p class="muted">Echte Konten aus Supabase. Ein positiver Kontostand ist Guthaben, ein negativer Betrag ist offen.</p><input id="guestSearch" class="search" placeholder="Nach Name oder Gastnummer suchen …" aria-label="Gäste suchen"><p id="guestStatus" class="status" role="status"></p><div id="guestList"></div></article>
 <article class="panel board-only" id="nkGuestMergePanel"><h2>↪ Doppelte Gastkonten zusammenführen</h2>
@@ -396,7 +423,13 @@ header .wrap{max-width:1490px}
 <form id="nkEventForm"><div class="fieldrow"><div><label for="nkEventName">Festname</label><input id="nkEventName" placeholder="z. B. Weihnachtsfeier 2026" required maxlength="120"></div><div><label for="nkEventDate">Veranstaltungsdatum</label><input type="date" id="nkEventDate" required></div></div><button class="primary" type="submit">Fest anlegen</button></form><p class="status" id="nkEventStatus"></p><div id="nkEventList"></div></article>
 <article class="panel"><h2>Kategorien</h2><p class="muted">Kategorie anlegen, umbenennen oder ausblenden. Eine Kategorie mit vorhandenen Artikeln kann nur deaktiviert werden.</p><form id="nkCategoryForm"><input type="hidden" id="nkCategoryId"><label for="nkCategoryName">Name der Kategorie</label><input id="nkCategoryName" placeholder="z. B. Snacks" maxlength="70" required><label><input type="checkbox" id="nkCategoryActive" checked style="width:auto"> Kategorie aktiv</label><div class="member-actions"><button class="primary" type="submit">Kategorie speichern</button><button class="secondary-btn" type="button" id="nkCategoryClear">Zurücksetzen</button></div></form><p class="status" id="nkCategoryStatus"></p><div id="nkCategoryList"></div></article>
 <article class="panel"><h2>Artikel verwalten</h2><p class="muted">Getränke, Speisen und Snacks benutzen dieselbe Strichliste. Zeiträume begrenzen die Buchbarkeit auf der Gästeseite. Für Papierstrichlisten bleiben aktive Artikel nachträglich auswählbar.</p>
-<form id="nkProductForm"><input type="hidden" id="nkProductId"><div class="fieldrow"><div><label for="nkProductName">Artikelname</label><input id="nkProductName" maxlength="100" required placeholder="z. B. Currywurst mit Pommes"></div><div><label for="nkProductCategory">Kategorie</label><select id="nkProductCategory" required></select></div><div><label for="nkProductPrice">Normalpreis (€)</label><input id="nkProductPrice" required inputmode="decimal" placeholder="5,00"></div><div><label for="nkProductMember">Förderpreis (€), leer = Normalpreis</label><input id="nkProductMember" inputmode="decimal" placeholder="5,00"></div><div><label for="nkProductFrom">Verfügbar ab (optional)</label><input id="nkProductFrom" type="datetime-local"></div><div><label for="nkProductUntil">Verfügbar bis (optional)</label><input id="nkProductUntil" type="datetime-local"></div></div><label><input type="checkbox" id="nkProductActive" style="width:auto" checked> Artikel aktiv</label><div class="member-actions"><button class="primary" type="submit">Artikel speichern</button><button type="button" class="secondary-btn" id="nkProductClear">Neuer Artikel</button></div></form><p id="nkProductStatus" class="status"></p><div id="nkProductList"></div></article></section>
+<form id="nkProductForm"><input type="hidden" id="nkProductId"><div class="fieldrow"><div><label for="nkProductName">Artikelname</label><input id="nkProductName" maxlength="100" required placeholder="z. B. Currywurst mit Pommes"></div><div><label for="nkProductCategory">Kategorie</label><select id="nkProductCategory" required></select></div><div><label for="nkProductPrice">Normalpreis (€)</label><input id="nkProductPrice" required inputmode="decimal" placeholder="5,00"></div><div><label for="nkProductMember">Förderpreis (€), leer = Normalpreis</label><input id="nkProductMember" inputmode="decimal" placeholder="5,00"></div><div><label for="nkProductFrom">Verfügbar ab (optional)</label><input id="nkProductFrom" type="datetime-local"></div><div><label for="nkProductUntil">Verfügbar bis (optional)</label><input id="nkProductUntil" type="datetime-local"></div></div><label><input type="checkbox" id="nkProductActive" style="width:auto" checked> Artikel aktiv</label><div class="member-actions"><button class="primary" type="submit">Artikel speichern</button><button type="button" class="secondary-btn" id="nkProductClear">Neuer Artikel</button></div></form><p id="nkProductStatus" class="status"></p><div id="nkProductList"></div></article><article class="panel board-only" id="nkScoreProductPanel">
+<h2>🍻 Alkoholische Artikel kennzeichnen</h2>
+<p class="muted">Nur als alkoholisch markierte Verkaufsartikel zählen. Über die <strong>Scoreboard-Gruppe</strong> fasst du Varianten zusammen: z. B. beide Jack-Daniel’s-Größen unter „Jacky“. Ohne Gruppe wird der Artikelname als eigener Reiter angezeigt. Preise und Lagerbestände bleiben unverändert.</p>
+<div class="member-actions"><button class="secondary-btn" type="button" id="nkScoreProductReload">Artikel laden / aktualisieren</button></div>
+<p class="status" role="status" id="nkScoreProductStatus"></p><div id="nkScoreProductList"></div>
+</article>
+</section>
 <section id="nkstats" class="tab" hidden><div class="nk-section-intro"><div class="nk-kicker">AUSWERTUNGEN</div><h2>Verkaufsstatistik</h2><p>Artikelumsätze, Bestellungen und Gast-Buchungshistorie.</p></div><article class="panel"><h2>📊 Bestellstatistik</h2><p class="muted">Stornierte Buchungen werden ausgeschlossen; berücksichtigte Fördergutschriften mindern den Warenwert.</p><label for="nkStatsEvent">Auswertung</label><select id="nkStatsEvent"><option value="">Alle Bestellungen</option></select><button id="nkStatsReload" class="secondary-btn" type="button" style="margin-top:12px">Aktualisieren</button><p class="status" id="nkStatsStatus"></p><div id="nkStatsResults"></div></article>
 <article class="panel"><h2>Gast-Bestellhistorie</h2><label for="nkHistoryGuest">Gast auswählen</label><select id="nkHistoryGuest"><option value="">Bitte auswählen</option></select><p class="status" id="nkHistoryStatus"></p><div id="nkHistoryEntries"></div><button class="secondary-btn" type="button" id="nkHistoryMore" hidden>Weitere Buchungen</button><p class="muted">Festzuordnungen können hier für einzelne Bestellungen korrigiert werden. Der Kontostand wird dabei nicht verändert.</p></article></section>
 <section id="nkweb" class="tab" hidden><div class="nk-section-intro"><div class="nk-kicker">AUSWERTUNGEN</div><h2>Webseitenbesucher</h2><p>Öffentliche Seitenaufrufe und Besuche. Persönliche Konten und interne Seiten werden nicht mitgemessen.</p></div>
@@ -479,7 +512,9 @@ function showTab(tab){
  nkCloseSidebar();
  if(tab==='paper'&&paperSelectedGuest())void loadPaperPriceQuote();
  if(tab==='nkstats')void nkLoadStats();
+ if(tab==='nkfest')void nkBoardScoreProductsLoad();
  if(tab==='nkinventory')void nkInvLoad();
+ if(tab==='members')void nkBoardGremiumLoad();
  if(tab==='nkweb')void nkLoadWebStats(nkCurrentWebDays);
 }
 $('nkNavToggle').addEventListener('click',()=>{
@@ -1845,5 +1880,97 @@ $('nkMergeApply').addEventListener('click',async()=>{
  }catch(e){status('nkMergeStatus','Zusammenführung abgebrochen: '+e.message);$('nkMergeApply').disabled=false;}
 });
 
+
+
+// NK Gremium <-> Mitglied (getrennt von den bestehenden Familien-/Finanzfunktionen).
+let nkGremiumLinksCache=null;
+async function nkBoardGremiumLoad(){
+ if(profile?.role!=='vorstand')return;
+ const statusEl=$('nkGremiumLinkStatus');statusEl.textContent='Zuordnungen werden geladen …';
+ const {data,error}=await supabase.rpc('nk_board_gremium_links');
+ if(error){statusEl.textContent='Fehler beim Laden: '+error.message;return}
+ nkGremiumLinksCache=data||{profiles:[],members:[]};
+ const prof=$('nkGremiumProfile'),mem=$('nkGremiumMember');
+ const oldProfile=prof.value,oldMember=mem.value;
+ prof.replaceChildren(new Option('Gremium-Login wählen …',''));
+ for(const p of nkGremiumLinksCache.profiles||[])prof.add(new Option((p.name||'Unbekannt')+' ('+p.role+')',p.id));
+ mem.replaceChildren(new Option('Bestätigtes Mitglied wählen …',''));
+ for(const m of nkGremiumLinksCache.members||[])mem.add(new Option(m.name+' · Gast #'+m.guest_number+(m.member_number?' · Mitglied #'+m.member_number:''),m.guest_id));
+ if([...prof.options].some(x=>x.value===oldProfile))prof.value=oldProfile;
+ if([...mem.options].some(x=>x.value===oldMember))mem.value=oldMember;
+ const list=$('nkGremiumLinkList');list.replaceChildren();
+ for(const p of nkGremiumLinksCache.profiles||[]){
+  const row=node('div',undefined,'nk-link-item'),info=node('div');
+  info.append(node('strong',p.name+' · '+p.role),node('small',p.guest_id?'Verbunden mit Gast #'+p.guest_number+' · '+p.guest_name+(p.opt_in?' · Scoreboard aktiv':' · Scoreboard nicht aktiviert'):'Noch kein Gastkonto verknüpft'));
+  row.append(info);
+  if(p.guest_id){const del=node('button','Trennen','secondary-btn');del.type='button';del.addEventListener('click',async()=>{
+    if(!confirm('Gremiums-Verknüpfung für '+p.name+' aufheben? Getränkebuchungen und Mitgliedschaft bleiben bestehen.'))return;
+    del.disabled=true;const {error}=await supabase.rpc('nk_board_gremium_unlink',{p_profile_id:p.id});
+    if(error){statusEl.textContent=error.message;del.disabled=false;return}
+    await nkBoardGremiumLoad();statusEl.textContent='Verknüpfung aufgehoben.';
+  });row.append(del)}
+  list.append(row);
+ }
+ if(!(nkGremiumLinksCache.profiles||[]).length)list.append(node('p','Noch keine Gremium-Logins gefunden.','muted'));
+ statusEl.textContent='';
+}
+$('nkGremiumProfile').addEventListener('change',()=>{
+ const p=(nkGremiumLinksCache?.profiles||[]).find(p=>p.id===$('nkGremiumProfile').value);
+ $('nkGremiumMember').value=p?.guest_id||'';
+});
+$('nkGremiumLinkReload').addEventListener('click',nkBoardGremiumLoad);
+$('nkGremiumLinkSave').addEventListener('click',async()=>{
+ const pid=$('nkGremiumProfile').value,gid=$('nkGremiumMember').value;
+ if(!pid||!gid){status('nkGremiumLinkStatus','Bitte Gremiumslogin und bestätigtes Mitglied auswählen.');return}
+ const who=$('nkGremiumProfile').selectedOptions[0]?.textContent||'Login';
+ const what=$('nkGremiumMember').selectedOptions[0]?.textContent||'Mitglied';
+ if(!confirm('Verknüpfen?\n'+who+'\n'+what+'\nEine eventuell bisherige Teilnahme am Scoreboard wird aus Datenschutzgründen deaktiviert.'))return;
+ const btn=$('nkGremiumLinkSave');btn.disabled=true;
+ const {error}=await supabase.rpc('nk_board_gremium_link',{p_profile_id:pid,p_guest_id:gid});btn.disabled=false;
+ if(error){status('nkGremiumLinkStatus','Speichern fehlgeschlagen: '+error.message);return}
+ await nkBoardGremiumLoad();status('nkGremiumLinkStatus','Gremiumslogin und Mitglied erfolgreich verknüpft.',true);
+});
+
+
+async function nkBoardScoreProductsLoad(){
+ if(profile?.role!=='vorstand')return;
+ const root=$('nkScoreProductList');status('nkScoreProductStatus','Artikel werden geladen …');
+ const {data,error}=await supabase.rpc('nk_board_score_products');
+ if(error){status('nkScoreProductStatus','Fehler beim Laden: '+error.message);return}
+ root.replaceChildren();
+ for(const p of data||[]){
+  const row=node('div',undefined,'nk-score-product'),label=node('label');
+  const box=document.createElement('input');box.type='checkbox';box.checked=!!p.alcoholic;
+  box.setAttribute('aria-label',p.name+' ist alkoholisch');
+  label.append(box,node('span',p.name));row.append(label);
+  const groupArea=node('div',undefined,'nk-score-group-edit');
+  const groupInput=document.createElement('input');groupInput.type='text';groupInput.maxLength=70;
+  groupInput.value=p.group||'';groupInput.placeholder='z. B. Bier, Schorle, Jacky';
+  groupInput.setAttribute('aria-label','Scoreboard-Gruppe für '+p.name);
+  groupInput.title='Gleicher Gruppenname fasst mehrere Verkaufsartikel zusammen';
+  const saveGroup=node('button','Gruppe speichern','secondary-btn');saveGroup.type='button';
+  saveGroup.addEventListener('click',async()=>{
+   saveGroup.disabled=true;
+   const {error}=await supabase.rpc('nk_board_score_set_group',{
+     p_product_id:p.id,p_group:groupInput.value.trim()||null
+   });
+   saveGroup.disabled=false;
+   if(error){status('nkScoreProductStatus','Gruppe konnte nicht gespeichert werden: '+error.message);return}
+   status('nkScoreProductStatus','Gruppe für „'+p.name+'“ gespeichert.',true);
+  });
+  groupArea.append(groupInput,saveGroup);row.append(groupArea);
+  box.addEventListener('change',async()=>{
+    box.disabled=true;
+    const {error}=await supabase.rpc('nk_board_score_set_product',{p_product_id:p.id,p_alcoholic:box.checked});
+    box.disabled=false;
+    if(error){box.checked=!box.checked;status('nkScoreProductStatus','Speichern fehlgeschlagen: '+error.message);return}
+    status('nkScoreProductStatus','Kennzeichnung für „'+p.name+'“ gespeichert.',true);
+  });
+  root.append(row);
+ }
+ if(!(data||[]).length)root.append(node('p','Noch keine Verkaufsartikel vorhanden.','muted'));
+ status('nkScoreProductStatus','');
+}
+$('nkScoreProductReload').addEventListener('click',nkBoardScoreProductsLoad);
 </script>
 </body></html>
