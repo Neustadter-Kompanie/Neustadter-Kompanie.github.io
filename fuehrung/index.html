@@ -367,7 +367,26 @@ header .wrap{max-width:1490px}
  <p class="muted" style="font-size:.85rem;margin-top:14px">Familienkonten mit umzuverteilenden Buchungen werden aus Sicherheitsgründen blockiert. Die Kontonummer wird erst nach einer erfolgreichen Übertragung wieder frei.</p>
 </article>
 </section>
-<section id="finance" class="tab" hidden><div class="nk-section-intro"><div class="nk-kicker">FINANZEN</div><h2>Kasse &amp; Konten</h2><p>Einzahlungen, Stornierungen sowie persönliche und Familienkonten.</p></div><article class="panel"><h2>Einzahlung oder Gutschrift erfassen</h2><p class="muted">Jede bestätigte Buchung wird in der Datenbank mit dem ausführenden Vorstandsmitglied gespeichert.</p><form id="paymentForm"><div class="fieldrow"><div><label for="paymentGuest">Gastkonto</label><select id="paymentGuest" required><option value="">Bitte Gast auswählen</option></select></div><div><label for="paymentMethod">Buchungsart</label><select id="paymentMethod" required><option value="cash">Bareinzahlung</option><option value="paypal">PayPal-Einzahlung</option><option value="other">Sonstige Gutschrift (kein Geldeingang)</option></select></div><div><label for="paymentAmount">Betrag in Euro</label><input id="paymentAmount" type="text" inputmode="decimal" placeholder="z. B. 10,00" required></div><div><label for="paymentReason">Grund / Vermerk</label><input id="paymentReason" type="text" maxlength="500" placeholder="z. B. Einzahlung am Wagen" required></div></div><button class="primary" id="paymentBtn" type="submit">Buchung speichern</button></form><p class="status" id="paymentStatus" role="status"></p><div class="hint"><strong>Wichtig:</strong> „Sonstige Gutschrift“ verändert den Getränkekontostand, ist aber keine tatsächliche Einnahme. Getränkekorrekturen erfolgen weiter unten über die Stornierfunktion. Auszahlungen und Mitgliedsbeiträge werden gesondert verwaltet.</div></article><article class="panel" id="voidPanel">
+<section id="finance" class="tab" hidden><div class="nk-section-intro"><div class="nk-kicker">FINANZEN</div><h2>Kasse &amp; Konten</h2><p>Einzahlungen, Stornierungen sowie persönliche und Familienkonten.</p></div><article class="panel"><h2>Einzahlung oder Gutschrift erfassen</h2><p class="muted">Jede bestätigte Buchung wird in der Datenbank mit dem ausführenden Vorstandsmitglied gespeichert.</p><form id="paymentForm"><div class="fieldrow"><div><label for="paymentGuest">Gastkonto</label><select id="paymentGuest" required><option value="">Bitte Gast auswählen</option></select></div><div><label for="paymentMethod">Buchungsart</label><select id="paymentMethod" required><option value="cash">Bareinzahlung</option><option value="paypal">PayPal-Einzahlung</option><option value="other">Sonstige Gutschrift (kein Geldeingang)</option></select></div><div><label for="paymentAmount">Betrag in Euro</label><input id="paymentAmount" type="text" inputmode="decimal" placeholder="z. B. 10,00" required></div><div><label for="paymentReason">Grund / Vermerk</label><input id="paymentReason" type="text" maxlength="500" placeholder="z. B. Einzahlung am Wagen" required></div></div><button class="primary" id="paymentBtn" type="submit">Buchung speichern</button></form><p class="status" id="paymentStatus" role="status"></p><div class="hint"><strong>Wichtig:</strong> „Sonstige Gutschrift“ verändert den Getränkekontostand, ist aber keine tatsächliche Einnahme. Getränkekorrekturen erfolgen weiter unten über die Stornierfunktion. Auszahlungen und Mitgliedsbeiträge werden gesondert verwaltet.</div></article><article class="panel" id="nkPaperCarryPanel">
+  <h2>🧾 Offene Beträge aus Papierstrichlisten übernehmen</h2>
+  <p class="muted">Ein vorhandener offener Betrag wird als <strong>separater Saldoübertrag</strong> übernommen. Es werden <strong>keine Getränke, Umsätze oder Lagerbestände</strong> gebucht. Du kannst den Papierbetrag später korrigieren; alle Änderungen bleiben protokolliert.</p>
+  <form id="nkPaperCarryForm">
+    <div class="fieldrow">
+      <div><label for="nkPaperCarryGuest">Gastkonto</label><select id="nkPaperCarryGuest" required><option value="">Gast auswählen …</option></select></div>
+      <div><label for="nkPaperCarryAccount">Belastetes Konto</label><select id="nkPaperCarryAccount" required><option value="personal">Persönliches Konto</option></select></div>
+      <div><label for="nkPaperCarryTarget">Offener Papierbetrag in €</label><input id="nkPaperCarryTarget" type="text" inputmode="decimal" placeholder="z. B. 18,50" required></div>
+      <div><label for="nkPaperCarryReason">Grund / Beleg</label><input id="nkPaperCarryReason" type="text" maxlength="400" placeholder="z. B. Papierstrichliste vom 18.10.2026" required></div>
+    </div>
+    <div class="hint"><strong>Wichtig:</strong> Hier steht der <strong>gesamte offene Betrag aus der alten Papierliste</strong>, nicht der gewünschte neue Gesamtkontostand. Bestehende digitale Buchungen oder Zahlungen bleiben unverändert. Für eine Korrektur den Papierbetrag ändern, nicht erneut addieren. Eine 0,00-€-Eingabe hebt nur den bisherigen Papierübertrag auf.</div>
+    <div id="nkPaperCarryPreview" class="finance-summary" hidden></div>
+    <button id="nkPaperCarrySave" class="primary" type="submit" disabled>Papierübertrag speichern</button>
+    <button id="nkPaperCarryReload" class="secondary-btn" type="button">Übertrag aktualisieren</button>
+  </form>
+  <p id="nkPaperCarryStatus" class="status" role="status" aria-live="polite"></p>
+  <h3 style="margin-top:20px">Letzte Änderungen dieses Gastkontos</h3>
+  <div id="nkPaperCarryHistory" class="stack"><p class="muted">Bitte Gastkonto auswählen.</p></div>
+</article>
+<article class="panel" id="voidPanel">
   <h2>↩️ Getränkebuchung stornieren</h2>
   <p class="muted">Nur für den Vorstand. Selbstbuchungen und nachgetragene Papierstrichlisten können ohne Zeitlimit storniert werden. Die ursprüngliche Buchung bleibt im Verlauf sichtbar.</p>
   <div class="fieldrow">
@@ -625,6 +644,7 @@ async function refreshData(){
   for(const g of active)sel.add(new Option('#'+g.guest_number+' · '+g.display_name,g.id));
   if(active.some(g=>g.id===selected))sel.value=selected;
   renderGuests();renderFinance();renderPaperGuestOptions();renderVoidGuestOptions();
+  nkPaperCarryGuestOptions();
  }catch(err){
   // Keine veralteten oder irreführenden Salden anzeigen, wenn eine Abfrage fehlschlägt.
   financeSnapshotReady=false;guests=[];balances=[];familyBalances=[];
@@ -637,6 +657,7 @@ async function refreshData(){
   $('paymentGuest').replaceChildren(new Option('Keine Konten verfügbar',''));
   $('voidGuest').replaceChildren(new Option('Keine Konten verfügbar',''));
   $('paperGuest').replaceChildren(new Option('Keine Konten verfügbar',''));
+  $('nkPaperCarryGuest').replaceChildren(new Option('Keine Konten verfügbar',''));$('nkPaperCarrySave').disabled=true;
  }
 }
 function renderGuests(){
@@ -1627,6 +1648,92 @@ $('nkFeeForm').addEventListener('submit',async e=>{
 $('loginForm').addEventListener('submit',async e=>{e.preventDefault();const btn=$('loginBtn');btn.disabled=true;status('loginStatus','');const {error}=await supabase.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});$('password').value='';btn.disabled=false;if(error){status('loginStatus','Anmeldung fehlgeschlagen. Bitte Zugangsdaten prüfen.');return}await initialize()});
 $('logout').addEventListener('click',async()=>{await supabase.auth.signOut();showLogin()});
 $('paymentForm').addEventListener('submit',async e=>{e.preventDefault();if(profile?.role!=='vorstand')return;const guest=$('paymentGuest').value,method=$('paymentMethod').value,reason=$('paymentReason').value.trim();const raw=$('paymentAmount').value.trim().replace(/\s/g,'');const valid=/^\d+(?:[,.]\d{1,2})?$/.test(raw);const amount=valid?Math.round(Number(raw.replace(',','.'))*100):NaN;if(!guest||!guests.some(g=>g.id===guest&&g.is_active)||!['cash','paypal','other'].includes(method)||!Number.isSafeInteger(amount)||amount<=0||amount>100000||!reason){status('paymentStatus','Bitte Gast, Betrag (maximal 1.000 €), Buchungsart und Begründung prüfen.');return}const g=guests.find(g=>g.id===guest);const kind=method==='other'?'Gutschrift':method==='cash'?'Bareinzahlung':'PayPal-Einzahlung';if(!confirm(kind+' über '+money(amount)+' für '+g.display_name+' (#'+g.guest_number+') wirklich buchen?'))return;const btn=$('paymentBtn');btn.disabled=true;status('paymentStatus','Buchung wird gespeichert …');const {error}=await supabase.rpc('drink_record_payment',{p_guest_id:guest,p_amount_cents:amount,p_payment_method:method,p_reference:reason});btn.disabled=false;if(error){status('paymentStatus','Buchung fehlgeschlagen: '+error.message);return}status('paymentStatus','Buchung erfolgreich gespeichert.',true);$('paymentAmount').value='';$('paymentReason').value='';await refreshData();await refreshMembershipRequests();await refreshFamilyRequests()});
+
+// --- Papierstrichlisten-Saldo: eigenstaendige Vorstandsbuchung, keine Artikel/Payments ---
+let nkPaperCarrySnapshot=null;
+let nkPaperCarryFetchSeq=0;
+function nkPaperCarryGuestOptions(){
+ const s=$('nkPaperCarryGuest');if(!s)return;
+ const old=s.value;
+ s.replaceChildren(new Option('Gast auswählen …',''));
+ for(const g of guests.filter(x=>x.is_active))s.add(new Option('#'+g.guest_number+' · '+g.display_name,g.id));
+ if(guests.some(g=>g.id===old&&g.is_active))s.value=old;
+ if(!s.value){nkPaperCarrySnapshot=null;$('nkPaperCarryPreview').hidden=true;
+   $('nkPaperCarryHistory').replaceChildren(node('p','Bitte Gastkonto auswählen.','muted'));
+   $('nkPaperCarrySave').disabled=true;}
+}
+function nkPaperCarryMoney(cents){return money(Number(cents)||0)}
+function nkPaperCarryCurrentAccount(){
+ const a=$('nkPaperCarryAccount').value;
+ return (nkPaperCarrySnapshot?.accounts||[]).find(x=>x.kind===a)||null;
+}
+function nkPaperCarryRender(){
+ const data=nkPaperCarrySnapshot;
+ const accSel=$('nkPaperCarryAccount'),old=accSel.value;
+ accSel.replaceChildren();
+ for(const acc of data?.accounts||[])accSel.add(new Option(acc.label,acc.kind));
+ if((data?.accounts||[]).some(x=>x.kind===old))accSel.value=old;
+ const a=nkPaperCarryCurrentAccount();
+ const box=$('nkPaperCarryPreview');
+ box.replaceChildren();
+ if(!a){box.hidden=true;$('nkPaperCarrySave').disabled=true;return}
+ box.hidden=false;
+ box.append(node('strong','Bereits übernommener Papierbetrag: '+nkPaperCarryMoney(a.carry_cents)));
+ box.append(node('p','Aktueller Kontostand (einschließlich Papierübertrag): '+
+   (Number(a.balance_cents)<0?'Offen '+nkPaperCarryMoney(-Number(a.balance_cents)):
+   'Guthaben '+nkPaperCarryMoney(a.balance_cents)),'muted'));
+ $('nkPaperCarryTarget').value=(Number(a.carry_cents)/100).toFixed(2).replace('.',',');
+ $('nkPaperCarrySave').disabled=false;
+ const hist=$('nkPaperCarryHistory');hist.replaceChildren();
+ if(!data.history?.length){hist.append(node('p','Noch kein Papierübertrag vorhanden.','muted'));return}
+ for(const h of data.history){
+   const entry=node('div',undefined,'item');
+   const meta=node('div');
+   meta.append(node('strong',(h.kind==='family'?'Familie':'Persönlich')+' · '+new Date(h.created_at).toLocaleString('de-DE')));
+   meta.append(node('div',String(h.reason||''),'muted'));
+   const amount=node('span',(Number(h.delta_cents)>0?'+':'')+nkPaperCarryMoney(h.delta_cents),'amount');
+   entry.append(meta,amount);hist.append(entry);
+ }
+}
+async function nkPaperCarryLoad(){
+ const id=$('nkPaperCarryGuest').value,seq=++nkPaperCarryFetchSeq;
+ $('nkPaperCarrySave').disabled=true;nkPaperCarrySnapshot=null;
+ $('nkPaperCarryPreview').hidden=true;
+ if(!id){$('nkPaperCarryHistory').replaceChildren(node('p','Bitte Gastkonto auswählen.','muted'));status('nkPaperCarryStatus','');return}
+ status('nkPaperCarryStatus','Papierübertrag wird geladen …');
+ const {data,error}=await supabase.rpc('nk_board_paper_balance_get',{p_guest_id:id});
+ if(seq!==nkPaperCarryFetchSeq||id!==$('nkPaperCarryGuest').value)return;
+ if(error){status('nkPaperCarryStatus','Konnte Papierübertrag nicht laden: '+error.message);return}
+ if(!data||!Array.isArray(data.accounts)||!Array.isArray(data.history)){status('nkPaperCarryStatus','Ungültige Serverantwort.');return}
+ nkPaperCarrySnapshot=data;status('nkPaperCarryStatus','');nkPaperCarryRender();
+}
+$('nkPaperCarryGuest').addEventListener('change',nkPaperCarryLoad);
+$('nkPaperCarryAccount').addEventListener('change',nkPaperCarryRender);
+$('nkPaperCarryReload').addEventListener('click',nkPaperCarryLoad);
+$('nkPaperCarryForm').addEventListener('submit',async e=>{
+ e.preventDefault();if(profile?.role!=='vorstand'||!financeSnapshotReady)return;
+ const guest=$('nkPaperCarryGuest').value,account=$('nkPaperCarryAccount').value;
+ const a=nkPaperCarryCurrentAccount(),reason=$('nkPaperCarryReason').value.trim();
+ const raw=$('nkPaperCarryTarget').value.trim().replace(/\s/g,'');
+ if(!/^\d+(?:[,.]\d{1,2})?$/.test(raw)||!a||!guest){status('nkPaperCarryStatus','Bitte Gast, Konto und gültigen Betrag eingeben.');return}
+ const target=Math.round(Number(raw.replace(',','.'))*100);
+ if(!Number.isSafeInteger(target)||target<0||target>1000000){status('nkPaperCarryStatus','Maximal 10.000 € Papierbetrag je Konto.');return}
+ if(reason.length<8||reason.length>400){status('nkPaperCarryStatus','Bitte einen aussagekräftigen Beleg/Grund mit mindestens 8 Zeichen eingeben.');return}
+ const g=guests.find(x=>x.id===guest);
+ const prev=Number(a.carry_cents);
+ if(target===prev){status('nkPaperCarryStatus','Der Papierbetrag ist bereits so hinterlegt. Keine Änderung nötig.',true);return}
+ if(!confirm('Papierübertrag für '+(g?.display_name||'Gast')+' (#'+(g?.guest_number||'?')+') · '+a.label+'\nBisher: '+nkPaperCarryMoney(prev)+'\nNeu: '+nkPaperCarryMoney(target)+'\nDifferenz: '+nkPaperCarryMoney(target-prev)+'\n\nVerbindlich speichern?'))return;
+ $('nkPaperCarrySave').disabled=true;status('nkPaperCarryStatus','Saldoübertrag wird gespeichert …');
+ const {data,error}=await supabase.rpc('nk_board_paper_balance_set',{
+   p_guest_id:guest,p_account:account,p_target_cents:target,p_reason:reason
+ });
+ if(error){status('nkPaperCarryStatus','Konnte Papierbetrag nicht speichern: '+error.message);$('nkPaperCarrySave').disabled=false;return}
+ status('nkPaperCarryStatus',data?.saved?'Papierbetrag erfolgreich aktualisiert.':'Keine Änderung erforderlich.',true);
+ $('nkPaperCarryReason').value='';
+ await refreshData();await nkPaperCarryLoad();
+ status('nkPaperCarryStatus',data?.saved?'Papierbetrag erfolgreich aktualisiert.':'Keine Änderung erforderlich.',true);
+});
+
 await initialize();
 
 // Einkaufs-/Bestandsuebersicht; ausschliesslich vorstandsberechtigte RPCs.
