@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#12352b">
+<title>Tablet-Kasse · Neustadter Kompanie</title>
+<style>
+:root{color-scheme:light;--pine:#14382e;--pine2:#235542;--gold:#c4a56d;--bg:#f6f2e9;--white:#fffdfa;--line:#e5dfd3;--ink:#22382f;--muted:#68786c;--red:#a3473c;--soft:#eaf1eb;--shadow:0 10px 30px #18332a10}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:16px;line-height:1.45}button,input{font:inherit}button{cursor:pointer;touch-action:manipulation}button:disabled{opacity:.48;cursor:not-allowed}input,button{outline-offset:3px}a{color:var(--pine)}[hidden]{display:none!important}.top{background:var(--pine);color:white;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:87px;box-shadow:var(--shadow)}.brand{display:flex;align-items:center;gap:14px}.brand img{width:59px;height:59px;object-fit:contain}.brand small{display:block;color:#dec99e;font-size:11px;text-transform:uppercase;letter-spacing:2px;font-weight:850}.brand strong{font:28px Georgia,serif;letter-spacing:.2px;display:block}.topRight{display:flex;align-items:center;gap:12px;font-size:13px;color:#dbebe0}.top button{background:#ffffff14;border:1px solid #b5d0c075;color:#fff;border-radius:10px;padding:11px 15px;font-weight:750}.shell{max-width:1600px;margin:auto;padding:16px 20px 70px}.eventBanner{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#e7f0e6;border:1px solid #c7d9c7;border-radius:12px;padding:10px 16px;margin-bottom:15px;color:#23533b;font-size:14px;font-weight:700}.eventBanner.off{background:#fffaf0;border-color:#e7d8ad;color:#81693c}.layout{display:grid;grid-template-columns:minmax(265px,330px) minmax(360px,1fr) minmax(285px,325px);align-items:start;gap:16px}.panel{background:var(--white);border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow);overflow:hidden}.panelHead{padding:17px 17px 12px;border-bottom:1px solid var(--line)}.panelHead h2{font:normal 23px Georgia,serif;margin:0 0 5px}.panelHead p{margin:0;color:var(--muted);font-size:12px}.padded{padding:14px 16px}.searchbar{position:relative}.searchbar label{display:block;font-size:13px;font-weight:750;margin:0 0 7px}.searchbar input{width:100%;padding:13px 14px;font-size:17px;background:#fff;border:1px solid #c9d5c9;border-radius:11px;min-height:50px}.tabs{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}.tab{border:1px solid #d3ded1;background:#f3f5f0;border-radius:9px;padding:9px 11px;font-weight:800;font-size:12px;color:#365d47}.tab.active{background:var(--pine);color:#fff;border-color:var(--pine)}.guestList{max-height:calc(100vh - 315px);min-height:180px;overflow:auto;padding:5px 9px 12px}.guest{display:flex;align-items:center;gap:11px;width:100%;background:transparent;text-align:left;border:1px solid transparent;padding:11px 9px;border-radius:11px;min-height:61px}.guest:hover{background:#f4f6f0}.guest.active{background:#e4eee4;border-color:#aac5ae}.guest .avatar{height:37px;width:37px;display:grid;place-items:center;border-radius:10px;background:#e9e6d8;color:var(--pine);font-weight:850;flex:0 0 auto}.guest .gText{min-width:0;flex:1}.guest .gText strong{display:block;font-size:14px;overflow-wrap:anywhere}.guest .gText small{color:var(--muted);font-size:12px}.guest .arr{font-weight:700;color:#7d9a83}.empty{color:var(--muted);font-size:14px;text-align:center;padding:29px 18px}.chosen{background:#e9f0e7;border:1px solid #bed2bf;border-radius:12px;margin:14px 16px 0;padding:11px 13px}.chosen strong{display:block;font-size:17px}.chosen small{color:#55725d}.categories{display:flex;gap:7px;overflow:auto;padding:14px 16px 7px;scrollbar-width:thin}.category{border:1px solid #cadacc;background:#f5f8f4;padding:9px 13px;border-radius:30px;white-space:nowrap;font-size:13px;font-weight:800}.category.on{background:var(--pine);color:#fff;border-color:var(--pine)}.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;padding:11px 16px 18px}.product{min-height:106px;border-radius:14px;border:1px solid #dce6d8;background:#fcfdf8;text-align:left;padding:13px;position:relative;display:flex;flex-direction:column;justify-content:space-between;transition:background .14s}.product:hover{background:#eaf3e9}.product:active{transform:scale(.985)}.product strong{font-size:15px;line-height:1.25}.product .price{display:flex;align-items:center;justify-content:space-between;margin-top:13px}.product .price b{font-size:17px;color:#1e6942}.add{background:#e1efe5;border-radius:9px;width:33px;height:33px;display:grid;place-items:center;font-size:24px;color:#1c6a42}.billBody{padding:12px 15px}.billGuest{font-size:15px;font-weight:800}.billGuest small{font-weight:500;color:var(--muted);display:block;margin-top:4px}.line{display:flex;gap:9px;align-items:center;padding:10px 0;border-bottom:1px solid #eee9df}.lineName{flex:1;min-width:0;font-weight:700;font-size:13px;overflow-wrap:anywhere}.lineName small{display:block;font-weight:400;color:var(--muted)}.qtyControl{display:flex;gap:5px;align-items:center}.qtyControl button{height:34px;width:34px;border:1px solid #c9dbcb;border-radius:8px;background:#f0f6ee;font-weight:850;font-size:20px;color:var(--pine)}.qtyControl span{min-width:17px;text-align:center;font-weight:800}.billTotal{display:flex;align-items:center;justify-content:space-between;padding:17px 0 5px;font-weight:800;font-size:16px}.billTotal strong{font-size:27px;color:var(--pine)}.billFooter{background:#f3f0e8;border-top:1px solid #e8e0d2;padding:13px 15px}.primary{width:100%;background:var(--pine);color:white;border:none;border-radius:11px;padding:15px 12px;min-height:58px;font-weight:850;font-size:16px}.primary:not(:disabled):hover{background:#28624c}.secondary{background:white;color:var(--pine);border:1px solid #9cbaac;border-radius:10px;padding:10px 13px;font-weight:750}.hint{font-size:11px;color:var(--muted);margin:9px 0 0}.flash{margin:0 0 14px;padding:13px 16px;border-radius:12px;background:#eaf4e9;border:1px solid #bbd4b6;color:#27633f;font-size:14px;font-weight:650}.flash.error{background:#fff1eb;border-color:#dfb7a8;color:#984c3a}.loginOuter{max-width:470px;margin:75px auto 0}.loginPanel{padding:30px 29px;background:var(--white);border-radius:21px;border:1px solid var(--line);box-shadow:var(--shadow)}.loginPanel img{display:block;width:92px;margin:0 auto 10px}.loginPanel h2{text-align:center;font:normal 30px Georgia,serif;margin:4px 0}.loginPanel p{text-align:center;color:var(--muted);font-size:14px}.loginPanel label{display:block;font-weight:750;margin:20px 0 7px}.loginPanel input{width:100%;height:53px;border-radius:11px;border:1px solid #ccd5ce;padding:0 14px}.loginPanel .primary{margin-top:24px}.status{color:var(--red);font-size:13px;font-weight:700;margin:12px 0}.busy{opacity:.65;pointer-events:none}.subtle{font-size:12px;color:var(--muted)}.pending{padding:15px;background:#fff4d9;border:1px solid #e2c78e;border-radius:13px;margin-bottom:14px}.pending p{font-size:13px;margin:5px 0 11px}.pendingActions{display:flex;gap:8px;flex-wrap:wrap}.pendingActions button{flex:1;min-height:42px}.veil{position:fixed;inset:0;background:#15291fba;z-index:100;display:grid;place-items:center;padding:18px}.dialog{background:#fffdf7;padding:24px;border-radius:18px;max-width:510px;width:100%;box-shadow:0 20px 80px #0003}.dialog h3{margin:0 0 8px;font:normal 26px Georgia,serif}.dialog p{line-height:1.6}.dialogButtons{display:flex;gap:10px;justify-content:flex-end;margin-top:22px}.dialogButtons button{padding:12px 16px;border-radius:10px;border:1px solid #c7d4c7;background:#fff;font-weight:750}.dialogButtons button.ok{background:var(--pine);color:white;border-color:var(--pine)}@media(max-width:1190px){.layout{grid-template-columns:minmax(250px,32%) minmax(380px,1fr)}.cartPanel{grid-column:2;grid-row:2}.guestList{max-height:470px}.topRight{flex-wrap:wrap;justify-content:flex-end}}@media(max-width:730px){.layout{grid-template-columns:1fr;gap:11px}.cartPanel{grid-column:auto;grid-row:auto}.products{grid-template-columns:repeat(2,minmax(0,1fr))}.guestList{max-height:240px}.shell{padding:12px 10px 30px}.top{padding:10px}.brand img{height:44px;width:44px}.brand strong{font-size:20px}.brand small{font-size:9px}.topRight{font-size:10px}.top button{padding:9px}.panelHead h2{font-size:20px}.cartPanel{position:relative}.loginOuter{margin:30px 12px}.loginPanel{padding:22px}}@media(min-width:1300px){.products{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header class="top"><div class="brand"><img src="./wappen.png" alt="Neustadter Kompanie Wappen"><div><small>Neustadter Kompanie</small><strong>Tablet-Kasse</strong></div></div><div class="topRight"><span id="identity"></span><button id="logout" type="button" hidden>Abmelden</button></div></header>
+<main class="shell">
+  <section id="loginView" class="loginOuter">
+    <form id="loginForm" class="loginPanel">
+      <img src="./wappen.png" alt="Vereinswappen"><h2>Am Wagen anmelden</h2>
+      <p>Für Gremium und Vorstand. Gäste melden sich weiterhin unter <a href="/trinken/">/trinken/</a> an.</p>
+      <label for="email">E-Mail-Adresse</label><input id="email" type="email" autocomplete="username" required>
+      <label for="password">Passwort</label><input id="password" type="password" autocomplete="current-password" required>
+      <button class="primary" id="loginButton" type="submit">Kasse öffnen</button>
+      <div id="loginStatus" class="status" role="alert"></div>
+      <p class="subtle">Aus Sicherheitsgründen bleibt die Anmeldung auf diesem Tablet nicht dauerhaft gespeichert.</p>
+    </form>
+  </section>
+  <section id="appView" hidden>
+    <div id="message" class="flash" hidden role="status" aria-live="polite"></div>
+    <div id="pendingView" class="pending" hidden><strong>⚠️ Buchung noch nicht bestätigt</strong><p>Falls die Verbindung unterbrochen wurde, denselben Beleg erneut senden. Nicht einfach eine neue Bestellung anlegen.</p><div id="pendingInfo" class="subtle"></div><div class="pendingActions"><button id="retryButton" class="secondary" type="button">Denselben Beleg erneut senden</button><button id="checkButton" class="secondary" type="button">Beleg verwerfen (nur nach Prüfung)</button></div></div>
+    <div id="eventBanner" class="eventBanner off">🚂 Regulärer Kassenbetrieb – kein Fest aktiv</div>
+    <div class="layout">
+      <section class="panel"><div class="panelHead"><h2>1. Gast auswählen</h2><p>Gastnummer eintippen oder nach Namen suchen</p></div>
+        <div class="padded"><div class="searchbar"><label for="guestSearch">Gastnummer oder Name</label><input id="guestSearch" type="search" autocomplete="off" placeholder="z. B. 2391 oder Max" inputmode="search"></div>
+          <div id="guestTabs" class="tabs"><button type="button" class="tab active" data-mode="recent">Zuletzt bestellt</button><button type="button" class="tab" data-mode="all">Alle Gäste</button><button type="button" class="tab" data-mode="festival" id="festTab" hidden>Festgäste</button></div>
+        </div><div class="guestList" id="guestList"><div class="empty">Nach der Anmeldung werden hier Gäste angezeigt.</div></div>
+      </section>
+      <section class="panel"><div class="panelHead"><h2>2. Getränke auswählen</h2><p>Große Tasten für die Bedienung am Tablet</p></div>
+        <div class="chosen" id="chosenGuest" hidden></div>
+        <div id="categoryTabs" class="categories" hidden></div>
+        <div id="products" class="products"><div class="empty">Zuerst ein Gastkonto auswählen.</div></div>
+      </section>
+      <section class="panel cartPanel"><div class="panelHead"><h2>3. Bestellung buchen</h2><p>Erst nach Bestätigung wird das Getränkekonto belastet</p></div>
+        <div class="billBody"><div id="billGuest" class="billGuest">Noch kein Gast ausgewählt</div><div id="cartList"><div class="empty">Noch keine Artikel ausgewählt.</div></div><div class="billTotal"><span>Gesamt</span><strong id="cartTotal">0,00 €</strong></div></div>
+        <div class="billFooter"><button type="button" id="bookButton" class="primary" disabled>Verbindlich buchen</button><button type="button" id="clearButton" class="secondary" style="width:100%;margin-top:9px">Warenkorb leeren</button><p class="hint">Keine Barzahlung in diesem Schritt: Die Buchung belastet nur das gewählte Getränkekonto. Einzahlungen werden weiterhin getrennt erfasst.</p></div>
+      </section>
+    </div>
+  </section>
+</main>
+<div class="veil" id="confirmVeil" hidden><div class="dialog" role="dialog" aria-modal="true" aria-labelledby="confirmHeading"><h3 id="confirmHeading">Bestellung bestätigen</h3><p id="confirmInfo"></p><div class="dialogButtons"><button id="cancelConfirm" type="button">Abbrechen</button><button id="acceptConfirm" class="ok" type="button">Jetzt buchen</button></div></div></div>
+<script type="module">
+import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+// Dieselben oeffentlichen Supabase-Verbindungsdaten wie /fuehrung/ und /intern/.
+// Niemals den service_role Key im Browser ablegen.
+const supabase=createClient('https://tyiskycptrrtlibpdbse.supabase.co','sb_publishable_Ctoq40heyWXiE8L8RMMFoQ_MwKCRPjp',{
+ auth:{persistSession:false,detectSessionInUrl:false,autoRefreshToken:true}
+});
+const $=id=>document.getElementById(id),eu=n=>(n/100).toLocaleString('de-DE',{style:'currency',currency:'EUR'});
+const node=(tag,txt,klass)=>{const el=document.createElement(tag);if(txt!==undefined)el.textContent=txt;if(klass)el.className=klass;return el};
+let snapshot=null,quote=null,guestId=null,products=[],cart=new Map(),searchMode='recent',category='Alle',quoteVersion=0,busy=false,pending=null;
+let idleTimer=null;const PENDING_KEY='nk_cashier_pending_v1';
+function banner(text,isError=false){const el=$('message');el.hidden=!text;el.textContent=text||'';el.classList.toggle('error',isError)}
+function setBusy(flag){busy=flag;$('bookButton').disabled=flag||!quote||cart.size===0||Boolean(pending);$('clearButton').disabled=flag||Boolean(pending);$('retryButton').disabled=flag;$('checkButton').disabled=flag;$('guestSearch').disabled=flag||Boolean(pending);$('acceptConfirm').disabled=flag;}
+function currentGuest(){return snapshot?.guests?.find(g=>g.id===guestId)}
+function moneyForCart(){let total=0,count=0;for(const [id,qty] of cart){const p=products.find(p=>p.id===id);if(p){total+=Number(p.price_cents)*qty;count+=qty}}return {total,count}}
+function sessionIdle(){if(idleTimer)clearTimeout(idleTimer);idleTimer=setTimeout(async()=>{if(!$('appView').hidden){await doLogout();$('loginStatus').textContent='Aus Sicherheitsgründen nach 20 Minuten ohne Bedienung abgemeldet.'}},20*60*1000)}
+for(const ev of ['pointerdown','keydown'])document.addEventListener(ev,()=>{if(!$('appView').hidden)sessionIdle()},{passive:true});
+async function doLogout(){if(pending){banner('Ein Beleg ist noch nicht bestätigt. Bitte erneut senden oder nach Prüfung durch den Vorstand verwerfen, bevor du dich abmeldest.',true);sessionIdle();return}quoteVersion++;try{await supabase.auth.signOut()}catch{}if(idleTimer)clearTimeout(idleTimer);quote=null;snapshot=null;guestId=null;products=[];cart.clear();$('identity').textContent='';$('logout').hidden=true;$('loginView').hidden=false;$('appView').hidden=true;$('email').value='';$('password').value='';banner('')}
+$('logout').addEventListener('click',doLogout);
+$('loginForm').addEventListener('submit',async e=>{e.preventDefault();const b=$('loginButton');b.disabled=true;$('loginStatus').textContent='Anmeldung läuft …';try{
+ const {error}=await supabase.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});$('password').value='';if(error)throw error;
+ await start();
+ }catch(err){$('loginStatus').textContent='Zugang nicht möglich: '+(err.message||'Anmeldung fehlgeschlagen');await supabase.auth.signOut()}finally{b.disabled=false}});
+async function checkedRpc(name,args={}){const {data,error}=await supabase.rpc(name,args);if(error)throw new Error(error.message||'Serverfehler');return data}
+async function start(){
+ snapshot=await checkedRpc('nk_cashier_snapshot');if(!Array.isArray(snapshot?.guests)||!Array.isArray(snapshot?.products))throw new Error('Kassendaten unvollständig');
+ $('identity').textContent=$('email').value.trim();$('loginView').hidden=true;$('appView').hidden=false;$('logout').hidden=false;
+ try{pending=JSON.parse(sessionStorage.getItem(PENDING_KEY)||'null')}catch{pending=null}
+ if(!pending||typeof pending.id!=='string'||typeof pending.guest_id!=='string'||!Array.isArray(pending.items)){pending=null;sessionStorage.removeItem(PENDING_KEY)}
+ searchMode=snapshot.event?'festival':'recent';guestId=null;quote=null;products=[];cart.clear();renderAll();sessionIdle();
+ if(pending){const found=snapshot.guests.find(g=>g.id===pending.guest_id);if(found){guestId=found.id;try{await selectGuest(found.id,true)}catch{} }renderPending();}
+}
+function renderAll(){
+ const e=snapshot?.event;$('eventBanner').textContent=e?'🎉 FESTMODUS AKTIV · '+e.name+' – kürzlich bediente Festgäste zuerst':'🚂 Regulärer Kassenbetrieb – kein Fest aktiv';$('eventBanner').classList.toggle('off',!e);$('festTab').hidden=!e;
+ if(searchMode==='festival'&&!e)searchMode='recent';
+ for(const b of $('guestTabs').querySelectorAll('button'))b.classList.toggle('active',b.dataset.mode===searchMode);
+ renderGuests();renderProducts();renderCart();renderPending();
+}
+function renderGuests(){
+ const root=$('guestList');root.replaceChildren();if(!snapshot)return;
+ const q=$('guestSearch').value.toLocaleLowerCase('de').trim();const byId=new Map(snapshot.guests.map(g=>[g.id,g]));
+ let arr=[];
+ if(q){const all=snapshot.guests.filter(g=>g.name.toLocaleLowerCase('de').includes(q)||String(g.number).includes(q));
+   arr=all.sort((a,b)=>(String(a.number)===q?-1:0)-(String(b.number)===q?-1:0));
+ }else if(searchMode==='festival'){arr=(snapshot.festival_recent||[]).map(id=>byId.get(id)).filter(Boolean)}
+ else if(searchMode==='recent'){arr=(snapshot.recent||[]).map(id=>byId.get(id)).filter(Boolean)}
+ else{arr=snapshot.guests}
+ arr=arr.slice(0,q?60:searchMode==='all'?100:35);
+ if(!arr.length){root.append(node('p',q?'Kein Gast gefunden.':'Hier gibt es noch keine Bestellungen. Wechsle auf „Alle Gäste“.','empty'));return}
+ for(const g of arr){const b=node('button',undefined,'guest'+(g.id===guestId?' active':''));b.type='button';b.disabled=Boolean(pending)||busy;
+ const av=node('span',g.name.trim().slice(0,1).toUpperCase(),'avatar');const info=node('span',undefined,'gText');info.append(node('strong',g.name),node('small','Gastnummer #'+g.number));b.append(av,info,node('span','›','arr'));
+ b.addEventListener('click',()=>void selectGuest(g.id));root.append(b)}
+}
+$('guestSearch').addEventListener('input',renderGuests);
+$('guestSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();const val=$('guestSearch').value.trim();const g=snapshot?.guests?.find(g=>String(g.number)===val);if(g)void selectGuest(g.id)}});
+for(const b of $('guestTabs').querySelectorAll('button'))b.addEventListener('click',()=>{if(busy||pending)return;searchMode=b.dataset.mode;$('guestSearch').value='';renderGuests();for(const tab of $('guestTabs').querySelectorAll('button'))tab.classList.toggle('active',tab===b)});
+async function selectGuest(id,force=false){if((busy||pending)&&!force)return;
+ const seq=++quoteVersion;guestId=id;quote=null;products=[];cart.clear();category='Alle';banner('');renderGuests();renderProducts();renderCart();
+ const g=currentGuest();if(!g)return;
+ $('chosenGuest').hidden=false;$('chosenGuest').replaceChildren(node('strong',g.name),node('small','#'+g.number+' · Preise werden geladen …'));
+ try{const data=await checkedRpc('nk_cashier_quote',{p_guest_id:id});if(seq!==quoteVersion||guestId!==id)return;
+  if(data?.guest?.id!==id||!Array.isArray(data.products))throw new Error('Preisvorschau unvollständig');
+  if(data.products.some(p=>!Number.isSafeInteger(Number(p.price_cents))||Number(p.price_cents)<0))throw new Error('Unzulässige Preisangabe');
+  quote=data;products=data.products;category='Alle';renderProducts();renderCart();
+  $('chosenGuest').replaceChildren(node('strong',g.name),node('small','#'+g.number+' · '+(data.is_member?'Fördermitgliedspreise':'Normalpreise')));
+ }catch(err){if(seq!==quoteVersion)return;quote=null;products=[];$('chosenGuest').replaceChildren(node('strong',g.name),node('small','Preise konnten nicht geladen werden'));
+   banner('Preisvorschau fehlgeschlagen: '+err.message+'. Bitte Gast erneut wählen.',true);renderProducts();renderCart()}
+}
+function renderProducts(){
+ const root=$('products'),tabs=$('categoryTabs');root.replaceChildren();tabs.replaceChildren();
+ if(!quote){tabs.hidden=true;root.append(node('p',guestId?'Getränkepreise werden geladen oder sind nicht verfügbar.':'Bitte zuerst ein Gastkonto auswählen.','empty'));return}
+ const cats=['Alle',...new Set(products.map(p=>p.category||'Getränke'))];if(!cats.includes(category))category='Alle';tabs.hidden=cats.length<=1;
+ for(const label of cats){const b=node('button',label,'category'+(category===label?' on':''));b.type='button';b.addEventListener('click',()=>{category=label;renderProducts()});tabs.append(b)}
+ const shown=products.filter(p=>category==='Alle'||(p.category||'Getränke')===category);
+ if(!shown.length){root.append(node('p','Keine aktiven Artikel verfügbar.','empty'));return}
+ for(const p of shown){const b=node('button',undefined,'product');b.type='button';b.disabled=busy||Boolean(pending);
+ b.append(node('strong',p.name));const line=node('div',undefined,'price');line.append(node('b',eu(Number(p.price_cents))),node('span','+','add'));b.append(line);
+ b.addEventListener('click',()=>changeQuantity(p.id,1));root.append(b)}
+}
+function changeQuantity(id,diff){if(busy||pending||!quote)return;const qty=Math.max(0,Math.min(10,(cart.get(id)||0)+diff));const totalQty=[...cart].reduce((n,[k,q])=>n+(k===id?0:q),0)+qty;if(totalQty>20){banner('Maximal 20 Artikel pro Bestellung.',true);return}
+ if(qty===0)cart.delete(id);else cart.set(id,qty);banner('');renderCart()}
+function renderCart(){const root=$('cartList');root.replaceChildren();const g=currentGuest();$('billGuest').replaceChildren();
+ if(g){$('billGuest').append(node('span',g.name),node('small','#'+g.number+' · '+(quote?.is_member?'Förderpreis':'Normalpreis')))}else $('billGuest').textContent='Noch kein Gast ausgewählt';
+ if(!cart.size){root.append(node('p','Noch keine Artikel ausgewählt.','empty'))}
+ else{for(const [id,qty] of cart){const p=products.find(p=>p.id===id);if(!p)continue;const line=node('div',undefined,'line');
+ const name=node('div',undefined,'lineName');name.append(node('span',p.name),node('small',eu(Number(p.price_cents))+' je Stück'));
+ const controls=node('div',undefined,'qtyControl');const minus=node('button','−'),num=node('span',String(qty)),plus=node('button','+');minus.type=plus.type='button';minus.disabled=plus.disabled=Boolean(pending)||busy;
+ minus.setAttribute('aria-label',p.name+' eins entfernen');plus.setAttribute('aria-label',p.name+' eins hinzufügen');minus.addEventListener('click',()=>changeQuantity(id,-1));plus.addEventListener('click',()=>changeQuantity(id,1));controls.append(minus,num,plus);
+ line.append(name,controls,node('strong',eu(Number(p.price_cents)*qty)));root.append(line)}}
+ const sum=moneyForCart();$('cartTotal').textContent=eu(sum.total);$('bookButton').disabled=busy||!quote||!cart.size||Boolean(pending);$('bookButton').textContent=sum.count?'✓ '+sum.count+' Artikel verbindlich buchen':'Verbindlich buchen';$('clearButton').disabled=busy||Boolean(pending)||!cart.size;}
+$('clearButton').addEventListener('click',()=>{if(pending||busy)return;cart.clear();renderCart()});
+$('bookButton').addEventListener('click',()=>{if(!quote||!cart.size||pending||busy)return;const g=currentGuest();if(!g)return;
+ const s=moneyForCart();$('confirmInfo').textContent='Gast: '+g.name+' (#'+g.number+')\n\n'+s.count+' Artikel für '+eu(s.total)+' auf das Getränkekonto buchen?\n\nEine Barzahlung wird damit NICHT erfasst.';
+ $('confirmInfo').style.whiteSpace='pre-line';$('confirmVeil').hidden=false;});
+$('cancelConfirm').addEventListener('click',()=>{$('confirmVeil').hidden=true});
+$('confirmVeil').addEventListener('click',e=>{if(e.target===$('confirmVeil'))$('confirmVeil').hidden=true});
+$('acceptConfirm').addEventListener('click',async()=>{if(!quote||!cart.size||busy||pending)return;$('confirmVeil').hidden=true;
+ if(!globalThis.crypto?.randomUUID){banner('Der Tablet-Browser unterstützt keine sicheren Buchungskennungen.',true);return}
+ const s=moneyForCart();pending={id:crypto.randomUUID(),guest_id:guestId,guest_name:currentGuest()?.name||'',
+ items:[...cart].map(([id,quantity])=>({product_id:id,quantity})).sort((a,b)=>a.product_id.localeCompare(b.product_id)),
+ expected_total_cents:s.total,expected_event_id:snapshot?.event?.id||null};sessionStorage.setItem(PENDING_KEY,JSON.stringify(pending));
+ renderPending();await submitPending()});
+function renderPending(){const box=$('pendingView');box.hidden=!pending;
+ if(pending){$('pendingInfo').textContent='Beleg: '+pending.id+' · '+pending.guest_name+' · '+eu(Number(pending.expected_total_cents));}
+ renderGuests();renderProducts();renderCart();}
+async function submitPending(){if(!pending||busy)return;setBusy(true);banner('Buchung wird gespeichert …');const order=pending;
+ try{const data=await checkedRpc('nk_cashier_book',{
+  p_request_id:order.id,p_guest_id:order.guest_id,p_items:order.items,
+  p_expected_total_cents:order.expected_total_cents,p_expected_event_id:order.expected_event_id
+ });
+ if(!data?.order_id||data.order_id!==order.id)throw new Error('Keine bestätigte Belegkennung erhalten');
+ pending=null;sessionStorage.removeItem(PENDING_KEY);cart.clear();
+ banner('✅ Gebucht: '+Number(data.quantity)+' Artikel für '+order.guest_name+' · '+eu(Number(data.total_cents))+' · Beleg '+data.order_id+(data.already_recorded?' (bereits vorhanden, keine Doppelbuchung)':''));
+ try{snapshot=await checkedRpc('nk_cashier_snapshot');renderAll()}catch(err){renderPending();renderCart();banner('✅ Bestellung gebucht. Gästeliste konnte nicht aktualisiert werden: '+err.message,true)}
+ }catch(err){banner('Buchungsstatus unklar: '+err.message+'. Bitte denselben Beleg erneut senden; NICHT neu buchen.',true)}
+ finally{setBusy(false);renderPending();renderCart()}
+}
+$('retryButton').addEventListener('click',submitPending);
+$('checkButton').addEventListener('click',()=>{
+ if(!pending||busy)return;const ok=window.confirm('Achtung: Die Bestellung könnte bereits gebucht worden sein.\n\nBeleg nur verwerfen, wenn der Vorstand geprüft hat, ob er gespeichert wurde.\n\nWirklich verwerfen?');if(!ok)return;
+ pending=null;sessionStorage.removeItem(PENDING_KEY);cart.clear();renderPending();banner('Beleg aus der Tablet-Sitzung entfernt. Keine Buchung storniert.');
+});
+</script>
+</body></html>
